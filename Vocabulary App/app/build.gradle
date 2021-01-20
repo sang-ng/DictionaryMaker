@@ -51,7 +51,12 @@ dependencies {
     //Koin
     implementation "org.koin:koin-core:2.2.0"
 
-    //room
+    //Room
     implementation "androidx.room:room-runtime:2.2.6"
+    annotationProcessor "androidx.room:room-compiler:2.2.6"
     kapt "androidx.room:room-compiler:2.2.6"
+    implementation "androidx.room:room-ktx:2.2.6"
+
+    implementation 'com.android.support:multidex:1.0.3'
+
 }
