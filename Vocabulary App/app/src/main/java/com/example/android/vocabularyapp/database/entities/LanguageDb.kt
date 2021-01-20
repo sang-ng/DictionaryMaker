@@ -10,3 +10,12 @@ data class LanguageDb constructor(
     var name : String,
     var image : String?
 )
+
+//fun LanguageDb.toDomainModel():  {
+//    return DepotDatabaseItem(
+//        id = id,
+//        title = title,
+//        value = value,
+//        valueIncrease = valueIncrease
+//    )
+//}
