@@ -50,6 +50,9 @@ dependencies {
 
     //Koin
     implementation "org.koin:koin-core:2.2.0"
+    implementation 'org.koin:koin-android:2.2.0'
+    implementation 'org.koin:koin-android-viewmodel:2.2.0'
+    implementation 'org.koin:koin-androidx-scope:2.0.1'
 
     //Room
     implementation "androidx.room:room-runtime:2.2.6"
