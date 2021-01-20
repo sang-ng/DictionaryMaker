@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.android.vocabularyapp.model.Language
 
 @Entity(tableName = "languages")
 data class LanguageDb constructor(
@@ -11,11 +12,10 @@ data class LanguageDb constructor(
     var image : String?
 )
 
-//fun LanguageDb.toDomainModel():  {
-//    return DepotDatabaseItem(
-//        id = id,
-//        title = title,
-//        value = value,
-//        valueIncrease = valueIncrease
-//    )
-//}
+fun LanguageDb.toDomainModel(): Language {
+    return Language(
+        id = id,
+        name = name,
+        image = image,
+    )
+}
