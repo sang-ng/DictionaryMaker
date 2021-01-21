@@ -4,17 +4,21 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.utils.inflate
 
 class CategoryListAdapter(private val categories: ArrayList<Category>) :
     RecyclerView.Adapter<CategoryListAdapter.CategoryHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): CategoryHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
 
-        TODO("Not yet implemented")
+        val inflatedView = parent.inflate(R.layout.category_list_item, false)
+        return CategoryHolder(inflatedView)
     }
 
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
-        TODO("Not yet implemented")
+        val itemCategory = categories[position]
+        holder.bind(itemCategory)
     }
 
     override fun getItemCount() = categories.size
@@ -33,6 +37,15 @@ class CategoryListAdapter(private val categories: ArrayList<Category>) :
         //4
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
+
+//            val context = itemView.context
+//            val showPhotoIntent = Intent(context, PhotoActivity::class.java)
+//            showPhotoIntent.putExtra(PHOTO_KEY, photo)
+//            context.startActivity(showPhotoIntent)
+        }
+
+        fun bind(category: Category)   {
+
         }
 
         companion object {
