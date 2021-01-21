@@ -27,11 +27,11 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayL
     }
 
     class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
-        RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(category: Category) = with(itemView) {
+        RecyclerView.ViewHolder(itemBinding.root){
 
+        fun bind(category: Category) = with(itemView) {
             itemBinding.categoryListName.text = category.name
-            itemBinding.categoryListLayout.setOnClickListener { Log.i("Test", "Hi") }
+            itemBinding.categoryListLayout.setOnClickListener { Log.i("TEST", "HI") }
         }
     }
 
