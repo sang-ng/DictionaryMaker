@@ -8,8 +8,14 @@ import kotlinx.coroutines.withContext
 class LanguageRepository(private val dao: LanguageDao) {
 
     suspend fun addLanguage(language: LanguageDb) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             dao.addLanguage(language)
+        }
+    }
+
+    suspend fun updateLanguage(language: LanguageDb) {
+        withContext(Dispatchers.IO) {
+            dao.updateLanguage(language)
         }
     }
 }
