@@ -2,21 +2,73 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.vocabularyapp.R
-import com.example.android.vocabularyapp.database.entities.LanguageDb
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.android.vocabularyapp.database.entities.CategoryDb
+import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
+import com.example.android.vocabularyapp.ui.addCategory.CategoryDialogFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class CategoryActivity : AppCompatActivity() {
+class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDialogListener {
 
     private val viewModel by viewModel<CategoryViewModel>()
+    private lateinit var binding: ActivityCategoryBinding
+    private lateinit var listAdapter: CategoryListAdapter
+    private lateinit var fragmentManager: FragmentManager
+    private lateinit var addDialogFragment: DialogFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
+        binding = ActivityCategoryBinding.inflate(layoutInflater)
+
+        initOnClick()
+        initRecyclerView()
+        initDialogFragment()
+        observeCategories()
+
+        setContentView(binding.root)
+    }
 
 
-        val language = LanguageDb(0, "Deuscth", " -")
+    private fun initOnClick() {
+        binding.categoryAddButton.setOnClickListener {
+            showAddDialog()
+        }
+    }
 
-        viewModel.addLanguage(language)
+    private fun showAddDialog() {
+        addDialogFragment.show(fragmentManager, "AddCatDialog")
+    }
+
+    private fun initRecyclerView() {
+        listAdapter = CategoryListAdapter()
+
+        binding.categoryRecyclerview.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            itemAnimator = DefaultItemAnimator()
+            adapter = listAdapter
+        }
+    }
+
+    private fun initDialogFragment() {
+        fragmentManager = supportFragmentManager
+        addDialogFragment = CategoryDialogFragment()
+    }
+
+    private fun observeCategories() {
+        viewModel.categories.observe(this, { categories ->
+            listAdapter.setData(categories)
+        })
+    }
+
+    override fun onDialogPositiveClick(name: String) {
+        val newCat = CategoryDb(0, name)
+        viewModel.addCategory(newCat)
+        addDialogFragment.dismiss()
     }
 }

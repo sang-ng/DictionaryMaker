@@ -7,6 +7,6 @@ import org.koin.dsl.module
 val databaseModule = module {
 
     single{ VocDatabase.getDatabase(androidApplication())}
-    single{ VocDatabase.getDatabase(androidApplication()).languageDao}
+    single{ VocDatabase.getDatabase(androidApplication()).categoryDao}
 
 }

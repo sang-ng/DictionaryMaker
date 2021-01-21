@@ -7,6 +7,9 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+    viewBinding{
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "com.example.android.vocabularyapp"
@@ -15,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +35,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+
 }
 
 dependencies {
