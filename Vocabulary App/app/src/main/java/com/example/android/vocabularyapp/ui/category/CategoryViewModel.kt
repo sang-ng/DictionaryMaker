@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 
 class CategoryViewModel(private val repository: CategoryRepository) : ViewModel() {
 
-    val category = repository.getCategory(0)
+    val categories = repository.categories
 
     fun addCategory(categoryDb: CategoryDb) {
         viewModelScope.launch(Dispatchers.IO) {

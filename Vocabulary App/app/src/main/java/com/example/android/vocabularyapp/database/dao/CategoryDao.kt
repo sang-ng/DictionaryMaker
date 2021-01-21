@@ -11,6 +11,9 @@ import com.example.android.vocabularyapp.model.Category
 @Dao
 interface CategoryDao {
 
+    @Query("SELECT * FROM categories")
+    fun getAllCategories() : LiveData<List<CategoryDb>>
+
     @Insert
     fun addCategory(categoryDb: CategoryDb)
 
@@ -19,4 +22,5 @@ interface CategoryDao {
 
     @Query("SELECT * FROM categories WHERE id=:id")
     fun getCategoryById(id: Long) : LiveData<Category>
+
 }

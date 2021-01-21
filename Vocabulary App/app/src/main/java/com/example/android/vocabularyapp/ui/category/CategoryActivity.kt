@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
@@ -11,7 +12,7 @@ class CategoryActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<CategoryViewModel>()
     private lateinit var binding: ActivityCategoryBinding
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var listAdapter: CategoryListAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +20,8 @@ class CategoryActivity : AppCompatActivity() {
         binding = ActivityCategoryBinding.inflate(layoutInflater)
 
         initOnClick()
+        initRecyclerView()
+        observeCategories()
 
         setContentView(binding.root)
     }
@@ -32,14 +35,19 @@ class CategoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeCategory(){
-        viewModel.category.observe(this, {category ->
-            viewModel.updateCatgegory(category)
-        })
+    private fun initRecyclerView() {
+        listAdapter = CategoryListAdapter()
+
+        binding.categoryRecyclerview.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            itemAnimator = DefaultItemAnimator()
+            adapter = listAdapter
+        }
     }
 
-    private fun initRecyclerView() {
-        linearLayoutManager = LinearLayoutManager(this)
-        binding.categoryRecyclerview.layoutManager = linearLayoutManager
+    private fun observeCategories() {
+        viewModel.categories.observe(this, { categories ->
+            listAdapter.setData(categories)
+        })
     }
 }
