@@ -22,10 +22,6 @@ class CategoryRepository(private val dao: CategoryDao) {
         }
     }
 
-    fun getCategory(id: Long): LiveData<Category> {
-        return dao.getCategoryById(id)
-    }
-
     suspend fun updateCategory(category: Category) {
         withContext(Dispatchers.IO) {
             dao.updateCategory(category.toDatabaseModel())

@@ -19,8 +19,4 @@ interface CategoryDao {
 
     @Update
     fun updateCategory(categoryDb: CategoryDb)
-
-    @Query("SELECT * FROM categories WHERE id=:id")
-    fun getCategoryById(id: Long) : LiveData<Category>
-
 }
