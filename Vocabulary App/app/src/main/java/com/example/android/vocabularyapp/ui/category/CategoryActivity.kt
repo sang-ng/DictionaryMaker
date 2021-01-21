@@ -19,7 +19,6 @@ class CategoryActivity : AppCompatActivity() {
         initOnClick()
 
         setContentView(binding.root)
-
     }
 
     private fun initOnClick() {
