@@ -19,7 +19,7 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
         }
     }
 
-    fun updateCatgegory(category: Category) {
+    fun updateCategory(category: Category) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateCategory(category)
         }
