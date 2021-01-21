@@ -3,8 +3,6 @@ package com.example.android.vocabularyapp.ui.category
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android.vocabularyapp.R
-import com.example.android.vocabularyapp.database.entities.LanguageDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -26,9 +24,7 @@ class CategoryActivity : AppCompatActivity() {
 
     private fun initOnClick() {
         binding.categoryAddButton.setOnClickListener {
-            val language = LanguageDb(0, "Deutsch", " -")
 
-            viewModel.addLanguage(language)
         }
     }
 
