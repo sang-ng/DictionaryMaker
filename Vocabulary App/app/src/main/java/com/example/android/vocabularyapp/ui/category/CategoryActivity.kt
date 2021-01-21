@@ -32,6 +32,12 @@ class CategoryActivity : AppCompatActivity() {
         }
     }
 
+    private fun observeCategory(){
+        viewModel.category.observe(this, {category ->
+            viewModel.updateCatgegory(category)
+        })
+    }
+
     private fun initRecyclerView() {
         linearLayoutManager = LinearLayoutManager(this)
         binding.categoryRecyclerview.layoutManager = linearLayoutManager

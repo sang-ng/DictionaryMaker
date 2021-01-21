@@ -1,10 +1,15 @@
 package com.example.android.vocabularyapp.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.example.android.vocabularyapp.database.entities.CategoryDb
 
-data class Category (
+data class Category(
     val id: Long,
-    var name : String,
-    val languageId : Long
+    var name: String
 )
+
+fun Category.toDatabaseModel(): CategoryDb {
+    return CategoryDb(
+        id = id,
+        name = name
+    )
+}
