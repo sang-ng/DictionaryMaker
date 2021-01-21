@@ -8,6 +8,5 @@ import androidx.room.PrimaryKey
 data class CategoryDb constructor(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    var name : String,
-    val languageId : Long
+    var name : String
 )

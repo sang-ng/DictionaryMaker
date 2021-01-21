@@ -3,6 +3,7 @@ package com.example.android.vocabularyapp.ui.category
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -25,6 +26,9 @@ class CategoryActivity : AppCompatActivity() {
     private fun initOnClick() {
         binding.categoryAddButton.setOnClickListener {
 
+            val cat = CategoryDb(0, "Basic")
+
+            viewModel.addCategory(cat)
         }
     }
 
