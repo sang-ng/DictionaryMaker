@@ -15,6 +15,7 @@ import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
 import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.category.CategoryViewModel
+import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class WordsActivity : AppCompatActivity() {
@@ -50,6 +51,10 @@ class WordsActivity : AppCompatActivity() {
 
         binding.wordsAddBtn.setOnClickListener {
             AddWordActivity.startActivity(this, viewModel.category.value!!)
+        }
+
+        binding.wordsStartBtn.setOnClickListener {
+            LearnActivity.startActivity(this, viewModel.category.value!!)
         }
     }
 
