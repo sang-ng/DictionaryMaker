@@ -34,7 +34,12 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayL
 
             itemBinding.categoryListName.text = category.name
 
-            itemBinding.categoryListLayout.setOnClickListener { WordsActivity.startActivity(itemView.context) }
+            itemBinding.categoryListLayout.setOnClickListener {
+                WordsActivity.startActivity(
+                    itemView.context,
+                    category
+                )
+            }
         }
     }
 
