@@ -7,7 +7,9 @@ import com.example.android.vocabularyapp.repository.WordsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WordsViewModel(private val repository: WordsRepository) : ViewModel(), DefaultLifecycleObserver {
+class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
+    DefaultLifecycleObserver {
+
 
     val words: LiveData<List<Word>>
         get() = _words
@@ -15,11 +17,15 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(), Def
     val category: LiveData<Category>
         get() = _category
 
+
+
     private var _category = MutableLiveData<Category>()
     private var _words = MutableLiveData<List<Word>>()
 
+
     init {
         getWords()
+
     }
 
     override fun onResume(owner: LifecycleOwner) {
@@ -40,5 +46,18 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(), Def
     }
 
 
-    private fun categoryIsNotNull(): Boolean = _category.value?.id != null
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

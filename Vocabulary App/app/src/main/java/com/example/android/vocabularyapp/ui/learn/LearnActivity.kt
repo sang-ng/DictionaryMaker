@@ -11,6 +11,7 @@ import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import com.example.android.vocabularyapp.ui.words.WordsViewModel
+import com.example.android.vocabularyapp.utils.CardStatus
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
@@ -26,7 +27,8 @@ class LearnActivity : AppCompatActivity() {
         binding = ActivityLearnBinding.inflate(layoutInflater)
 
         getCategoryFromIntent()
-        observeWords()
+        initOnClick()
+        observeCardStatus()
 
         setContentView(binding.root)
     }
@@ -39,10 +41,27 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeWords(){
-        viewModel.words.observe(this, {words ->
-            Log.i("TEST", words.first().name)
+    private fun observeCardStatus() {
+        viewModel.cardStatus.observe(this, { cardStatus ->
+
+            when (cardStatus) {
+                CardStatus.NAME -> displayName()
+                CardStatus.TRANSLATION -> Log.i("TEST", "card clicked. Trans")
+                CardStatus.YES -> Log.i("TEST", "Button clicked")
+            }
         })
+    }
+
+    private fun displayName() {
+        viewModel.currentWord.observe(this, { currentWord ->
+            binding.learnWord.text = currentWord.name
+        })
+    }
+
+    private fun initOnClick() {
+        binding.learnCard.setOnClickListener { viewModel.onCardClicked() }
+
+        binding.learnYesBtn.setOnClickListener { viewModel.onYesButtonClicked() }
     }
 
     companion object {

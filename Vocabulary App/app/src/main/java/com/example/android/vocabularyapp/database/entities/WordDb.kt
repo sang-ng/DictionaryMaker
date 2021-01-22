@@ -12,7 +12,7 @@ data class WordDb constructor(
     val id: Long,
     var name: String,
     var translation: String,
-    var goodWord: Boolean,
+    var goodWord: Int,
     var categoryId: Long,
 )
 
