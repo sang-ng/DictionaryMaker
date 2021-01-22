@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
+import com.example.android.vocabularyapp.databinding.WordListItemBinding
 import com.example.android.vocabularyapp.model.Word
 
 class WordListAdapter(private val wordList: ArrayList<Word> = ArrayList()) :
@@ -11,7 +12,7 @@ class WordListAdapter(private val wordList: ArrayList<Word> = ArrayList()) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
         val itemBinding =
-            CategoryListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            WordListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WordViewHolder(itemBinding)
     }
 
@@ -23,13 +24,13 @@ class WordListAdapter(private val wordList: ArrayList<Word> = ArrayList()) :
         holder.bind(wordList[position])
     }
 
-    class WordViewHolder(private val itemBinding: CategoryListItemBinding) :
+    class WordViewHolder(private val itemBinding: WordListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(word: Word) = with(itemView) {
 
-            itemBinding.categoryListName.text = word.name
-            itemBinding.categoryListLayout.setOnClickListener {}
+            itemBinding.wordListName.text = word.name
+            itemBinding.wordListTrans.text = word.translation
         }
     }
 
