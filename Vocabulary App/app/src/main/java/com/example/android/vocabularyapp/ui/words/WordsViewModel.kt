@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 
 class WordsViewModel(private val repository: WordsRepository) : ViewModel() {
 
+    val words = repository.words
+
     val category: LiveData<Category>
         get() = _category
 
