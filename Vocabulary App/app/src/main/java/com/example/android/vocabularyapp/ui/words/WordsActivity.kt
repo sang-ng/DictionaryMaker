@@ -1,5 +1,7 @@
 package com.example.android.vocabularyapp.ui.words
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.android.vocabularyapp.R
@@ -28,6 +30,13 @@ class WordsActivity : AppCompatActivity() {
 
             val word = Word(0, "Hallo", "Hola", true, 0)
             viewModel.addWord(word)
+        }
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, WordsActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }

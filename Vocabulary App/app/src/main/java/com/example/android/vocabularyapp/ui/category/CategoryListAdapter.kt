@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.ui.words.WordsActivity
 
 class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayList()) :
     RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
@@ -27,12 +28,13 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayL
     }
 
     class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
-        RecyclerView.ViewHolder(itemBinding.root){
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(category: Category) = with(itemView) {
+
             itemBinding.categoryListName.text = category.name
-            //TODO: naviagte next activity on click
-            itemBinding.categoryListLayout.setOnClickListener {  }
+
+            itemBinding.categoryListLayout.setOnClickListener { WordsActivity.startActivity(itemView.context) }
         }
     }
 
