@@ -41,8 +41,7 @@ class WordsActivity : AppCompatActivity() {
 
         binding.wordsAddBtn.setOnClickListener {
 
-            val word = Word(0, "Hallo", "Hola", true, 0)
-            viewModel.addWord(word)
+            viewModel.addWord(name = "Hallo", translation = "Hola")
         }
     }
 
