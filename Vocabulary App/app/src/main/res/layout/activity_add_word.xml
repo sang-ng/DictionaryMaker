@@ -24,22 +24,24 @@
             android:padding="16dp">
 
             <EditText
-                android:id="@+id/add_word_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="name"
-                android:inputType="textPersonName" />
-
-            <EditText
                 android:id="@+id/add_word_trans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="translation"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="Englisch" />
+
+            <EditText
+                android:id="@+id/add_word_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="deutsch"
+                android:inputType="textPersonName"
+                android:text="Deutsch" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

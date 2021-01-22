@@ -9,7 +9,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/words_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="480dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/words_add_btn"
@@ -20,4 +23,13 @@
         android:clickable="true"
         app:backgroundTint="#FF6D00"
         app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <Button
+        android:id="@+id/words_start_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="80dp"
+        android:text="Start learning"
+        app:backgroundTint="#FF6D00" />
 </FrameLayout>
