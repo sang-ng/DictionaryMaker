@@ -39,7 +39,11 @@ class AddWordActivity : AppCompatActivity() {
     private fun initOnClick() {
 
         binding.addWordBtn.setOnClickListener {
-            Log.i("TEST", viewModel.category.value!!.name)
+            val name = binding.addWordName.text.toString()
+            val translation = binding.addWordTrans.text.toString()
+
+            viewModel.addWord(name, translation)
+            finish()
         }
     }
 

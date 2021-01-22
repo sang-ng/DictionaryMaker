@@ -18,8 +18,6 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
     private var _category = MutableLiveData<Category>()
 
 
-
-
     fun addWord(name: String, translation: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
