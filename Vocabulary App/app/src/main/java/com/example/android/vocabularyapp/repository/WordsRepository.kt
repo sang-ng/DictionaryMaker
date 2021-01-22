@@ -1,7 +1,6 @@
 package com.example.android.vocabularyapp.repository
 
 import com.example.android.vocabularyapp.database.dao.WordDao
-import com.example.android.vocabularyapp.database.entities.WordDb
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.model.toDatabaseModel
 import kotlinx.coroutines.Dispatchers

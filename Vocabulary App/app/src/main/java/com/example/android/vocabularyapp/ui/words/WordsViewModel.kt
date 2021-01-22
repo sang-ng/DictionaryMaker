@@ -15,5 +15,4 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel() {
             repository.addWord(word)
         }
     }
-
 }
