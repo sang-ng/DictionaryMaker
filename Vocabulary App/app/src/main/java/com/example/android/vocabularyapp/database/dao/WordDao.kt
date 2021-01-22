@@ -1,6 +1,7 @@
 package com.example.android.vocabularyapp.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -14,4 +15,7 @@ interface WordDao {
 
     @Query("SELECT * FROM words")
     fun getWords() : LiveData<List<WordDb>>
+
+    @Query("SELECT * FROM words WHERE categoryId=:categoryId")
+    fun getFilteredWords(categoryId: Long) : List<WordDb>
 }
