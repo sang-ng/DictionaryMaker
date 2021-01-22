@@ -31,7 +31,8 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayL
 
         fun bind(category: Category) = with(itemView) {
             itemBinding.categoryListName.text = category.name
-            itemBinding.categoryListLayout.setOnClickListener { Log.i("TEST", "HI") }
+            //TODO: naviagte next activity on click
+            itemBinding.categoryListLayout.setOnClickListener {  }
         }
     }
 
