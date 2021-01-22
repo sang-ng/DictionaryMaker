@@ -12,6 +12,7 @@ import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
 import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.category.CategoryViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -48,8 +49,7 @@ class WordsActivity : AppCompatActivity() {
     private fun initOnClick() {
 
         binding.wordsAddBtn.setOnClickListener {
-
-            viewModel.addWord(name = "Hallo", translation = "Hola")
+            AddWordActivity.startActivity(this)
         }
     }
 
