@@ -4,14 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.example.android.vocabularyapp.R
+import android.view.View
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
-import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
-import com.example.android.vocabularyapp.ui.words.WordsActivity
-import com.example.android.vocabularyapp.ui.words.WordsViewModel
-import com.example.android.vocabularyapp.utils.CardStatus
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
@@ -27,8 +23,9 @@ class LearnActivity : AppCompatActivity() {
         binding = ActivityLearnBinding.inflate(layoutInflater)
 
         getCategoryFromIntent()
+        observeCurrentWord()
         initOnClick()
-        observeCardStatus()
+        observeShowTranslationEvent()
 
         setContentView(binding.root)
     }
@@ -41,28 +38,38 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeCardStatus() {
-        viewModel.cardStatus.observe(this, { cardStatus ->
+    private fun observeCurrentWord() {
+        viewModel.currentWord.observe(this, { word ->
+            binding.learnWord.text = word.name
+            binding.learnTranslation.text = word.translation
+        })
+    }
 
-            when (cardStatus) {
-                CardStatus.NAME -> displayName()
-                CardStatus.TRANSLATION -> Log.i("TEST", "card clicked. Trans")
-                CardStatus.YES -> Log.i("TEST", "Button clicked")
+    private fun observeShowTranslationEvent() {
+        viewModel.showTranslationEvent.observe(this, { showTranslationEvent ->
+
+            if (showTranslationEvent) {
+                binding.learnTranslation.visibility = View.VISIBLE
+                binding.learnWord.visibility = View.INVISIBLE
+            }else{
+                binding.learnTranslation.visibility = View.INVISIBLE
+                binding.learnWord.visibility = View.VISIBLE
             }
         })
     }
 
-    private fun displayName() {
-        viewModel.currentWord.observe(this, { currentWord ->
-            binding.learnWord.text = currentWord.name
-        })
-    }
 
     private fun initOnClick() {
-        binding.learnCard.setOnClickListener { viewModel.onCardClicked() }
 
-        binding.learnYesBtn.setOnClickListener { viewModel.onYesButtonClicked() }
+        binding.learnCard.setOnClickListener {
+            viewModel.onCardClicked()
+        }
+
+        binding.learnYesBtn.setOnClickListener {
+            viewModel.getCurrentWord()
+        }
     }
+
 
     companion object {
         private const val CATEGORY = "category_arg"

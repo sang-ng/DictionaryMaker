@@ -20,6 +20,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/learn_translation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TextView"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <TextView
             android:id="@+id/learn_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,6 +36,7 @@
             android:text="TextView"
             android:textColor="#000000"
             android:textSize="24sp" />
+
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -39,7 +49,7 @@
         app:backgroundTint="#16AF56"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/learn_card"
         app:layout_constraintVertical_bias="0.0" />
