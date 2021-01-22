@@ -14,14 +14,15 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLearnBinding
     private val viewModel by viewModel<LearnViewModel>()
+    private lateinit var binding: ActivityLearnBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLearnBinding.inflate(layoutInflater)
 
 
+        setContentView(binding.root)
     }
 
     private fun getCategoryFromIntent() {
