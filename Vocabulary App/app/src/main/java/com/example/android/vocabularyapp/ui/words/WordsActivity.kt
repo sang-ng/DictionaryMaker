@@ -32,6 +32,7 @@ class WordsActivity : AppCompatActivity() {
         observeSelectedCategory()
         initRecyclerView()
         observeWords()
+        lifecycle.addObserver(viewModel)
 
         setContentView(binding.root)
     }

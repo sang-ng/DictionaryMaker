@@ -1,19 +1,13 @@
 package com.example.android.vocabularyapp.ui.words
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.repository.WordsRepository
-import com.example.android.vocabularyapp.utils.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WordsViewModel(private val repository: WordsRepository) : ViewModel() {
-
-//    val words = repository.words
+class WordsViewModel(private val repository: WordsRepository) : ViewModel(), DefaultLifecycleObserver {
 
     val words: LiveData<List<Word>>
         get() = _words
@@ -25,6 +19,11 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel() {
     private var _words = MutableLiveData<List<Word>>()
 
     init {
+        getWords()
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
         getWords()
     }
 
