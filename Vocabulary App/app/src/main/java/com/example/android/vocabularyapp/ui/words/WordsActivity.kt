@@ -49,7 +49,7 @@ class WordsActivity : AppCompatActivity() {
     private fun initOnClick() {
 
         binding.wordsAddBtn.setOnClickListener {
-            AddWordActivity.startActivity(this)
+            AddWordActivity.startActivity(this, viewModel.category.value!!)
         }
     }
 
@@ -72,7 +72,6 @@ class WordsActivity : AppCompatActivity() {
     private fun observeSelectedCategory() {
         viewModel.category.observe(this, { selectedCategory ->
             Log.i("TEST", selectedCategory.name)
-
         })
     }
 

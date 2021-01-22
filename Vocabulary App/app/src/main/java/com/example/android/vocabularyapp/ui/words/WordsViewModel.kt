@@ -31,18 +31,6 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(), Def
         _category.value = category
     }
 
-    fun addWord(name: String, translation: String) {
-
-        viewModelScope.launch(Dispatchers.IO) {
-
-            if (categoryIsNotNull()) {
-
-                val word = Word(0, name, translation, false, _category.value!!.id)
-                repository.addWord(word)
-            }
-        }
-    }
-
     private fun getWords() {
         viewModelScope.launch(Dispatchers.IO) {
             val words = _category.value?.id?.let { repository.getFilteredWords(it) }
@@ -50,6 +38,7 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(), Def
             _words.postValue(words)
         }
     }
+
 
     private fun categoryIsNotNull(): Boolean = _category.value?.id != null
 }
