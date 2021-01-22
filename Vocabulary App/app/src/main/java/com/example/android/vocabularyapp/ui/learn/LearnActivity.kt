@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
@@ -14,6 +15,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
+    //TODO: on card click -> display translation of word
+    //TODO: on yes clicked -> display new word
+
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
 
@@ -21,6 +25,8 @@ class LearnActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLearnBinding.inflate(layoutInflater)
 
+        getCategoryFromIntent()
+        observeWords()
 
         setContentView(binding.root)
     }
@@ -31,6 +37,12 @@ class LearnActivity : AppCompatActivity() {
         category?.run {
             viewModel.setSelectedCategory(this)
         }
+    }
+
+    private fun observeWords(){
+        viewModel.words.observe(this, {words ->
+            Log.i("TEST", words.first().name)
+        })
     }
 
     companion object {
