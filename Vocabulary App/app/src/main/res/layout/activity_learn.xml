@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.learn.LearnActivity">
 
+    <Button
+        android:id="@+id/learn_no_btn"
+        android:layout_width="102dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="312dp"
+        android:text="NO"
+        app:backgroundTint="#D50000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/learn_card"
+        app:layout_constraintVertical_bias="0.0" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/learn_card"
         android:layout_width="0dp"

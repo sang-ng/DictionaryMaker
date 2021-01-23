@@ -12,7 +12,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
-    //TODO: on yes clicked -> display new word
+    //TODO: make sure that each word is displayed only once
 
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding

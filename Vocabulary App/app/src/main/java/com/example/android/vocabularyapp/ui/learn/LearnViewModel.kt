@@ -14,7 +14,6 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     val currentWord: LiveData<Word>
         get() = _currentWord
 
-
     val showTranslationEvent : LiveData<Boolean>
     get() = _showTranslationEvent
 
