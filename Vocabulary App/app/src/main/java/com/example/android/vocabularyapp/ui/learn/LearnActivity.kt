@@ -12,7 +12,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
-    //TODO: on card click -> display translation of word
     //TODO: on yes clicked -> display new word
 
     private val viewModel by viewModel<LearnViewModel>()

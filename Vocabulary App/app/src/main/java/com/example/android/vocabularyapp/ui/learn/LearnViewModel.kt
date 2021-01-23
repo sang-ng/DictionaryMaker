@@ -14,15 +14,12 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     val currentWord: LiveData<Word>
         get() = _currentWord
 
-    val cardStatus: LiveData<CardStatus>
-        get() = _cardStatus
 
     val showTranslationEvent : LiveData<Boolean>
     get() = _showTranslationEvent
 
     private var _category = MutableLiveData<Category>()
     private var _currentWord = MutableLiveData<Word>()
-    private var _cardStatus = MutableLiveData<CardStatus>()
     private var _showTranslationEvent = MutableLiveData<Boolean>()
 
     init {
