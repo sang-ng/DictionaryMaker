@@ -14,8 +14,11 @@ interface WordDao {
     fun addWord(word: WordDb)
 
     @Query("SELECT * FROM words")
-    fun getWords() : LiveData<List<WordDb>>
+    fun getWords(): LiveData<List<WordDb>>
 
     @Query("SELECT * FROM words WHERE categoryId=:categoryId")
-    fun getFilteredWords(categoryId: Long) : List<WordDb>
+    fun getFilteredWords(categoryId: Long): List<WordDb>
+
+    @Query("SELECT * FROM words WHERE categoryId=:categoryId AND goodWord=0")
+    fun getFilteredBadWords(categoryId: Long) : List<WordDb>
 }

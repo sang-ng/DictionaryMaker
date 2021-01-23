@@ -24,7 +24,7 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
 
             if (categoryIsNotNull()) {
 
-                val word = Word(0, name, translation, false, _category.value!!.id)
+                val word = Word(0, name, translation, 0, _category.value!!.id)
                 repository.addWord(word)
             }
         }
