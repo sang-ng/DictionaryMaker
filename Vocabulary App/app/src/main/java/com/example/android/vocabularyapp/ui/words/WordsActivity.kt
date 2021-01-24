@@ -50,7 +50,7 @@ class WordsActivity : AppCompatActivity() {
         }
 
         binding.wordsStartBtn.setOnClickListener {
-            LearnActivity.startActivity(this, viewModel.category.value!!)
+            startLearnActivity(viewModel.category.value!!)
         }
     }
 
@@ -69,14 +69,20 @@ class WordsActivity : AppCompatActivity() {
             if (words.isNullOrEmpty()) {
                 Toast.makeText(this, "Please add some words to start!", Toast.LENGTH_LONG).show()
             } else {
-               renderUI(listItems = words)
+                renderUI(listItems = words)
             }
         })
     }
 
-    private fun renderUI(listItems : List<Word>){
+    private fun renderUI(listItems: List<Word>) {
         listAdapter.setData(listItems)
         binding.wordsStartBtn.visibility = View.VISIBLE
+    }
+
+    private fun startLearnActivity(category: Category) {
+        startActivity(Intent(this, LearnActivity::class.java).apply {
+            putExtra(CATEGORY, category)
+        })
     }
 
 

@@ -14,6 +14,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
+    private  val CATEGORY = "category_arg"
 
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
@@ -78,17 +79,5 @@ class LearnActivity : AppCompatActivity() {
     private fun renderUI(word: Word) {
         binding.learnWord.text = word.name
         binding.learnTranslation.text = word.translation
-    }
-
-    companion object {
-        private const val CATEGORY = "category_arg"
-
-        fun startActivity(context: Context, category: Category) {
-            val intent = Intent(context, LearnActivity::class.java)
-
-            intent.putExtra(CATEGORY, category)
-
-            context.startActivity(intent)
-        }
     }
 }
