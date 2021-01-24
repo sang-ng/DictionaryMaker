@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -28,6 +29,7 @@ class LearnActivity : AppCompatActivity() {
         observeCurrentWord()
         initOnClick()
         observeShowTranslationEvent()
+        observeSessionsEvent()
 
         setContentView(binding.root)
     }
@@ -55,6 +57,14 @@ class LearnActivity : AppCompatActivity() {
             } else {
                 binding.learnTranslation.visibility = View.INVISIBLE
                 binding.learnWord.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    private fun observeSessionsEvent(){
+        viewModel.showSessionCompleteEvent.observe(this, { sessionCompleted ->
+            if (sessionCompleted) {
+                Toast.makeText(this, "Session completed!", Toast.LENGTH_SHORT).show()
             }
         })
     }
