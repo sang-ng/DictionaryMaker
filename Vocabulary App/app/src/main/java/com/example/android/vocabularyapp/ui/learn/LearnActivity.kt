@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
@@ -19,11 +20,13 @@ class LearnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLearnBinding.inflate(layoutInflater)
+        lifecycle.addObserver(viewModel)
 
         getCategoryFromIntent()
         observeCurrentWord()
         initOnClick()
         observeShowTranslationEvent()
+        observeBadWords()
 
         setContentView(binding.root)
     }
@@ -49,9 +52,19 @@ class LearnActivity : AppCompatActivity() {
             if (showTranslationEvent) {
                 binding.learnTranslation.visibility = View.VISIBLE
                 binding.learnWord.visibility = View.INVISIBLE
-            }else{
+            } else {
                 binding.learnTranslation.visibility = View.INVISIBLE
                 binding.learnWord.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    private fun observeBadWords() {
+        viewModel.badWords.observe(this, { badWords ->
+            if (badWords != null) {
+                for (word in badWords) {
+                    Log.i("TEST", word.name)
+                }
             }
         })
     }
@@ -64,6 +77,12 @@ class LearnActivity : AppCompatActivity() {
         }
 
         binding.learnYesBtn.setOnClickListener {
+            viewModel.onYesClicked()
+            viewModel.getCurrentWord()
+        }
+
+        binding.learnNoBtn.setOnClickListener {
+            viewModel.onNoClicked()
             viewModel.getCurrentWord()
         }
     }

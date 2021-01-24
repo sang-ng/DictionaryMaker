@@ -15,11 +15,18 @@ class WordsRepository(private val dao: WordDao) {
         }
     }
 
-     fun getWordsOfCategory(categoryId: Long): List<Word> {
-         return dao.getWordsOfCategory(categoryId).toDomainModel()
+    suspend fun updateWord(word: Word) {
+        withContext(Dispatchers.IO) {
+            dao.updateWord(word.toDatabaseModel())
+        }
     }
 
-    fun getBadWordsOfCategory(categoryId: Long) : List<Word>{
+
+    fun getWordsOfCategory(categoryId: Long): List<Word> {
+        return dao.getWordsOfCategory(categoryId).toDomainModel()
+    }
+
+    fun getBadWordsOfCategory(categoryId: Long): List<Word> {
         return dao.getBadWordsOfCategory(categoryId).toDomainModel()
     }
 }
