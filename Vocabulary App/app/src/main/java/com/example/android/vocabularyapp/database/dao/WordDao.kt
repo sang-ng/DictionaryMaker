@@ -17,8 +17,8 @@ interface WordDao {
     fun getWords(): LiveData<List<WordDb>>
 
     @Query("SELECT * FROM words WHERE categoryId=:categoryId")
-    fun getFilteredWords(categoryId: Long): List<WordDb>
+    fun getWordsOfCategory(categoryId: Long): List<WordDb>
 
     @Query("SELECT * FROM words WHERE categoryId=:categoryId AND goodWord=0")
-    fun getFilteredBadWords(categoryId: Long) : List<WordDb>
+    fun getBadWordsOfCategory(categoryId: Long) : List<WordDb>
 }

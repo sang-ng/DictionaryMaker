@@ -39,7 +39,7 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
 
     private fun getWords() {
         viewModelScope.launch(Dispatchers.IO) {
-            val words = _category.value?.id?.let { repository.getFilteredWords(it) }
+            val words = _category.value?.id?.let { repository.getWordsOfCategory(it) }
 
             _words.postValue(words)
         }

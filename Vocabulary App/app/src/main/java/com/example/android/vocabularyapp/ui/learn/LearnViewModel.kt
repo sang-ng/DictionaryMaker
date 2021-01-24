@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.repository.WordsRepository
-import com.example.android.vocabularyapp.utils.CardStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -12,16 +11,18 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
     //TODO: make sure that each word is displayed only once
+    //TODO: decide if word was known and append to appropriate list (good/bad)
 
 
-    //TODO: bad list: every item with goodWord = false
-    //TODO: get random item of badlist
-    //TODO: When correct answer set goodWord = true of current word
-    //TODO: display next word of bad list
-
-    //TODO: start displaying word from good list only when bad list is empty
-    //TODO: when word of good list was not correct set goodWord to false
-    //TODO: when bad list has item start displaying item from there again
+// get list from
+//     bad list: every item with goodWord = false
+//    get random item of badlist
+//   When correct answer set goodWord = true of current word
+//     display next word of bad list
+//
+//     start displaying word from good list only when bad list is empty
+//    when word of good list was not correct set goodWord to false
+//     when bad list has item start displaying item from there again
 
     val currentWord: LiveData<Word>
         get() = _currentWord
@@ -50,7 +51,7 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
      fun getCurrentWord() {
         viewModelScope.launch(Dispatchers.IO) {
-            val words = _category.value?.id?.let { repository.getFilteredWords(it) }
+            val words = _category.value?.id?.let { repository.getWordsOfCategory(it) }
 
             _currentWord.postValue(words?.random())
         }

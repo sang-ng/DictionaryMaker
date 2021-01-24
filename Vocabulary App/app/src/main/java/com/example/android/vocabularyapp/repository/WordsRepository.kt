@@ -15,11 +15,11 @@ class WordsRepository(private val dao: WordDao) {
         }
     }
 
-     fun getFilteredWords(categoryId: Long): List<Word> {
-         return dao.getFilteredWords(categoryId).toDomainModel()
+     fun getWordsOfCategory(categoryId: Long): List<Word> {
+         return dao.getWordsOfCategory(categoryId).toDomainModel()
     }
 
-    fun getFilteredBadWords(categoryId: Long) : List<Word>{
-        return dao.getFilteredBadWords(categoryId).toDomainModel()
+    fun getBadWordsOfCategory(categoryId: Long) : List<Word>{
+        return dao.getBadWordsOfCategory(categoryId).toDomainModel()
     }
 }
