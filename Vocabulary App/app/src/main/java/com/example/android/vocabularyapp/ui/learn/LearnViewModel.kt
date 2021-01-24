@@ -11,33 +11,15 @@ import kotlinx.coroutines.launch
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
-    //TODO: make sure that each word is displayed only once
-    //TODO: decide if word was known and append to appropriate list (good/bad)
-
-
-// get list from
-//     bad list: every item with goodWord = false
-//    get random item of badlist
-//   When correct answer set goodWord = true of current word
-//     display next word of bad list
-//
-//     start displaying word from good list only when bad list is empty
-//    when word of good list was not correct set goodWord to false
-//     when bad list has item start displaying item from there again
-
     val currentWord: LiveData<Word>
         get() = _currentWord
 
     val showTranslationEvent: LiveData<Boolean>
         get() = _showTranslationEvent
 
-    val badWords: LiveData<List<Word>>
-        get() = _badWords
-
     private var _category = MutableLiveData<Category>()
     private var _currentWord = MutableLiveData<Word>()
     private var _showTranslationEvent = MutableLiveData<Boolean>()
-    private var _badWords = MutableLiveData<List<Word>>()
 
     private var itemPosCounter = 0
 
@@ -62,20 +44,21 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
             val allWords = getAllWords()
             val badWords = getBadWords()
 
+            //make sure that bad words are asked more often than well known ones
             if (!badWords.isNullOrEmpty() && badWords.size > 1) {
 
-                if(itemPosCounter < badWords.size){
+                if (itemPosCounter < badWords.size) {
                     _currentWord.postValue(badWords[getBadItemPosition()])
-                }else{
+                } else {
                     itemPosCounter = 0
                     _currentWord.postValue(badWords[getBadItemPosition()])
                 }
 
             } else {
 
-                if(itemPosCounter < allWords!!.size){
+                if (itemPosCounter < allWords!!.size) {
                     _currentWord.postValue(allWords[getBadItemPosition()])
-                }else{
+                } else {
                     itemPosCounter = 0
                     _currentWord.postValue(allWords[getBadItemPosition()])
                 }
@@ -83,15 +66,9 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         }
     }
 
-    private fun getAllWords(): List<Word>? {
+    private fun getAllWords() = _category.value?.id?.let { repository.getWordsOfCategory(it) }
 
-        return _category.value?.id?.let { repository.getWordsOfCategory(it) }
-    }
-
-    private fun getBadWords(): List<Word>? {
-        return _category.value?.id?.let { repository.getBadWordsOfCategory(it) }
-    }
-
+    private fun getBadWords() = _category.value?.id?.let { repository.getBadWordsOfCategory(it) }
 
     fun onCardClicked() {
         _showTranslationEvent.value = _showTranslationEvent.value == false
@@ -113,7 +90,6 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         }
     }
 
-    private fun getBadItemPosition(): Int {
-        return itemPosCounter++
-    }
+    private fun getBadItemPosition() = itemPosCounter++
+
 }

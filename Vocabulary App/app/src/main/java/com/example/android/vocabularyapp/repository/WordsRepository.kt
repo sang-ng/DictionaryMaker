@@ -21,7 +21,6 @@ class WordsRepository(private val dao: WordDao) {
         }
     }
 
-
     fun getWordsOfCategory(categoryId: Long): List<Word> {
         return dao.getWordsOfCategory(categoryId).toDomainModel()
     }

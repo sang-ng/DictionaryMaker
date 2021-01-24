@@ -1,6 +1,7 @@
 package com.example.android.vocabularyapp.ui.category
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -62,8 +63,16 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
 
     private fun observeCategories() {
         viewModel.categories.observe(this, { categories ->
-            listAdapter.setData(categories)
+            if (categories.isNullOrEmpty()) {
+                displayNoDataMessage()
+            } else {
+                listAdapter.setData(categories)
+            }
         })
+    }
+
+    private fun displayNoDataMessage(){
+        Toast.makeText(this, "Please add a category", Toast.LENGTH_LONG).show()
     }
 
     override fun onDialogPositiveClick(name: String) {

@@ -17,8 +17,6 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
     val category: LiveData<Category>
         get() = _category
 
-
-
     private var _category = MutableLiveData<Category>()
     private var _words = MutableLiveData<List<Word>>()
 
@@ -44,10 +42,6 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
             _words.postValue(words)
         }
     }
-
-
-
-
 }
 
 

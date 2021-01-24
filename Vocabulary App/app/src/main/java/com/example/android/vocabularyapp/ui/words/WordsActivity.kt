@@ -4,17 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android.vocabularyapp.R
-import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
-import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
-import com.example.android.vocabularyapp.ui.category.CategoryViewModel
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -28,13 +25,12 @@ class WordsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWordsBinding.inflate(layoutInflater)
+        lifecycle.addObserver(viewModel)
 
         getCategoryFromIntent()
         initOnClick()
-        observeSelectedCategory()
         initRecyclerView()
         observeWords()
-        lifecycle.addObserver(viewModel)
 
         setContentView(binding.root)
     }
@@ -70,15 +66,19 @@ class WordsActivity : AppCompatActivity() {
 
     private fun observeWords() {
         viewModel.words.observe(this, { words ->
-            listAdapter.setData(words)
+            if (words.isNullOrEmpty()) {
+                Toast.makeText(this, "Please add some words to start!", Toast.LENGTH_LONG).show()
+            } else {
+               renderUI(listItems = words)
+            }
         })
     }
 
-    private fun observeSelectedCategory() {
-        viewModel.category.observe(this, { selectedCategory ->
-            Log.i("TEST", selectedCategory.name)
-        })
+    private fun renderUI(listItems : List<Word>){
+        listAdapter.setData(listItems)
+        binding.wordsStartBtn.visibility = View.VISIBLE
     }
+
 
     companion object {
         private const val CATEGORY = "category_arg"

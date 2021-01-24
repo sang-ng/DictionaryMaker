@@ -1,6 +1,5 @@
 package com.example.android.vocabularyapp.ui.addWord
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,8 +11,6 @@ import kotlinx.coroutines.launch
 
 class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
 
-    val category: LiveData<Category>
-        get() = _category
 
     private var _category = MutableLiveData<Category>()
 

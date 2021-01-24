@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.model.Word
 import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -26,7 +27,6 @@ class LearnActivity : AppCompatActivity() {
         observeCurrentWord()
         initOnClick()
         observeShowTranslationEvent()
-        observeBadWords()
 
         setContentView(binding.root)
     }
@@ -41,8 +41,7 @@ class LearnActivity : AppCompatActivity() {
 
     private fun observeCurrentWord() {
         viewModel.currentWord.observe(this, { word ->
-            binding.learnWord.text = word.name
-            binding.learnTranslation.text = word.translation
+            renderUI(word)
         })
     }
 
@@ -58,17 +57,6 @@ class LearnActivity : AppCompatActivity() {
             }
         })
     }
-
-    private fun observeBadWords() {
-        viewModel.badWords.observe(this, { badWords ->
-            if (badWords != null) {
-                for (word in badWords) {
-                    Log.i("TEST", word.name)
-                }
-            }
-        })
-    }
-
 
     private fun initOnClick() {
 
@@ -87,6 +75,10 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
+    private fun renderUI(word: Word) {
+        binding.learnWord.text = word.name
+        binding.learnTranslation.text = word.translation
+    }
 
     companion object {
         private const val CATEGORY = "category_arg"
