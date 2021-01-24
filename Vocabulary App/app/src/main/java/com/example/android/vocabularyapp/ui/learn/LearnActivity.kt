@@ -15,6 +15,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
+    //TODO: add text to speech listener
+
     private  val CATEGORY = "category_arg"
 
     private val viewModel by viewModel<LearnViewModel>()
