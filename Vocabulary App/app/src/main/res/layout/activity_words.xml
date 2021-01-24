@@ -31,5 +31,6 @@
         android:layout_gravity="center|top"
         android:layout_marginTop="80dp"
         android:text="Start learning"
+        android:visibility="invisible"
         app:backgroundTint="#FF6D00" />
 </FrameLayout>

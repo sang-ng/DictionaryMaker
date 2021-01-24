@@ -4,15 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.model.Word
 import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
-    //TODO: make sure that each word is displayed only once
 
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
@@ -20,6 +21,7 @@ class LearnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLearnBinding.inflate(layoutInflater)
+        lifecycle.addObserver(viewModel)
 
         getCategoryFromIntent()
         observeCurrentWord()
@@ -39,8 +41,7 @@ class LearnActivity : AppCompatActivity() {
 
     private fun observeCurrentWord() {
         viewModel.currentWord.observe(this, { word ->
-            binding.learnWord.text = word.name
-            binding.learnTranslation.text = word.translation
+            renderUI(word)
         })
     }
 
@@ -50,13 +51,12 @@ class LearnActivity : AppCompatActivity() {
             if (showTranslationEvent) {
                 binding.learnTranslation.visibility = View.VISIBLE
                 binding.learnWord.visibility = View.INVISIBLE
-            }else{
+            } else {
                 binding.learnTranslation.visibility = View.INVISIBLE
                 binding.learnWord.visibility = View.VISIBLE
             }
         })
     }
-
 
     private fun initOnClick() {
 
@@ -65,10 +65,20 @@ class LearnActivity : AppCompatActivity() {
         }
 
         binding.learnYesBtn.setOnClickListener {
+            viewModel.onYesClicked()
+            viewModel.getCurrentWord()
+        }
+
+        binding.learnNoBtn.setOnClickListener {
+            viewModel.onNoClicked()
             viewModel.getCurrentWord()
         }
     }
 
+    private fun renderUI(word: Word) {
+        binding.learnWord.text = word.name
+        binding.learnTranslation.text = word.translation
+    }
 
     companion object {
         private const val CATEGORY = "category_arg"
