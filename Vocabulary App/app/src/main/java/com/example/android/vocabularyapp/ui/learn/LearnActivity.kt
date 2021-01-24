@@ -75,6 +75,12 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
+    fun startActivity() {
+        startActivity(Intent(this, LearnActivity::class.java).apply {
+            putExtra(CATEGORY, category)
+        })
+    }
+
     private fun renderUI(word: Word) {
         binding.learnWord.text = word.name
         binding.learnTranslation.text = word.translation
@@ -83,12 +89,6 @@ class LearnActivity : AppCompatActivity() {
     companion object {
         private const val CATEGORY = "category_arg"
 
-        fun startActivity(context: Context, category: Category) {
-            val intent = Intent(context, LearnActivity::class.java)
 
-            intent.putExtra(CATEGORY, category)
-
-            context.startActivity(intent)
-        }
     }
 }
