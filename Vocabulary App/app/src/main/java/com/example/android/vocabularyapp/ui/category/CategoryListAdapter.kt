@@ -13,7 +13,7 @@ import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 
-class CategoryListAdapter(context: Context, private val categoryList: ArrayList<Category> = ArrayList()) :
+class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayList()) :
     RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
