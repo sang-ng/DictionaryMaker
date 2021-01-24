@@ -11,6 +11,18 @@ import kotlinx.coroutines.launch
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
+    //TODO: make sure that each word is displayed only once
+
+
+    //TODO: bad list: every item with goodWord = false
+    //TODO: get random item of badlist
+    //TODO: When correct answer set goodWord = true of current word
+    //TODO: display next word of bad list
+
+    //TODO: start displaying word from good list only when bad list is empty
+    //TODO: when word of good list was not correct set goodWord to false
+    //TODO: when bad list has item start displaying item from there again
+
     val currentWord: LiveData<Word>
         get() = _currentWord
 
