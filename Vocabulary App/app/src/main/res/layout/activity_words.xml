@@ -6,13 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".ui.words.WordsActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/words_recyclerview"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="160dp"
+        android:layout_gravity="top"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp">
+
+        <Button
+            android:id="@+id/words_start_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Start learning"
+            android:visibility="invisible"
+            app:backgroundTint="#FF6D00" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_settings_24" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/words_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="401dp"
+            android:layout_gravity="bottom" />
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/words_add_btn"
@@ -24,13 +57,4 @@
         app:backgroundTint="#FF6D00"
         app:srcCompat="@drawable/ic_baseline_add_24" />
 
-    <Button
-        android:id="@+id/words_start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="80dp"
-        android:text="Start learning"
-        android:visibility="invisible"
-        app:backgroundTint="#FF6D00" />
 </FrameLayout>
