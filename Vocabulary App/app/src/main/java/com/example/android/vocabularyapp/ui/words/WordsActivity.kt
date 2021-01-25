@@ -4,10 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -52,7 +56,27 @@ class WordsActivity : AppCompatActivity() {
         binding.wordsStartBtn.setOnClickListener {
             LearnActivity.startActivity(this, viewModel.category.value!!)
         }
+
+        binding.wordsSetting.setOnClickListener {
+            showPopUp(binding.wordsSetting)
+        }
     }
+
+    private fun showPopUp(view: View) {
+        val popUp = PopupMenu(this, view)
+        popUp.inflate(R.menu.menu_category)
+        popUp.show()
+
+        popUp.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_cat_delete -> Log.i("TEST", "delete")
+                R.id.menu_cat_rename -> Log.i("TEST", "rename")
+                else -> TODO()
+            }
+            true
+        }
+    }
+
 
     private fun initRecyclerView() {
         listAdapter = WordListAdapter()
@@ -69,12 +93,12 @@ class WordsActivity : AppCompatActivity() {
             if (words.isNullOrEmpty()) {
                 Toast.makeText(this, "Please add some words to start!", Toast.LENGTH_LONG).show()
             } else {
-               renderUI(listItems = words)
+                renderUI(listItems = words)
             }
         })
     }
 
-    private fun renderUI(listItems : List<Word>){
+    private fun renderUI(listItems: List<Word>) {
         listAdapter.setData(listItems)
         binding.wordsStartBtn.visibility = View.VISIBLE
     }
