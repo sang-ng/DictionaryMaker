@@ -27,4 +27,10 @@ class CategoryRepository(private val dao: CategoryDao) {
             dao.updateCategory(category.toDatabaseModel())
         }
     }
+
+    suspend fun deleteCategory(category: Category) {
+        withContext(Dispatchers.IO) {
+            dao.deleteCategory(category.toDatabaseModel())
+        }
+    }
 }

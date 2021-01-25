@@ -69,7 +69,7 @@ class WordsActivity : AppCompatActivity() {
 
         popUp.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.menu_cat_delete -> Log.i("TEST", "delete")
+                R.id.menu_cat_delete -> viewModel.deleteCategory()
                 R.id.menu_cat_rename -> Log.i("TEST", "rename")
                 else -> TODO()
             }
