@@ -16,6 +16,10 @@ class CategoryRepository(private val dao: CategoryDao) {
         it.toDomainModel()
     }
 
+    suspend fun getCategories(): LiveData<List<CategoryDb>> {
+        return dao.getAllCategories()
+    }
+
     suspend fun addCategory(category: CategoryDb) {
         withContext(Dispatchers.IO) {
             dao.addCategory(category)

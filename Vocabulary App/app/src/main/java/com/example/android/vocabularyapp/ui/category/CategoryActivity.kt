@@ -26,6 +26,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
+        lifecycle.addObserver(viewModel)
 
         initOnClick()
         initRecyclerView()
