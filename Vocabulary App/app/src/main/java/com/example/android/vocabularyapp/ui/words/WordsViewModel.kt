@@ -50,6 +50,11 @@ class WordsViewModel(private val repoWord: WordsRepository, private val repoCate
     }
 
     //TODO: check if list has one value left, if so delete it manually
+    fun getAllCategoris(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repoCategory.getCategories()
+        }
+    }
 }
 
 
