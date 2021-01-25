@@ -36,7 +36,6 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
         setContentView(binding.root)
     }
 
-
     private fun initOnClick() {
         binding.categoryAddButton.setOnClickListener {
             showAddDialog()
@@ -72,7 +71,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
         })
     }
 
-    private fun displayNoDataMessage(){
+    private fun displayNoDataMessage() {
         Toast.makeText(this, "Please add a category", Toast.LENGTH_LONG).show()
     }
 

@@ -48,6 +48,8 @@ class WordsViewModel(private val repoWord: WordsRepository, private val repoCate
             _category.value?.let { repoCategory.deleteCategory(it) }
         }
     }
+
+    //TODO: check if list has one value left, if so delete it manually
 }
 
 
