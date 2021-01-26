@@ -15,13 +15,13 @@ import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
-import com.example.android.vocabularyapp.ui.addCategory.CategoryDialogFragment
+import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
-    CategoryDialogFragment.CategoryDialogListener {
+    AddCatDialog.CategoryDialogListener {
 
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
@@ -111,7 +111,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
     private fun initDialogFragment() {
         fragmentManager = supportFragmentManager
-        catDialogFragment = CategoryDialogFragment()
+        catDialogFragment = AddCatDialog()
     }
 
     private fun observeWords() {

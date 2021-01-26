@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
-import com.example.android.vocabularyapp.ui.addCategory.CategoryDialogFragment
+import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.collections.ArrayList
 
-class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDialogListener,
+class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListener,
     CategoryListAdapter.ItemClickListener {
 
     private val viewModel by viewModel<CategoryViewModel>()
@@ -62,7 +62,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
 
     private fun initDialogFragment() {
         fragmentManager = supportFragmentManager
-        catDialogFragment = CategoryDialogFragment()
+        catDialogFragment = AddCatDialog()
     }
 
     private fun observeCategories() {
