@@ -7,8 +7,15 @@ import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.databinding.WordListItemBinding
 import com.example.android.vocabularyapp.model.Word
 
-class WordListAdapter(private val wordList: ArrayList<Word> = ArrayList()) :
-    RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
+class WordListAdapter(
+    private val wordList: ArrayList<Word> = ArrayList(),
+    val clickListener: ItemClickListener
+) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
+
+    interface ItemClickListener {
+        fun onItemClick(position: Int)
+        fun onItemLongClick(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
         val itemBinding =
@@ -24,11 +31,14 @@ class WordListAdapter(private val wordList: ArrayList<Word> = ArrayList()) :
         holder.bind(wordList[position])
     }
 
-    class WordViewHolder(private val itemBinding: WordListItemBinding) :
+    inner class WordViewHolder(private val itemBinding: WordListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bind(word: Word) = with(itemView) {
+        init {
+            itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
+        }
 
+        fun bind(word: Word) {
             itemBinding.wordListName.text = word.name
             itemBinding.wordListTrans.text = word.translation
         }

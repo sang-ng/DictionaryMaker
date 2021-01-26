@@ -5,7 +5,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
 import android.view.MenuItem
+=======
+>>>>>>> 8f6f6ec158046e5b269395beb7c0d27954fbd180
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -16,14 +19,17 @@ import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
+import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WordsActivity : AppCompatActivity() {
+class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
     private lateinit var listAdapter: WordListAdapter
+    private val CATEGORY = "category_arg"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,11 +56,15 @@ class WordsActivity : AppCompatActivity() {
     private fun initOnClick() {
 
         binding.wordsAddBtn.setOnClickListener {
-            AddWordActivity.startActivity(this, viewModel.category.value!!)
+            viewModel.category.value?.let {
+                startAddWordActivity(category = it)
+            }
         }
 
         binding.wordsStartBtn.setOnClickListener {
-            LearnActivity.startActivity(this, viewModel.category.value!!)
+            viewModel.category.value?.let {
+                startLearnActivity(category = it)
+            }
         }
 
         binding.wordsSetting.setOnClickListener {
@@ -82,7 +92,7 @@ class WordsActivity : AppCompatActivity() {
 
 
     private fun initRecyclerView() {
-        listAdapter = WordListAdapter()
+        listAdapter = WordListAdapter(ArrayList(), this)
 
         binding.wordsRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context)
@@ -106,16 +116,25 @@ class WordsActivity : AppCompatActivity() {
         binding.wordsStartBtn.visibility = View.VISIBLE
     }
 
+    private fun startLearnActivity(category: Category) {
+        startActivity(Intent(this, LearnActivity::class.java).apply {
+            
+            putExtra(CATEGORY, category)
 
-    companion object {
-        private const val CATEGORY = "category_arg"
+        })
+    }
 
-        fun startActivity(context: Context, category: Category) {
-            val intent = Intent(context, WordsActivity::class.java)
+    private fun startAddWordActivity(category: Category) {
+        startActivity(Intent(this, AddWordActivity::class.java).apply {
+            putExtra(CATEGORY, category)
+        })
+    }
 
-            intent.putExtra(CATEGORY, category)
+    override fun onItemClick(position: Int) {
+        Log.i("TEST", "clicked")
+    }
 
-            context.startActivity(intent)
-        }
+    override fun onItemLongClick(position: Int) {
+        Log.i("TEST", "Clicked")
     }
 }

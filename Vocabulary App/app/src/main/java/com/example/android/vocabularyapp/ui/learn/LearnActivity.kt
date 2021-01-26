@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -14,6 +15,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LearnActivity : AppCompatActivity() {
 
+    //TODO: add text to speech listener
+
+    private  val CATEGORY = "category_arg"
 
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
@@ -27,6 +31,7 @@ class LearnActivity : AppCompatActivity() {
         observeCurrentWord()
         initOnClick()
         observeShowTranslationEvent()
+        observeSessionsEvent()
 
         setContentView(binding.root)
     }
@@ -58,6 +63,14 @@ class LearnActivity : AppCompatActivity() {
         })
     }
 
+    private fun observeSessionsEvent(){
+        viewModel.showSessionCompleteEvent.observe(this, { sessionCompleted ->
+            if (sessionCompleted) {
+                Toast.makeText(this, "Session completed!", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     private fun initOnClick() {
 
         binding.learnCard.setOnClickListener {
@@ -78,17 +91,5 @@ class LearnActivity : AppCompatActivity() {
     private fun renderUI(word: Word) {
         binding.learnWord.text = word.name
         binding.learnTranslation.text = word.translation
-    }
-
-    companion object {
-        private const val CATEGORY = "category_arg"
-
-        fun startActivity(context: Context, category: Category) {
-            val intent = Intent(context, LearnActivity::class.java)
-
-            intent.putExtra(CATEGORY, category)
-
-            context.startActivity(intent)
-        }
     }
 }

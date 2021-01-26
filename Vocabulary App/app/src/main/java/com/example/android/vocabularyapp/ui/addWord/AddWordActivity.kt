@@ -17,6 +17,8 @@ class AddWordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddWordBinding
     private val viewModel by viewModel<AddWordViewModel>()
+    private  val CATEGORY = "category_arg"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,18 +46,6 @@ class AddWordActivity : AppCompatActivity() {
 
             viewModel.addWord(name, translation)
             finish()
-        }
-    }
-
-    companion object {
-        private const val CATEGORY = "category_arg"
-
-        fun startActivity(context: Context, category: Category) {
-            val intent = Intent(context, AddWordActivity::class.java)
-
-            intent.putExtra(CATEGORY, category)
-
-            context.startActivity(intent)
         }
     }
 }

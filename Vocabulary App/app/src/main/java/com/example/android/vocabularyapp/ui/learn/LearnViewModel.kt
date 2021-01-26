@@ -11,17 +11,24 @@ import kotlinx.coroutines.launch
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
+    //TODO: feat: learn session consists of 10 words, if less words available session = list.size
+
     val currentWord: LiveData<Word>
         get() = _currentWord
 
     val showTranslationEvent: LiveData<Boolean>
         get() = _showTranslationEvent
 
+    val showSessionCompleteEvent: LiveData<Boolean>
+        get() = _showSessionCompleteEvent
+
     private var _category = MutableLiveData<Category>()
     private var _currentWord = MutableLiveData<Word>()
     private var _showTranslationEvent = MutableLiveData<Boolean>()
+    private var _showSessionCompleteEvent = MutableLiveData<Boolean>()
 
     private var itemPosCounter = 0
+    private var sessionCounter = 0
 
     init {
         getCurrentWord()
@@ -80,6 +87,9 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
             repository.updateWord(_currentWord.value!!)
         }
+
+        checkIfSessionCompleted()
+        sessionCounter++
     }
 
     fun onNoClicked() {
@@ -88,6 +98,13 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
             repository.updateWord(_currentWord.value!!)
         }
+
+        checkIfSessionCompleted()
+        sessionCounter++
+    }
+
+    private fun checkIfSessionCompleted() {
+        _showSessionCompleteEvent.value = sessionCounter == 2
     }
 
     private fun getBadItemPosition() = itemPosCounter++
