@@ -13,8 +13,15 @@ import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 
-class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayList()) :
-    RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
+class CategoryListAdapter(
+    private val categoryList: ArrayList<Category> = ArrayList(),
+    val clickListener: ItemClickListener
+) : RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
+
+    interface ItemClickListener {
+        fun onItemClick(position: Int)
+        fun onItemLongClick(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val itemBinding =
@@ -28,18 +35,23 @@ class CategoryListAdapter(private val categoryList: ArrayList<Category> = ArrayL
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(categoryList[position])
+
     }
 
-    class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
+    inner class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
+
+        init {
+            itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
+        }
 
         fun bind(category: Category) = with(itemView) {
 
             itemBinding.categoryListName.text = category.name
 
-            itemBinding.categoryListLayout.setOnClickListener {
-                WordsActivity.startActivity(itemView.context, category)
-            }
+//            itemBinding.categoryListLayout.setOnClickListener {
+//                WordsActivity.startActivity(itemView.context, category)
+//            }
         }
     }
 

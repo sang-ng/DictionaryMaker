@@ -12,10 +12,11 @@ import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
+import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WordsActivity : AppCompatActivity() {
+class WordsActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
@@ -107,4 +108,5 @@ class WordsActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
     }
+
 }

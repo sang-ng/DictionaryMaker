@@ -1,5 +1,6 @@
 package com.example.android.vocabularyapp.ui.category
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,16 +12,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
+import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.addCategory.CategoryDialogFragment
+import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
+import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
-class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDialogListener {
+class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDialogListener,
+    CategoryListAdapter.ItemClickListener {
 
     private val viewModel by viewModel<CategoryViewModel>()
     private lateinit var binding: ActivityCategoryBinding
     private lateinit var listAdapter: CategoryListAdapter
     private lateinit var fragmentManager: FragmentManager
     private lateinit var addDialogFragment: DialogFragment
+    private val CATEGORY = "category_arg"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +55,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
     }
 
     private fun initRecyclerView() {
-        listAdapter = CategoryListAdapter()
+        listAdapter = CategoryListAdapter(ArrayList(), this)
 
         binding.categoryRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context)
@@ -71,7 +79,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
         })
     }
 
-    private fun displayNoDataMessage(){
+    private fun displayNoDataMessage() {
         Toast.makeText(this, "Please add a category", Toast.LENGTH_LONG).show()
     }
 
@@ -79,5 +87,21 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
         val newCat = CategoryDb(0, name)
         viewModel.addCategory(newCat)
         addDialogFragment.dismiss()
+    }
+
+    override fun onItemClick(position: Int) {
+        viewModel.categories.value?.get(position)?.let {
+            startWordsActivity(it)
+        }
+    }
+
+    override fun onItemLongClick(position: Int) {
+        TODO("Not yet implemented")
+    }
+
+    private fun startWordsActivity(category: Category) {
+        startActivity(Intent(this, WordsActivity::class.java).apply {
+            putExtra(CATEGORY, category)
+        })
     }
 }
