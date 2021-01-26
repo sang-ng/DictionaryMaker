@@ -53,8 +53,14 @@ class WordsViewModel(
         }
     }
 
+    fun deleteWord(position: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _words.value?.get(position)?.let { repoWord.deleteWord(it) }
+        }
+    }
+
     //TODO: after updating category, name won't get updated automatically
-    fun updateCategory(newName : String) {
+    fun updateCategory(newName: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
             _category.value?.name = newName

@@ -21,6 +21,12 @@ class WordsRepository(private val dao: WordDao) {
         }
     }
 
+    suspend fun deleteWord(word: Word) {
+        withContext(Dispatchers.IO) {
+            dao.deleteWord(word.toDatabaseModel())
+        }
+    }
+
     fun getWordsOfCategory(categoryId: Long): List<Word> {
         return dao.getWordsOfCategory(categoryId).toDomainModel()
     }
