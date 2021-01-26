@@ -1,6 +1,5 @@
 package com.example.android.vocabularyapp.ui.words
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,22 +7,27 @@ import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import com.example.android.vocabularyapp.ui.addCategory.CategoryDialogFragment
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
-import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
+class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
+    CategoryDialogFragment.CategoryDialogListener {
 
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
     private lateinit var listAdapter: WordListAdapter
+    private lateinit var fragmentManager: FragmentManager
+    private lateinit var catDialogFragment: DialogFragment
     private val CATEGORY = "category_arg"
 
 
@@ -35,9 +39,17 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         getCategoryFromIntent()
         initOnClick()
         initRecyclerView()
+        initDialogFragment()
         observeWords()
+        observeCategory()
 
         setContentView(binding.root)
+    }
+
+    private fun observeCategory() {
+        viewModel.category.observe(this, { category ->
+            binding.wordsCategory.text = category.name
+        })
     }
 
     private fun getCategoryFromIntent() {
@@ -45,6 +57,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         category?.run {
             viewModel.setSelectedCategory(this)
+            binding.wordsCategory.text = category.name
         }
     }
 
@@ -78,7 +91,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
                     viewModel.deleteCategory()
                     finish()
                 }
-                R.id.menu_cat_rename -> Log.i("TEST", "rename")
+                R.id.menu_cat_rename -> showDialog()
                 else -> TODO()
             }
             true
@@ -94,6 +107,11 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
             itemAnimator = DefaultItemAnimator()
             adapter = listAdapter
         }
+    }
+
+    private fun initDialogFragment() {
+        fragmentManager = supportFragmentManager
+        catDialogFragment = CategoryDialogFragment()
     }
 
     private fun observeWords() {
@@ -113,9 +131,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
     private fun startLearnActivity(category: Category) {
         startActivity(Intent(this, LearnActivity::class.java).apply {
-            
             putExtra(CATEGORY, category)
-
         })
     }
 
@@ -131,5 +147,15 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
     override fun onItemLongClick(position: Int) {
         Log.i("TEST", "Clicked")
+    }
+
+    override fun onDialogPositiveClick(newName: String) {
+
+        viewModel.updateCategory(newName)
+        catDialogFragment.dismiss()
+    }
+
+    private fun showDialog() {
+        catDialogFragment.show(fragmentManager, "CatDialog")
     }
 }
