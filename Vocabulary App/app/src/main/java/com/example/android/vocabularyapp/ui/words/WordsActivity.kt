@@ -46,11 +46,15 @@ class WordsActivity : AppCompatActivity() {
     private fun initOnClick() {
 
         binding.wordsAddBtn.setOnClickListener {
-            AddWordActivity.startActivity(this, viewModel.category.value!!)
+            viewModel.category.value?.let {
+                startAddWordActivity(category = it)
+            }
         }
 
         binding.wordsStartBtn.setOnClickListener {
-            startLearnActivity(viewModel.category.value!!)
+            viewModel.category.value?.let {
+                startLearnActivity(category = it)
+            }
         }
     }
 
@@ -81,6 +85,12 @@ class WordsActivity : AppCompatActivity() {
 
     private fun startLearnActivity(category: Category) {
         startActivity(Intent(this, LearnActivity::class.java).apply {
+            putExtra(CATEGORY, category)
+        })
+    }
+
+    private fun startAddWordActivity(category: Category) {
+        startActivity(Intent(this, AddWordActivity::class.java).apply {
             putExtra(CATEGORY, category)
         })
     }
