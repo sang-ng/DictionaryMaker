@@ -1,5 +1,6 @@
 package com.example.android.vocabularyapp.ui.addWord
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,23 +13,49 @@ import kotlinx.coroutines.launch
 class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
 
 
+    val word: LiveData<Word>
+        get() = _word
+
     private var _category = MutableLiveData<Category>()
+    private var _word = MutableLiveData<Word>()
 
 
-    fun addWord(name: String, translation: String) {
+    fun addOrUpdate(name: String, translation: String) {
 
+        if (categoryIsNotNull() && _word.value == null) {
+
+            addWord(name, translation)
+        } else if (categoryIsNotNull() && _word.value != null) {
+
+            updateWord(name, translation)
+        }
+    }
+
+    private fun updateWord(newName: String, newTranslation: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            if (categoryIsNotNull()) {
+            _word.value?.name = newName
+            _word.value?.translation = newTranslation
 
-                val word = Word(0, name, translation, 0, _category.value!!.id)
-                repository.addWord(word)
-            }
+            _word.value?.let { repository.updateWord(it) }
         }
+    }
+
+    private fun addWord(name: String, translation: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val word = Word(0, name, translation, 0, _category.value!!.id)
+            repository.addWord(word)
+        }
+
     }
 
     fun setSelectedCategory(category: Category) {
         _category.value = category
+    }
+
+    fun setSelectedWord(word: Word) {
+        _word.value = word
     }
 
     private fun categoryIsNotNull(): Boolean = _category.value?.id != null

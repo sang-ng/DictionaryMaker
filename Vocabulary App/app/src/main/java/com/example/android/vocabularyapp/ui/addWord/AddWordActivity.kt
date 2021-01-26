@@ -1,41 +1,38 @@
 package com.example.android.vocabularyapp.ui.addWord
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityAddWordBinding
-import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
-import com.example.android.vocabularyapp.ui.category.CategoryViewModel
-import com.example.android.vocabularyapp.ui.words.WordsActivity
+import com.example.android.vocabularyapp.model.Word
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddWordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddWordBinding
     private val viewModel by viewModel<AddWordViewModel>()
-    private  val CATEGORY = "category_arg"
+    private val CATEGORY = "category_arg"
+    private val WORD = "word_arg"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddWordBinding.inflate(layoutInflater)
 
-        getCategoryFromIntent()
+        getDataFromIntent()
         initOnClick()
+        observeSelectedWord()
 
         setContentView(binding.root)
     }
 
-    private fun getCategoryFromIntent() {
+    private fun getDataFromIntent() {
         val category: Category? = intent.getParcelableExtra(CATEGORY)
+        val word: Word? = intent.getParcelableExtra(WORD)
 
-        category?.run {
-            viewModel.setSelectedCategory(this)
-        }
+        category?.run { viewModel.setSelectedCategory(this) }
+
+        word?.run { viewModel.setSelectedWord(this) }
     }
 
     private fun initOnClick() {
@@ -44,8 +41,17 @@ class AddWordActivity : AppCompatActivity() {
             val name = binding.addWordName.text.toString()
             val translation = binding.addWordTrans.text.toString()
 
-            viewModel.addWord(name, translation)
+            viewModel.addOrUpdate(name, translation)
             finish()
         }
+    }
+
+    private fun observeSelectedWord() {
+        viewModel.word.observe(this, { word ->
+            if (word != null) {
+                binding.addWordName.setText(word.name)
+                binding.addWordTrans.setText(word.translation)
+            }
+        })
     }
 }

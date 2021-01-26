@@ -3,12 +3,10 @@ package com.example.android.vocabularyapp.ui.words
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -33,6 +31,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private lateinit var catDialogFragment: DialogFragment
     private lateinit var recyclerView: RecyclerView
     private val CATEGORY = "category_arg"
+    private val WORD = "word_arg"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +69,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
         binding.wordsAddBtn.setOnClickListener {
             viewModel.category.value?.let {
-                startAddWordActivity(category = it)
+                startAddWordActivity(category = it, null)
             }
         }
 
@@ -97,7 +96,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                     finish()
                 }
                 R.id.menu_cat_rename -> showDialog()
-                else -> TODO()
             }
             true
         }
@@ -140,19 +138,23 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         })
     }
 
-    private fun startAddWordActivity(category: Category) {
+    private fun startAddWordActivity(category: Category, word: Word?) {
         startActivity(Intent(this, AddWordActivity::class.java).apply {
             putExtra(CATEGORY, category)
+            putExtra(WORD, word)
         })
     }
 
     override fun onItemClick(position: Int) {
+        val word = viewModel.words.value?.get(position)
+
+        viewModel.category.value?.let { startAddWordActivity(it, word) }
     }
 
 
-    override fun onDialogPositiveClick(newName: String) {
+    override fun onDialogPositiveClick(name: String) {
 
-        viewModel.updateCategory(newName)
+        viewModel.updateCategory(name)
         catDialogFragment.dismiss()
     }
 
