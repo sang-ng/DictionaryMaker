@@ -5,10 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-<<<<<<< HEAD
-import android.view.MenuItem
-=======
->>>>>>> 8f6f6ec158046e5b269395beb7c0d27954fbd180
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -29,7 +25,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
     private val viewModel by viewModel<WordsViewModel>()
     private lateinit var listAdapter: WordListAdapter
     private val CATEGORY = "category_arg"
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
