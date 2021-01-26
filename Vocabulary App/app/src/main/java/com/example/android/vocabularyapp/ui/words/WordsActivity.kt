@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -16,11 +17,13 @@ import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WordsActivity : AppCompatActivity(){
+class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
     private lateinit var listAdapter: WordListAdapter
+    private val CATEGORY = "category_arg"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +63,7 @@ class WordsActivity : AppCompatActivity(){
     }
 
     private fun initRecyclerView() {
-        listAdapter = WordListAdapter()
+        listAdapter = WordListAdapter(ArrayList(), this)
 
         binding.wordsRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context)
@@ -96,17 +99,11 @@ class WordsActivity : AppCompatActivity(){
         })
     }
 
-
-    companion object {
-        private const val CATEGORY = "category_arg"
-
-        fun startActivity(context: Context, category: Category) {
-            val intent = Intent(context, WordsActivity::class.java)
-
-            intent.putExtra(CATEGORY, category)
-
-            context.startActivity(intent)
-        }
+    override fun onItemClick(position: Int) {
+        Log.i("TEST", "clicked")
     }
 
+    override fun onItemLongClick(position: Int) {
+        Log.i("TEST", "Clicked")
+    }
 }

@@ -1,17 +1,10 @@
 package com.example.android.vocabularyapp.ui.category
 
-import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.model.Category
-import com.example.android.vocabularyapp.ui.learn.LearnActivity
-import com.example.android.vocabularyapp.ui.words.WordsActivity
 
 class CategoryListAdapter(
     private val categoryList: ArrayList<Category> = ArrayList(),
@@ -35,7 +28,6 @@ class CategoryListAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(categoryList[position])
-
     }
 
     inner class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
