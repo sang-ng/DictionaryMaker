@@ -11,7 +11,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
 
     viewModel { CategoryViewModel(repository = get()) }
-    viewModel { WordsViewModel(repository = get()) }
+    viewModel { WordsViewModel(repoWord = get(), repoCategory = get()) }
     viewModel { AddWordViewModel(repository = get()) }
     viewModel { LearnViewModel(repository = get()) }
 }

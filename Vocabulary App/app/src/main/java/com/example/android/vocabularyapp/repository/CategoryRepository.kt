@@ -16,6 +16,10 @@ class CategoryRepository(private val dao: CategoryDao) {
         it.toDomainModel()
     }
 
+    suspend fun getCategories(): LiveData<List<CategoryDb>> {
+        return dao.getAllCategories()
+    }
+
     suspend fun addCategory(category: CategoryDb) {
         withContext(Dispatchers.IO) {
             dao.addCategory(category)
@@ -25,6 +29,12 @@ class CategoryRepository(private val dao: CategoryDao) {
     suspend fun updateCategory(category: Category) {
         withContext(Dispatchers.IO) {
             dao.updateCategory(category.toDatabaseModel())
+        }
+    }
+
+    suspend fun deleteCategory(category: Category) {
+        withContext(Dispatchers.IO) {
+            dao.deleteCategory(category.toDatabaseModel())
         }
     }
 }

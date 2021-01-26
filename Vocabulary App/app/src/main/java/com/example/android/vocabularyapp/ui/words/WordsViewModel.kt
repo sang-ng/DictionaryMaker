@@ -3,11 +3,12 @@ package com.example.android.vocabularyapp.ui.words
 import androidx.lifecycle.*
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import com.example.android.vocabularyapp.repository.CategoryRepository
 import com.example.android.vocabularyapp.repository.WordsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
+class WordsViewModel(private val repoWord: WordsRepository, private val repoCategory: CategoryRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
 
@@ -23,7 +24,6 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
 
     init {
         getWords()
-
     }
 
     override fun onResume(owner: LifecycleOwner) {
@@ -37,9 +37,22 @@ class WordsViewModel(private val repository: WordsRepository) : ViewModel(),
 
     private fun getWords() {
         viewModelScope.launch(Dispatchers.IO) {
-            val words = _category.value?.id?.let { repository.getWordsOfCategory(it) }
+            val words = _category.value?.id?.let { repoWord.getWordsOfCategory(it) }
 
             _words.postValue(words)
+        }
+    }
+
+    fun deleteCategory(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _category.value?.let { repoCategory.deleteCategory(it) }
+        }
+    }
+
+    //TODO: check if list has one value left, if so delete it manually
+    fun getAllCategoris(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repoCategory.getCategories()
         }
     }
 }
