@@ -45,13 +45,8 @@ class CategoryListAdapter(
             itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
         }
 
-        fun bind(category: Category) = with(itemView) {
-
+        fun bind(category: Category) {
             itemBinding.categoryListName.text = category.name
-
-//            itemBinding.categoryListLayout.setOnClickListener {
-//                WordsActivity.startActivity(itemView.context, category)
-//            }
         }
     }
 
