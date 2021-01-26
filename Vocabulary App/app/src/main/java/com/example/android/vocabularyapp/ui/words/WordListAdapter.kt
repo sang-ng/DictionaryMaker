@@ -14,7 +14,6 @@ class WordListAdapter(
 
     interface ItemClickListener {
         fun onItemClick(position: Int)
-        fun onItemLongClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {

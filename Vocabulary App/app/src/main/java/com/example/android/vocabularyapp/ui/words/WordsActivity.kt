@@ -149,9 +149,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     override fun onItemClick(position: Int) {
     }
 
-    override fun onItemLongClick(position: Int) {
-        Log.i("TEST", "Clicked")
-    }
 
     override fun onDialogPositiveClick(newName: String) {
 
