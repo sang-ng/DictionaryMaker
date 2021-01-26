@@ -89,7 +89,9 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
     private fun startLearnActivity(category: Category) {
         startActivity(Intent(this, LearnActivity::class.java).apply {
+            
             putExtra(CATEGORY, category)
+
         })
     }
 
