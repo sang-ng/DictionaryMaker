@@ -17,7 +17,7 @@ class LearnActivity : AppCompatActivity() {
 
     //TODO: add text to speech listener
 
-    private  val CATEGORY = "category_arg"
+    private val CATEGORY = "category_arg"
 
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
@@ -32,6 +32,7 @@ class LearnActivity : AppCompatActivity() {
         initOnClick()
         observeShowTranslationEvent()
         observeSessionsEvent()
+        observeNumberOGoodWords()
 
         setContentView(binding.root)
     }
@@ -63,11 +64,18 @@ class LearnActivity : AppCompatActivity() {
         })
     }
 
-    private fun observeSessionsEvent(){
+    private fun observeSessionsEvent() {
         viewModel.showSessionCompleteEvent.observe(this, { sessionCompleted ->
             if (sessionCompleted) {
+                viewModel.showSessionCompleteDone()
                 Toast.makeText(this, "Session completed!", Toast.LENGTH_SHORT).show()
             }
+        })
+    }
+
+    private fun observeNumberOGoodWords() {
+        viewModel.numberOfGoodWords.observe(this, { numberOfGoodWords ->
+            Log.i("TEST", numberOfGoodWords.toString())
         })
     }
 
