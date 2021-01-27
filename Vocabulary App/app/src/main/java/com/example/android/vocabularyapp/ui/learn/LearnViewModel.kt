@@ -12,8 +12,7 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
 
     /*
-    TODO: - getRandomWord -> only one word once per session
-          - numberOfWords doesn't work properly yet
+     TODO:- numberOfWords doesn't work properly yet
           - display goodWords, display word in sum
           - make progressbar out of it
      */
@@ -37,7 +36,8 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     private var _showSessionCompleteEvent = MutableLiveData<Boolean>()
 
 
-    private var itemPosCounter = 0
+    private var _itemPosCounter = 0
+    private var _randomWords = listOf<Word>()
 
     init {
         getCurrentWord()
@@ -60,15 +60,20 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         viewModelScope.launch(Dispatchers.IO) {
 
             val allWords = getAllWords()
-            var randomWords = listOf<Word>()
 
             allWords?.let {
-                randomWords = it.shuffled()
 
-                if (itemPosCounter < randomWords.size) {
-                    _currentWord.postValue(randomWords[itemPosCounter])
-                } else if (itemPosCounter == randomWords.size) {
-                    itemPosCounter = 0
+                if (_itemPosCounter == 0) {
+                    _randomWords = it.shuffled()
+                }
+
+                if (_itemPosCounter < _randomWords.size) {
+
+                    _currentWord.postValue(_randomWords[_itemPosCounter])
+
+                } else if (_itemPosCounter == _randomWords.size) {
+
+                    _itemPosCounter = 0
                     _showSessionCompleteEvent.postValue(true)
                 }
             }
@@ -106,7 +111,7 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
             _currentWord.value?.let { repository.updateWord(it) }
         }
 
-        itemPosCounter++
+        _itemPosCounter++
         getNumberOfGoodWords()
     }
 
@@ -117,12 +122,12 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
             _currentWord.value?.let { repository.updateWord(it) }
         }
 
-        itemPosCounter++
+        _itemPosCounter++
         getNumberOfGoodWords()
     }
 
     fun showSessionCompleteDone() {
-        itemPosCounter = 0
+        _itemPosCounter = 0
         _showSessionCompleteEvent.value = false
     }
 }
