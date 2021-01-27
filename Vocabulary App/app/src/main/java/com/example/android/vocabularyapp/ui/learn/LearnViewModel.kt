@@ -11,7 +11,15 @@ import kotlinx.coroutines.launch
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
-    //TODO: feat: learn session consists of 10 words, if less words available session = list.size
+
+    /**
+    1.Each word can be marked as good or bad.
+    if good -> word.goodWord = 1, else = 0
+    -> so you can display the sum of words you have already learned/ marked
+
+    2.shuffle List -> sublist of 10 words/ allWords.size(if less than 10) -> sublist.get(i) = currentWord
+
+     **/
 
     val currentWord: LiveData<Word>
         get() = _currentWord
