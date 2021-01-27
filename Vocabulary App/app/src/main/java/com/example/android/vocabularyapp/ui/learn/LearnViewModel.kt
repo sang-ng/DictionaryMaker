@@ -1,5 +1,6 @@
 package com.example.android.vocabularyapp.ui.learn
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -12,9 +13,8 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
 
     /*
-     TODO:- numberOfWords doesn't work properly yet
+     TODO:
           - display goodWords, display word in sum
-          - make progressbar out of it
      */
 
     val currentWord: LiveData<Word>
@@ -51,7 +51,6 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         getNumberOfGoodWords()
     }
 
-
     fun setSelectedCategory(category: Category) {
         _category.value = category
     }
@@ -82,18 +81,16 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
     private fun getNumberOfGoodWords() {
         viewModelScope.launch(Dispatchers.IO) {
-            val allWords = getAllWords()
 
-            val goodWords = allWords?.filter { it.goodWord == 1 }
+            val goodWords = getAllWords()?.filter { it.goodWord == 1 }
 
             goodWords?.let {
-                var numberOfGoodWords = 0
 
-                for ((i, word) in goodWords.withIndex()) {
-                    numberOfGoodWords += i
-                }
+                goodWords.count().toString()
 
-                _numberOfGoodWords.postValue(numberOfGoodWords)
+                _numberOfGoodWords.postValue(
+                    goodWords.count()
+                )
             }
         }
     }
