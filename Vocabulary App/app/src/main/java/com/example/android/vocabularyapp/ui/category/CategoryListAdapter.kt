@@ -14,7 +14,6 @@ class CategoryListAdapter(
 
     interface ItemClickListener {
         fun onItemClick(position: Int)
-        fun onItemLongClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -46,6 +45,11 @@ class CategoryListAdapter(
     fun setData(list: List<Category>) {
         categoryList.clear()
         categoryList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clear(){
+        categoryList.clear()
         notifyDataSetChanged()
     }
 }
