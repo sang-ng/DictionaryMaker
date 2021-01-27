@@ -12,7 +12,8 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
 
     /*
-    TODO: - numberOfWords doesn't work properly yet
+    TODO: - getRandomWord -> only one word once per session
+          - numberOfWords doesn't work properly yet
           - display goodWords, display word in sum
           - make progressbar out of it
      */
