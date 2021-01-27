@@ -155,6 +155,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     override fun onDialogPositiveClick(name: String) {
 
         viewModel.updateCategory(name)
+        binding.wordsCategory.text = name
         catDialogFragment.dismiss()
     }
 

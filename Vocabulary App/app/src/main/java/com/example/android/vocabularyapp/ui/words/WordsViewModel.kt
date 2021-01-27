@@ -59,7 +59,6 @@ class WordsViewModel(
         }
     }
 
-    //TODO: after updating category, name won't get updated automatically
     fun updateCategory(newName: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
