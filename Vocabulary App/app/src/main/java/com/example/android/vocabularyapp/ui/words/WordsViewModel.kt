@@ -8,7 +8,10 @@ import com.example.android.vocabularyapp.repository.WordsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WordsViewModel(private val repoWord: WordsRepository, private val repoCategory: CategoryRepository) : ViewModel(),
+class WordsViewModel(
+    private val repoWord: WordsRepository,
+    private val repoCategory: CategoryRepository
+) : ViewModel(),
     DefaultLifecycleObserver {
 
 
@@ -29,6 +32,7 @@ class WordsViewModel(private val repoWord: WordsRepository, private val repoCate
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
         getWords()
+        getAllCategoris()
     }
 
     fun setSelectedCategory(category: Category) {
@@ -43,14 +47,30 @@ class WordsViewModel(private val repoWord: WordsRepository, private val repoCate
         }
     }
 
-    fun deleteCategory(){
+    fun deleteCategory() {
         viewModelScope.launch(Dispatchers.IO) {
             _category.value?.let { repoCategory.deleteCategory(it) }
         }
     }
 
+    fun deleteWord(position: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _words.value?.get(position)?.let { repoWord.deleteWord(it) }
+        }
+    }
+
+    //TODO: after updating category, name won't get updated automatically
+    fun updateCategory(newName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            _category.value?.name = newName
+
+            _category.value?.let { repoCategory.updateCategory(it) }
+        }
+    }
+
     //TODO: check if list has one value left, if so delete it manually
-    fun getAllCategoris(){
+    fun getAllCategoris() {
         viewModelScope.launch(Dispatchers.IO) {
             repoCategory.getCategories()
         }

@@ -1,30 +1,37 @@
 package com.example.android.vocabularyapp.ui.words
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityWordsBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
-import com.example.android.vocabularyapp.ui.category.CategoryListAdapter
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
+class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
+    AddCatDialog.CategoryDialogListener {
 
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
     private lateinit var listAdapter: WordListAdapter
+    private lateinit var fragmentManager: FragmentManager
+    private lateinit var catDialogFragment: DialogFragment
+    private lateinit var recyclerView: RecyclerView
     private val CATEGORY = "category_arg"
+    private val WORD = "word_arg"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +42,18 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         getCategoryFromIntent()
         initOnClick()
         initRecyclerView()
+        initDialogFragment()
         observeWords()
+        observeCategory()
+        setRecyclerViewItemTouchListener()
 
         setContentView(binding.root)
+    }
+
+    private fun observeCategory() {
+        viewModel.category.observe(this, { category ->
+            binding.wordsCategory.text = category.name
+        })
     }
 
     private fun getCategoryFromIntent() {
@@ -45,6 +61,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         category?.run {
             viewModel.setSelectedCategory(this)
+            binding.wordsCategory.text = category.name
         }
     }
 
@@ -52,7 +69,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         binding.wordsAddBtn.setOnClickListener {
             viewModel.category.value?.let {
-                startAddWordActivity(category = it)
+                startAddWordActivity(category = it, null)
             }
         }
 
@@ -63,11 +80,11 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         }
 
         binding.wordsSetting.setOnClickListener {
-            showPopUp(binding.wordsSetting)
+            showCatPopUp(binding.wordsSetting)
         }
     }
 
-    private fun showPopUp(view: View) {
+    private fun showCatPopUp(view: View) {
         val popUp = PopupMenu(this, view)
         popUp.inflate(R.menu.menu_category)
         popUp.show()
@@ -78,8 +95,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
                     viewModel.deleteCategory()
                     finish()
                 }
-                R.id.menu_cat_rename -> Log.i("TEST", "rename")
-                else -> TODO()
+                R.id.menu_cat_rename -> showDialog()
             }
             true
         }
@@ -89,11 +105,16 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
     private fun initRecyclerView() {
         listAdapter = WordListAdapter(ArrayList(), this)
 
-        binding.wordsRecyclerview.apply {
+        recyclerView = binding.wordsRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context)
             itemAnimator = DefaultItemAnimator()
             adapter = listAdapter
         }
+    }
+
+    private fun initDialogFragment() {
+        fragmentManager = supportFragmentManager
+        catDialogFragment = AddCatDialog()
     }
 
     private fun observeWords() {
@@ -113,23 +134,54 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
     private fun startLearnActivity(category: Category) {
         startActivity(Intent(this, LearnActivity::class.java).apply {
-            
             putExtra(CATEGORY, category)
-
         })
     }
 
-    private fun startAddWordActivity(category: Category) {
+    private fun startAddWordActivity(category: Category, word: Word?) {
         startActivity(Intent(this, AddWordActivity::class.java).apply {
             putExtra(CATEGORY, category)
+            putExtra(WORD, word)
         })
     }
 
     override fun onItemClick(position: Int) {
-        Log.i("TEST", "clicked")
+        val word = viewModel.words.value?.get(position)
+
+        viewModel.category.value?.let { startAddWordActivity(it, word) }
     }
 
-    override fun onItemLongClick(position: Int) {
-        Log.i("TEST", "Clicked")
+
+    override fun onDialogPositiveClick(name: String) {
+
+        viewModel.updateCategory(name)
+        catDialogFragment.dismiss()
+    }
+
+    private fun showDialog() {
+        catDialogFragment.show(fragmentManager, "CatDialog")
+    }
+
+    private fun setRecyclerViewItemTouchListener() {
+
+        val itemTouchCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                viewHolder1: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                val position = viewHolder.adapterPosition
+
+                viewModel.deleteWord(position)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }

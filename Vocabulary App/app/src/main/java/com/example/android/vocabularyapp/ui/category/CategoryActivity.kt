@@ -7,27 +7,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
-import com.example.android.vocabularyapp.ui.addCategory.CategoryDialogFragment
-import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
+import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.*
 import kotlin.collections.ArrayList
 
-class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDialogListener,
+class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListener,
     CategoryListAdapter.ItemClickListener {
 
     private val viewModel by viewModel<CategoryViewModel>()
     private lateinit var binding: ActivityCategoryBinding
     private lateinit var listAdapter: CategoryListAdapter
     private lateinit var fragmentManager: FragmentManager
-    private lateinit var addDialogFragment: DialogFragment
+    private lateinit var catDialogFragment: DialogFragment
     private val CATEGORY = "category_arg"
 
 
@@ -51,7 +47,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
     }
 
     private fun showAddDialog() {
-        addDialogFragment.show(fragmentManager, "AddCatDialog")
+        catDialogFragment.show(fragmentManager, "CatDialog")
     }
 
     private fun initRecyclerView() {
@@ -66,7 +62,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
 
     private fun initDialogFragment() {
         fragmentManager = supportFragmentManager
-        addDialogFragment = CategoryDialogFragment()
+        catDialogFragment = AddCatDialog()
     }
 
     private fun observeCategories() {
@@ -86,7 +82,7 @@ class CategoryActivity : AppCompatActivity(), CategoryDialogFragment.CategoryDia
     override fun onDialogPositiveClick(name: String) {
         val newCat = CategoryDb(0, name)
         viewModel.addCategory(newCat)
-        addDialogFragment.dismiss()
+        catDialogFragment.dismiss()
     }
 
     override fun onItemClick(position: Int) {

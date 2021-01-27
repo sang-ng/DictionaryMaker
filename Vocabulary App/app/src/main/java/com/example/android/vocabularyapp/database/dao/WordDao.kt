@@ -2,10 +2,7 @@ package com.example.android.vocabularyapp.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.android.vocabularyapp.database.entities.WordDb
 
 @Dao
@@ -16,6 +13,9 @@ interface WordDao {
 
     @Update
     fun updateWord(word: WordDb)
+
+    @Delete
+    fun deleteWord(word: WordDb)
 
     @Query("SELECT * FROM words")
     fun getWords(): LiveData<List<WordDb>>

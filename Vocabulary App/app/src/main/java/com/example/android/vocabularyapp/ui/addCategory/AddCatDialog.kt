@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.example.android.vocabularyapp.databinding.DialogCategoryBinding
 
-class CategoryDialogFragment : DialogFragment() {
+class AddCatDialog : DialogFragment() {
 
     private lateinit var listener: CategoryDialogListener
     private lateinit var binding: DialogCategoryBinding
