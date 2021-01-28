@@ -1,20 +1,14 @@
 package com.example.android.vocabularyapp.ui.learn
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
-import com.example.android.vocabularyapp.service.WordsService
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -132,6 +126,4 @@ class LearnActivity : AppCompatActivity() {
 
         super.onPause()
     }
-
-
 }
