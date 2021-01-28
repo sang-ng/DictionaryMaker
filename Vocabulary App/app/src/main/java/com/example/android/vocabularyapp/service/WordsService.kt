@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import com.example.android.vocabularyapp.R
@@ -24,6 +25,9 @@ class WordsService : Service(), TextToSpeech.OnInitListener {
 
 
         input = intent.getStringExtra("inputExtra")
+
+        Log.i("TEST", input.toString())
+
         val notificationIntent = Intent(this, LearnActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,

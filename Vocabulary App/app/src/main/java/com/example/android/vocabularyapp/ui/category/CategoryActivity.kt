@@ -43,6 +43,8 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         observeCategories()
         createNotificationChannel()
 
+        startService()
+
         setContentView(binding.root)
     }
 
@@ -105,10 +107,10 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     }
 
     private fun startService() {
-        val input = "text to speek"
+        val input = arrayListOf<String>()
 
         val serviceIntent = Intent(this, WordsService::class.java)
-        serviceIntent.putExtra("inputExtra", input)
+        serviceIntent.putStringArrayListExtra("inputExtra", input)
         ContextCompat.startForegroundService(this, serviceIntent)
     }
 
