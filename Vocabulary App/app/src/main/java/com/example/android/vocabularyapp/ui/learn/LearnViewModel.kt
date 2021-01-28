@@ -11,10 +11,10 @@ import kotlinx.coroutines.launch
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
-
     /*
      TODO:
           - display goodWords, display word in sum
+          - add TexToSpeech
      */
 
     val currentWord: LiveData<Word>

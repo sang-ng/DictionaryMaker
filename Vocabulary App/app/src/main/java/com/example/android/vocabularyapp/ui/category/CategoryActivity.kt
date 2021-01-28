@@ -14,7 +14,6 @@ import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.collections.ArrayList
 
 class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListener,
     CategoryListAdapter.ItemClickListener {

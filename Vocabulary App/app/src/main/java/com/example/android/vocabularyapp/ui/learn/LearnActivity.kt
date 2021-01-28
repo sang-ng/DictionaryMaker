@@ -1,26 +1,24 @@
 package com.example.android.vocabularyapp.ui.learn
 
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class LearnActivity : AppCompatActivity() {
-
-    //TODO: add text to speech listener
 
     private val CATEGORY = "category_arg"
 
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
+    private lateinit var textToSpeech: TextToSpeech
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +31,23 @@ class LearnActivity : AppCompatActivity() {
         observeShowTranslationEvent()
         observeSessionsEvent()
         observeNumberOGoodWords()
+        initTextToSpeech()
+
 
         setContentView(binding.root)
+    }
+
+    private fun speakWord() {
+        val wordToSpeech = binding.learnTranslation.text.toString()
+        textToSpeech.speak(wordToSpeech, TextToSpeech.QUEUE_FLUSH, null)
+    }
+
+    private fun initTextToSpeech() {
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.language = Locale.UK
+            }
+        }
     }
 
     private fun getCategoryFromIntent() {
@@ -94,10 +107,23 @@ class LearnActivity : AppCompatActivity() {
             viewModel.onNoClicked()
             viewModel.getCurrentWord()
         }
+
+        binding.learnPronunciation.setOnClickListener {
+            speakWord()
+        }
     }
 
     private fun renderUI(word: Word) {
         binding.learnWord.text = word.name
         binding.learnTranslation.text = word.translation
+    }
+
+    override fun onPause() {
+
+        if (textToSpeech.isSpeaking) {
+            textToSpeech.stop()
+        }
+
+        super.onPause()
     }
 }
