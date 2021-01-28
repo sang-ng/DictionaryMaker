@@ -11,7 +11,11 @@ import kotlinx.coroutines.launch
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
-    //TODO: feat: learn session consists of 10 words, if less words available session = list.size
+
+    /*
+     TODO:
+          - display goodWords, display word in sum
+     */
 
     val currentWord: LiveData<Word>
         get() = _currentWord
@@ -22,24 +26,30 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     val showSessionCompleteEvent: LiveData<Boolean>
         get() = _showSessionCompleteEvent
 
+    val numberOfGoodWords: LiveData<Int>
+        get() = _numberOfGoodWords
+
     private var _category = MutableLiveData<Category>()
     private var _currentWord = MutableLiveData<Word>()
+    private var _numberOfGoodWords = MutableLiveData<Int>()
     private var _showTranslationEvent = MutableLiveData<Boolean>()
     private var _showSessionCompleteEvent = MutableLiveData<Boolean>()
 
-    private var itemPosCounter = 0
-    private var sessionCounter = 0
+
+    private var _itemPosCounter = 0
+    private var _randomWords = listOf<Word>()
 
     init {
         getCurrentWord()
+        getNumberOfGoodWords()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
 
         getCurrentWord()
+        getNumberOfGoodWords()
     }
-
 
     fun setSelectedCategory(category: Category) {
         _category.value = category
@@ -49,33 +59,43 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         viewModelScope.launch(Dispatchers.IO) {
 
             val allWords = getAllWords()
-            val badWords = getBadWords()
 
-            //make sure that bad words are asked more often than well known ones
-            if (!badWords.isNullOrEmpty() && badWords.size > 1) {
+            allWords?.let {
 
-                if (itemPosCounter < badWords.size) {
-                    _currentWord.postValue(badWords[getBadItemPosition()])
-                } else {
-                    itemPosCounter = 0
-                    _currentWord.postValue(badWords[getBadItemPosition()])
+                if (_itemPosCounter == 0) {
+                    _randomWords = it.shuffled()
                 }
 
-            } else {
+                if (_itemPosCounter < _randomWords.size) {
 
-                if (itemPosCounter < allWords!!.size) {
-                    _currentWord.postValue(allWords[getBadItemPosition()])
-                } else {
-                    itemPosCounter = 0
-                    _currentWord.postValue(allWords[getBadItemPosition()])
+                    _currentWord.postValue(_randomWords[_itemPosCounter])
+
+                } else if (_itemPosCounter == _randomWords.size) {
+
+                    _itemPosCounter = 0
+                    _showSessionCompleteEvent.postValue(true)
                 }
             }
         }
     }
 
-    private fun getAllWords() = _category.value?.id?.let { repository.getWordsOfCategory(it) }
+    private fun getNumberOfGoodWords() {
+        viewModelScope.launch(Dispatchers.IO) {
 
-    private fun getBadWords() = _category.value?.id?.let { repository.getBadWordsOfCategory(it) }
+            val goodWords = getAllWords()?.filter { it.goodWord == 1 }
+
+            goodWords?.let {
+
+                goodWords.count().toString()
+
+                _numberOfGoodWords.postValue(
+                    goodWords.count()
+                )
+            }
+        }
+    }
+
+    private fun getAllWords() = _category.value?.id?.let { repository.getWordsOfCategory(it) }
 
     fun onCardClicked() {
         _showTranslationEvent.value = _showTranslationEvent.value == false
@@ -85,28 +105,26 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         viewModelScope.launch(Dispatchers.IO) {
             _currentWord.value?.goodWord = 1
 
-            repository.updateWord(_currentWord.value!!)
+            _currentWord.value?.let { repository.updateWord(it) }
         }
 
-        checkIfSessionCompleted()
-        sessionCounter++
+        _itemPosCounter++
+        getNumberOfGoodWords()
     }
 
     fun onNoClicked() {
         viewModelScope.launch(Dispatchers.IO) {
             _currentWord.value?.goodWord = 0
 
-            repository.updateWord(_currentWord.value!!)
+            _currentWord.value?.let { repository.updateWord(it) }
         }
 
-        checkIfSessionCompleted()
-        sessionCounter++
+        _itemPosCounter++
+        getNumberOfGoodWords()
     }
 
-    private fun checkIfSessionCompleted() {
-        _showSessionCompleteEvent.value = sessionCounter == 2
+    fun showSessionCompleteDone() {
+        _itemPosCounter = 0
+        _showSessionCompleteEvent.value = false
     }
-
-    private fun getBadItemPosition() = itemPosCounter++
-
 }

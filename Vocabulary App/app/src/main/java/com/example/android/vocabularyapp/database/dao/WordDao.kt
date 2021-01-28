@@ -22,7 +22,4 @@ interface WordDao {
 
     @Query("SELECT * FROM words WHERE categoryId=:categoryId")
     fun getWordsOfCategory(categoryId: Long): List<WordDb>
-
-    @Query("SELECT * FROM words WHERE categoryId=:categoryId AND goodWord=0")
-    fun getBadWordsOfCategory(categoryId: Long): List<WordDb>
 }

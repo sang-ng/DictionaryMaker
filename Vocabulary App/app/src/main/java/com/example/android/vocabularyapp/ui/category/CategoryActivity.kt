@@ -69,6 +69,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         viewModel.categories.observe(this, { categories ->
             if (categories.isNullOrEmpty()) {
                 displayNoDataMessage()
+                listAdapter.clear()
             } else {
                 listAdapter.setData(categories)
             }
@@ -89,10 +90,6 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         viewModel.categories.value?.get(position)?.let {
             startWordsActivity(it)
         }
-    }
-
-    override fun onItemLongClick(position: Int) {
-        TODO("Not yet implemented")
     }
 
     private fun startWordsActivity(category: Category) {

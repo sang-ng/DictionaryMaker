@@ -30,8 +30,4 @@ class WordsRepository(private val dao: WordDao) {
     fun getWordsOfCategory(categoryId: Long): List<Word> {
         return dao.getWordsOfCategory(categoryId).toDomainModel()
     }
-
-    fun getBadWordsOfCategory(categoryId: Long): List<Word> {
-        return dao.getBadWordsOfCategory(categoryId).toDomainModel()
-    }
 }

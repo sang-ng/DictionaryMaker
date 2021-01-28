@@ -48,7 +48,7 @@ class AddWordActivity : AppCompatActivity() {
 
     private fun observeSelectedWord() {
         viewModel.word.observe(this, { word ->
-            if (word != null) {
+            word?.let {
                 binding.addWordName.setText(word.name)
                 binding.addWordTrans.setText(word.translation)
             }
