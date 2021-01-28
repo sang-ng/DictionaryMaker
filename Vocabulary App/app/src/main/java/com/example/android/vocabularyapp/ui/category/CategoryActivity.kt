@@ -1,9 +1,13 @@
 package com.example.android.vocabularyapp.ui.category
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -11,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.service.WordsService
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -36,6 +41,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         initRecyclerView()
         initDialogFragment()
         observeCategories()
+        createNotificationChannel()
 
         setContentView(binding.root)
     }
@@ -96,5 +102,30 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         startActivity(Intent(this, WordsActivity::class.java).apply {
             putExtra(CATEGORY, category)
         })
+    }
+
+    private fun startService() {
+        val input = "text to speek"
+
+        val serviceIntent = Intent(this, WordsService::class.java)
+        serviceIntent.putExtra("inputExtra", input)
+        ContextCompat.startForegroundService(this, serviceIntent)
+    }
+
+    private fun stopService() {
+        val serviceIntent = Intent(this, WordsService::class.java)
+        stopService(serviceIntent)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val serviceChannel = NotificationChannel(
+                "CHANNEL_ID",
+                "Example Service Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(serviceChannel)
+        }
     }
 }
