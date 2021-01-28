@@ -44,10 +44,12 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
     private fun addWord(name: String, translation: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            val word = Word(0, name, translation, 0, _category.value!!.id)
-            repository.addWord(word)
-        }
+            val word = _category.value?.id?.let { Word(0, name, translation, 0, it) }
 
+            if (word != null) {
+                repository.addWord(word)
+            }
+        }
     }
 
     fun setSelectedCategory(category: Category) {

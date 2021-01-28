@@ -26,28 +26,11 @@ class LearnActivity : AppCompatActivity() {
         lifecycle.addObserver(viewModel)
 
         getCategoryFromIntent()
-        observeCurrentWord()
         initOnClick()
-        observeShowTranslationEvent()
-        observeSessionsEvent()
-        observeNumberOGoodWords()
+        addObservers()
         initTextToSpeech()
 
-
         setContentView(binding.root)
-    }
-
-    private fun speakWord() {
-        val wordToSpeech = binding.learnTranslation.text.toString()
-        textToSpeech.speak(wordToSpeech, TextToSpeech.QUEUE_FLUSH, null)
-    }
-
-    private fun initTextToSpeech() {
-        textToSpeech = TextToSpeech(this) { status ->
-            if (status != TextToSpeech.ERROR) {
-                textToSpeech.language = Locale.UK
-            }
-        }
     }
 
     private fun getCategoryFromIntent() {
@@ -55,6 +38,42 @@ class LearnActivity : AppCompatActivity() {
 
         category?.run {
             viewModel.setSelectedCategory(this)
+        }
+    }
+
+    private fun initOnClick() {
+
+        binding.learnCard.setOnClickListener {
+            viewModel.onCardClicked()
+        }
+
+        binding.learnYesBtn.setOnClickListener {
+            viewModel.onYesClicked()
+            viewModel.getCurrentWord()
+        }
+
+        binding.learnNoBtn.setOnClickListener {
+            viewModel.onNoClicked()
+            viewModel.getCurrentWord()
+        }
+
+        binding.learnPronunciation.setOnClickListener {
+            speakWord()
+        }
+    }
+
+    private fun addObservers(){
+        observeCurrentWord()
+        observeShowTranslationEvent()
+        observeSessionsEvent()
+        observeNumberOGoodWords()
+    }
+
+    private fun initTextToSpeech() {
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.language = Locale.UK
+            }
         }
     }
 
@@ -92,25 +111,9 @@ class LearnActivity : AppCompatActivity() {
         })
     }
 
-    private fun initOnClick() {
-
-        binding.learnCard.setOnClickListener {
-            viewModel.onCardClicked()
-        }
-
-        binding.learnYesBtn.setOnClickListener {
-            viewModel.onYesClicked()
-            viewModel.getCurrentWord()
-        }
-
-        binding.learnNoBtn.setOnClickListener {
-            viewModel.onNoClicked()
-            viewModel.getCurrentWord()
-        }
-
-        binding.learnPronunciation.setOnClickListener {
-            speakWord()
-        }
+    private fun speakWord() {
+        val wordToSpeech = binding.learnTranslation.text.toString()
+        textToSpeech.speak(wordToSpeech, TextToSpeech.QUEUE_FLUSH, null)
     }
 
     private fun renderUI(word: Word) {

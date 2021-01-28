@@ -1,6 +1,5 @@
 package com.example.android.vocabularyapp.ui.learn
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -10,12 +9,6 @@ import kotlinx.coroutines.launch
 
 class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     DefaultLifecycleObserver {
-
-    /*
-     TODO:
-          - display goodWords, display word in sum
-          - add TexToSpeech
-     */
 
     val currentWord: LiveData<Word>
         get() = _currentWord
