@@ -3,7 +3,6 @@ package com.example.android.vocabularyapp.ui.words
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.databinding.WordListItemBinding
 import com.example.android.vocabularyapp.model.Word
 
@@ -44,7 +43,6 @@ class WordListAdapter(
         }
     }
 
-    //TODO: DiffUtil
     fun setData(list: List<Word>) {
         wordList.clear()
         wordList.addAll(list)

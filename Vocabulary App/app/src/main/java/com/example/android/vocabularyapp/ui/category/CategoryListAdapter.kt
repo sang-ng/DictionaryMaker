@@ -2,7 +2,6 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.model.Category
@@ -52,27 +51,4 @@ class CategoryListAdapter(
         categoryList.clear()
         notifyDataSetChanged()
     }
-}
-
-class CategoryDiffCallback : DiffUtil.ItemCallback<DataItem>() {
-    override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
-        return oldItem == newItem
-    }
-
-}
-
-sealed class DataItem {
-    data class CategoryItem(val category: Category) : DataItem() {
-        override val id = category.id
-    }
-
-    object Header : DataItem() {
-        override val id = Long.MIN_VALUE
-    }
-
-    abstract val id: Long
 }

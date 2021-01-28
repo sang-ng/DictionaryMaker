@@ -11,8 +11,6 @@ import kotlinx.coroutines.withContext
 class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(),
     DefaultLifecycleObserver {
 
-    //TODO: category list will be updated after deleting category, but only if there are more than one item.
-
     val categories = repository.categories
 
     override fun onResume(owner: LifecycleOwner) {

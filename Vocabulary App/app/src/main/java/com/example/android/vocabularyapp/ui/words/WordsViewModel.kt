@@ -24,7 +24,6 @@ class WordsViewModel(
     private var _category = MutableLiveData<Category>()
     private var _words = MutableLiveData<List<Word>>()
 
-
     init {
         getWords()
     }
@@ -68,8 +67,7 @@ class WordsViewModel(
         }
     }
 
-    //TODO: check if list has one value left, if so delete it manually
-    fun getAllCategoris() {
+    private fun getAllCategoris() {
         viewModelScope.launch(Dispatchers.IO) {
             repoCategory.getCategories()
         }
