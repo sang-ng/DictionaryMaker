@@ -39,6 +39,8 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         binding = ActivityWordsBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
 
+
+        initToolbar()
         getCategoryFromIntent()
         initOnClick()
         initRecyclerView()
@@ -48,6 +50,12 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         setRecyclerViewItemTouchListener()
 
         setContentView(binding.root)
+    }
+
+    private fun initToolbar(){
+        setSupportActionBar(binding.wordsToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun observeCategory() {
@@ -79,8 +87,8 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             }
         }
 
-        binding.wordsSetting.setOnClickListener {
-            showCatPopUp(binding.wordsSetting)
+        binding.wordsCatEdit.setOnClickListener {
+            showCatPopUp(binding.wordsCatEdit)
         }
     }
 

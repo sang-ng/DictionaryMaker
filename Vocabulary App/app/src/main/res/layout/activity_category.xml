@@ -24,6 +24,9 @@
                 android:id="@+id/text_youknow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:shadowColor="#481C1C1C"
+                android:shadowDy="5"
+                android:shadowRadius="5"
                 android:text="You know"
                 android:textColor="#FFFFFF" />
 
@@ -31,6 +34,9 @@
                 android:id="@+id/category_total_words"
                 android:layout_width="176dp"
                 android:layout_height="wrap_content"
+                android:shadowColor="#481C1C1C"
+                android:shadowDy="5"
+                android:shadowRadius="10"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="36sp" />
