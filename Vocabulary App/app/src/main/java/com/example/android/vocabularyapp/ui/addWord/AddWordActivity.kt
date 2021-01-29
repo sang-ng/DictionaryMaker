@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.ui.addWord
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.android.vocabularyapp.databinding.ActivityAddWordBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -19,11 +20,21 @@ class AddWordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddWordBinding.inflate(layoutInflater)
 
+        setSupportActionBar(binding.addToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         getDataFromIntent()
         initOnClick()
         observeSelectedWord()
 
         setContentView(binding.root)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+
+        return super.onSupportNavigateUp()
     }
 
     private fun getDataFromIntent() {

@@ -32,8 +32,6 @@ class LearnActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //TODO add navigate up
-
         getCategoryFromIntent()
         initOnClick()
         addObservers()
