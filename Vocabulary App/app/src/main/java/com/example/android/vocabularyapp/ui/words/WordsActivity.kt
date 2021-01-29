@@ -118,7 +118,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     }
 
     private fun observeWords() {
-        viewModel.words.observe(this, { words ->
+        viewModel.wordsOfCategory.observe(this, { words ->
             if (words.isNullOrEmpty()) {
                 Toast.makeText(this, "Please add some words to start!", Toast.LENGTH_LONG).show()
             } else {
@@ -146,7 +146,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        val word = viewModel.words.value?.get(position)
+        val word = viewModel.wordsOfCategory.value?.get(position)
 
         viewModel.category.value?.let { startAddWordActivity(it, word) }
     }

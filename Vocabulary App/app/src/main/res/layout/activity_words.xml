@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6F8FB"
     tools:context=".ui.words.WordsActivity">
 
     <androidx.cardview.widget.CardView
@@ -18,8 +19,9 @@
             android:id="@+id/words_start_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Start learning"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="16dp"
+            android:text="Continue Learning"
             android:visibility="invisible"
             app:backgroundTint="#FF6D00" />
 
@@ -36,9 +38,10 @@
             android:id="@+id/words_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="TextView" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:text="TextView"
+            android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
 

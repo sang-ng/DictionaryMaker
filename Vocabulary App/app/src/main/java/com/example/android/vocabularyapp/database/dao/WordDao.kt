@@ -19,4 +19,7 @@ interface WordDao {
 
     @Query("SELECT * FROM words WHERE categoryId=:categoryId")
     fun getWordsOfCategory(categoryId: Long): List<WordDb>
+
+    @Query("SELECT COUNT(*) FROM words")
+    fun getTotalOfWords(): LiveData<Int>
 }

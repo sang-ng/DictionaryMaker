@@ -35,6 +35,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         initRecyclerView()
         initDialogFragment()
         observeCategories()
+        observeTotalNumberOfWords()
 
         setContentView(binding.root)
     }
@@ -94,6 +95,12 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     private fun startWordsActivity(category: Category) {
         startActivity(Intent(this, WordsActivity::class.java).apply {
             putExtra(CATEGORY, category)
+        })
+    }
+
+    private fun observeTotalNumberOfWords(){
+        viewModel.totalOfWords.observe(this, {totalNumberOfWords ->
+            binding.categoryTotalWords.text = totalNumberOfWords.toString() + " words"
         })
     }
 }
