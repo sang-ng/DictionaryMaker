@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyApp">
-        <activity android:name=".ui.learn.LearnActivity" />
+        <activity android:name=".ui.learn.LearnActivity"/>
         <activity android:name=".ui.addWord.AddWordActivity" />
         <activity
             android:name=".ui.words.WordsActivity"

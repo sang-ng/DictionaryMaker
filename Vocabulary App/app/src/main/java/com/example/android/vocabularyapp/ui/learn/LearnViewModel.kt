@@ -22,6 +22,9 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     val numberOfGoodWords: LiveData<Int>
         get() = _numberOfGoodWords
 
+    val category: LiveData<Category>
+        get() = _category
+
     private var _category = MutableLiveData<Category>()
     private var _currentWord = MutableLiveData<Word>()
     private var _numberOfGoodWords = MutableLiveData<Int>()
