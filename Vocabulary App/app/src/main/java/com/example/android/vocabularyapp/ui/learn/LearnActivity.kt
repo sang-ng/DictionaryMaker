@@ -25,6 +25,12 @@ class LearnActivity : AppCompatActivity() {
         binding = ActivityLearnBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
 
+        setSupportActionBar(binding.learnToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        //TODO add navigate up
+
         getCategoryFromIntent()
         initOnClick()
         addObservers()

@@ -17,7 +17,7 @@
         <activity android:name=".ui.addWord.AddWordActivity" />
         <activity
             android:name=".ui.words.WordsActivity"
-            android:parentActivityName=".ui.category.CategoryActivity"/>
+            android:parentActivityName=".ui.category.CategoryActivity" />
         <activity android:name=".ui.category.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
