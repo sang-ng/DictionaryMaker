@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.example.android.vocabularyapp.databinding.ActivityAddWordBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddWordActivity : AppCompatActivity() {
@@ -27,6 +28,7 @@ class AddWordActivity : AppCompatActivity() {
         getDataFromIntent()
         initOnClick()
         observeSelectedWord()
+        observeInputData()
 
         setContentView(binding.root)
     }
@@ -53,8 +55,17 @@ class AddWordActivity : AppCompatActivity() {
             val translation = binding.addWordTrans.text.toString()
 
             viewModel.addOrUpdate(name, translation)
-            finish()
         }
+    }
+
+    private fun observeInputData() {
+        viewModel.dataIsValid.observe(this, { dataIsValid ->
+            if (!dataIsValid) {
+                Snackbar.make(binding.root, "Please fill out all fields", Snackbar.LENGTH_SHORT).show()
+            } else {
+                finish()
+            }
+        })
     }
 
     private fun observeSelectedWord() {
