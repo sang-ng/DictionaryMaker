@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -21,10 +22,13 @@ import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     AddCatDialog.CategoryDialogListener {
 
+    private lateinit var textToSpeech: TextToSpeech
     private lateinit var binding: ActivityWordsBinding
     private val viewModel by viewModel<WordsViewModel>()
     private lateinit var listAdapter: WordListAdapter
@@ -48,6 +52,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         observeWords()
         observeCategory()
         setRecyclerViewItemTouchListener()
+        initTextToSpeech()
 
         setContentView(binding.root)
     }
@@ -142,7 +147,8 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         binding.wordsStartBtn.visibility = View.VISIBLE
 
         binding.wordsNumber.text =
-            "(" + listItems.filter { it.goodWord == 1 }.count().toString()+ " /" + listItems.count()
+            "(" + listItems.filter { it.goodWord == 1 }.count()
+                .toString() + " /" + listItems.count()
                 .toString() + ")"
 
 
@@ -163,10 +169,25 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
     override fun onItemClick(position: Int) {
         val word = viewModel.wordsOfCategory.value?.get(position)
-
         viewModel.category.value?.let { startAddWordActivity(it, word) }
     }
 
+    override fun onListeningClick(position: Int) {
+        val word = viewModel.wordsOfCategory.value?.get(position)?.translation
+        word?.let { speakWord(it) }
+    }
+
+    private fun initTextToSpeech() {
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.language = Locale.UK
+            }
+        }
+    }
+
+    private fun speakWord(word: String) {
+        textToSpeech.speak(word, TextToSpeech.QUEUE_FLUSH, null)
+    }
 
     override fun onDialogPositiveClick(name: String) {
 
