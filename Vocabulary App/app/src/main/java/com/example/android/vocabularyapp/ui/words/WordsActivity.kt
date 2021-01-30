@@ -39,7 +39,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         binding = ActivityWordsBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
 
-
         initToolbar()
         getCategoryFromIntent()
         initOnClick()
@@ -52,7 +51,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         setContentView(binding.root)
     }
 
-    private fun initToolbar(){
+    private fun initToolbar() {
         setSupportActionBar(binding.wordsToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -187,6 +186,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                 val position = viewHolder.adapterPosition
 
                 viewModel.deleteWord(position)
+                //TODO: update recycler view after item deleted
             }
         }
 

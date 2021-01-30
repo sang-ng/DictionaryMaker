@@ -34,7 +34,6 @@ class WordListAdapter(
 
         init {
             itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
-
         }
 
         fun bind(word: Word) {
