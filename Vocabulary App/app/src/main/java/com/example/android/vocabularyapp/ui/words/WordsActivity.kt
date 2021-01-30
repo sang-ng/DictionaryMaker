@@ -1,5 +1,6 @@
 package com.example.android.vocabularyapp.ui.words
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -134,11 +135,17 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun renderUI(listItems: List<Word>) {
         listAdapter.setData(listItems)
 
         binding.wordsStartBtn.visibility = View.VISIBLE
-        binding.wordsNumber.text = listItems.count().toString()
+
+        binding.wordsNumber.text =
+            "(" + listItems.filter { it.goodWord == 1 }.count().toString()+ " /" + listItems.count()
+                .toString() + ")"
+
+
     }
 
     private fun startLearnActivity(category: Category) {

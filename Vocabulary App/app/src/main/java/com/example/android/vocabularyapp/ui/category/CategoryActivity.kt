@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -70,17 +71,15 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     private fun observeCategories() {
         viewModel.categories.observe(this, { categories ->
             if (categories.isNullOrEmpty()) {
-                displayNoDataMessage()
                 listAdapter.clear()
+                binding.categoryNoWords.visibility = View.VISIBLE
             } else {
                 listAdapter.setData(categories)
+                binding.categoryNoWords.visibility = View.INVISIBLE
             }
         })
     }
 
-    private fun displayNoDataMessage() {
-        Toast.makeText(this, "Please add a category", Toast.LENGTH_LONG).show()
-    }
 
     override fun onDialogPositiveClick(name: String) {
         val newCat = CategoryDb(0, name)
