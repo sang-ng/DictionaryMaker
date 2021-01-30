@@ -39,8 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="16dp"
+            android:clickable="false"
+            android:enabled="false"
             android:text="Continue Learning"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:backgroundTint="#FF9100" />
 
         <TextView
@@ -78,6 +80,23 @@
             android:layout_width="match_parent"
             android:layout_height="311dp"
             android:layout_gravity="bottom" />
+
+        <ImageView
+            android:id="@+id/words_add_image"
+            android:layout_width="110dp"
+            android:layout_height="107dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            app:srcCompat="@drawable/ic_outline_post_add_24" />
+
+        <TextView
+            android:id="@+id/words_add_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="Add your first words!"
+            android:textColor="#DCDCDC" />
 
     </androidx.cardview.widget.CardView>
 

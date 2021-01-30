@@ -133,7 +133,8 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private fun observeWords() {
         viewModel.wordsOfCategory.observe(this, { words ->
             if (words.isNullOrEmpty()) {
-                Toast.makeText(this, "Please add some words to start!", Toast.LENGTH_LONG).show()
+                binding.wordsAddImage.visibility = View.VISIBLE
+                binding.wordsAddText.visibility = View.VISIBLE
             } else {
                 renderUI(listItems = words)
             }
@@ -151,6 +152,11 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                 .toString() + " /" + listItems.count()
                 .toString() + ")"
 
+        binding.wordsAddImage.visibility = View.INVISIBLE
+        binding.wordsAddText.visibility = View.INVISIBLE
+
+        binding.wordsStartBtn.isEnabled = true
+        binding.wordsStartBtn.isClickable = true
 
     }
 
