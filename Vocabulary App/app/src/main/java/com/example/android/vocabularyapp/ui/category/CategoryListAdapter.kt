@@ -1,14 +1,19 @@
 package com.example.android.vocabularyapp.ui.category
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.vocabularyapp.database.dao.WordDao
 import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.repository.CategoryRepository
+import com.example.android.vocabularyapp.repository.WordsRepository
 
 class CategoryListAdapter(
     private val categoryList: ArrayList<Category> = ArrayList(),
-    val clickListener: ItemClickListener
+    val clickListener: ItemClickListener,
+    private val repository: WordDao
 ) : RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
 
     interface ItemClickListener {
@@ -38,6 +43,8 @@ class CategoryListAdapter(
 
         fun bind(category: Category) {
             itemBinding.categoryListName.text = category.name
+            itemBinding.categoryWordsNumber.text =
+                repository.getTotalWordsOfCategory(category.id).toString()
         }
     }
 
@@ -47,7 +54,7 @@ class CategoryListAdapter(
         notifyDataSetChanged()
     }
 
-    fun clear(){
+    fun clear() {
         categoryList.clear()
         notifyDataSetChanged()
     }

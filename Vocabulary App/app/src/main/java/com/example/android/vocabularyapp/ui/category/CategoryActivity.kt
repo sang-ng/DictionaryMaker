@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.vocabularyapp.database.VocDatabase
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
@@ -51,7 +52,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     }
 
     private fun initRecyclerView() {
-        listAdapter = CategoryListAdapter(ArrayList(), this)
+        listAdapter = CategoryListAdapter(ArrayList(), this, VocDatabase.getDatabase(this).wordDao)
 
         binding.categoryRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context)

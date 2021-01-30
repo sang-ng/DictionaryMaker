@@ -13,6 +13,9 @@ import kotlinx.coroutines.withContext
 class WordsRepository(private val dao: WordDao) {
 
     val totalWords: LiveData<Int> = dao.getTotalOfWords()
+    var totalWordsOfCategory: Int = 0
+
+
 
 
     suspend fun addWord(word: Word) {
@@ -38,4 +41,10 @@ class WordsRepository(private val dao: WordDao) {
     }
 
 
+    suspend fun getTotalWordsOfCategory(categoryId: Long) {
+
+        withContext(Dispatchers.IO) {
+            totalWordsOfCategory = dao.getTotalWordsOfCategory(categoryId)
+        }
+    }
 }
