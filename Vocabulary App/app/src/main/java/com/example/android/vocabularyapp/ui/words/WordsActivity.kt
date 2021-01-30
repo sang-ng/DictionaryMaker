@@ -136,7 +136,9 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
     private fun renderUI(listItems: List<Word>) {
         listAdapter.setData(listItems)
+
         binding.wordsStartBtn.visibility = View.VISIBLE
+        binding.wordsNumber.text = listItems.count().toString()
     }
 
     private fun startLearnActivity(category: Category) {

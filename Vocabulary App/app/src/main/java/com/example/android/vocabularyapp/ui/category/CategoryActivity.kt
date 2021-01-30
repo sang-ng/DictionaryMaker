@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -52,7 +53,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     }
 
     private fun initRecyclerView() {
-        listAdapter = CategoryListAdapter(ArrayList(), this, VocDatabase.getDatabase(this).wordDao)
+        listAdapter = CategoryListAdapter(ArrayList(), this)
 
         binding.categoryRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context)
@@ -99,8 +100,8 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         })
     }
 
-    private fun observeTotalNumberOfWords(){
-        viewModel.totalOfWords.observe(this, {totalNumberOfWords ->
+    private fun observeTotalNumberOfWords() {
+        viewModel.totalOfWords.observe(this, { totalNumberOfWords ->
             binding.categoryTotalWords.text = totalNumberOfWords.toString() + " words"
         })
     }

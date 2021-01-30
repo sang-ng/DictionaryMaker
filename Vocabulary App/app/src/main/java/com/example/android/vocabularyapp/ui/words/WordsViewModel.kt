@@ -25,12 +25,12 @@ class WordsViewModel(
     private var _wordsOfCategory = MutableLiveData<List<Word>>()
 
     init {
-        getWords()
+        getWordsOfCategory()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
-        getWords()
+        getWordsOfCategory()
         getAllCategoris()
     }
 
@@ -38,7 +38,7 @@ class WordsViewModel(
         _category.value = category
     }
 
-    private fun getWords() {
+    private fun getWordsOfCategory() {
         viewModelScope.launch(Dispatchers.IO) {
             val words = _category.value?.id?.let { repoWord.getWordsOfCategory(it) }
 
