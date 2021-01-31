@@ -27,6 +27,7 @@ class LearnActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLearnBinding
     private lateinit var textToSpeech: TextToSpeech
     private lateinit var soundCorrect : MediaPlayer
+    private lateinit var soundCompleted : MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class LearnActivity : AppCompatActivity() {
         initTextToSpeech()
 
         soundCorrect = MediaPlayer.create(this, R.raw.correct)
+        soundCompleted = MediaPlayer.create(this, R.raw.success)
 
         setContentView(binding.root)
     }
@@ -140,16 +142,21 @@ class LearnActivity : AppCompatActivity() {
         viewModel.showSessionCompleteEvent.observe(this, { sessionCompleted ->
             if (sessionCompleted) {
                 viewModel.showSessionCompleteDone()
-                binding.learnAnimation.visibility = View.VISIBLE
-                binding.learnWord.visibility = View.INVISIBLE
-                binding.learnTranslation.visibility = View.INVISIBLE
-                binding.learnCard.visibility = View.INVISIBLE
-                binding.learnNoBtn.visibility = View.INVISIBLE
-                binding.learnYesBtn.visibility = View.INVISIBLE
-                binding.learnPronunciation.visibility = View.INVISIBLE
-                binding.learnFlip.visibility = View.INVISIBLE
+                startSuccessAnim()
+                soundCompleted.start()
             }
         })
+    }
+
+    private fun startSuccessAnim(){
+        binding.learnAnimation.visibility = View.VISIBLE
+        binding.learnWord.visibility = View.INVISIBLE
+        binding.learnTranslation.visibility = View.INVISIBLE
+        binding.learnCard.visibility = View.INVISIBLE
+        binding.learnNoBtn.visibility = View.INVISIBLE
+        binding.learnYesBtn.visibility = View.INVISIBLE
+        binding.learnPronunciation.visibility = View.INVISIBLE
+        binding.learnFlip.visibility = View.INVISIBLE
     }
 
     private fun speakWord() {
