@@ -2,6 +2,8 @@ package com.example.android.vocabularyapp.ui.learn
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.MenuItem
@@ -12,6 +14,8 @@ import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.words.WordsActivity
+import kotlinx.coroutines.delay
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -112,7 +116,14 @@ class LearnActivity : AppCompatActivity() {
         viewModel.showSessionCompleteEvent.observe(this, { sessionCompleted ->
             if (sessionCompleted) {
                 viewModel.showSessionCompleteDone()
-                Toast.makeText(this, "Session completed!", Toast.LENGTH_SHORT).show()
+                binding.learnAnimation.visibility = View.VISIBLE
+                binding.learnWord.visibility = View.INVISIBLE
+                binding.learnTranslation.visibility = View.INVISIBLE
+                binding.learnCard.visibility = View.INVISIBLE
+                binding.learnNoBtn.visibility = View.INVISIBLE
+                binding.learnYesBtn.visibility = View.INVISIBLE
+                binding.learnPronunciation.visibility = View.INVISIBLE
+                binding.learnFlip.visibility = View.INVISIBLE
             }
         })
     }
