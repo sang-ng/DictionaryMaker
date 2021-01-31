@@ -16,19 +16,36 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
     val word: LiveData<Word>
         get() = _word
 
+    val dataIsValid: LiveData<Boolean>
+        get() = _dataIsValid
+
     private var _category = MutableLiveData<Category>()
     private var _word = MutableLiveData<Word>()
+    private var _dataIsValid = MutableLiveData<Boolean>()
 
 
     fun addOrUpdate(name: String, translation: String) {
 
-        if (categoryIsNotNull() && _word.value == null) {
+        if (categoryIsNotNull() && _word.value == null && inputNotEmpty(name, translation)) {
 
             addWord(name, translation)
-        } else if (categoryIsNotNull() && _word.value != null) {
+            _dataIsValid.value = true
+
+        } else if (categoryIsNotNull() && _word.value != null && inputNotEmpty(name, translation)) {
 
             updateWord(name, translation)
+            _dataIsValid.value = true
+
+        } else {
+            _dataIsValid.value = false
         }
+    }
+
+    private fun inputNotEmpty(name: String, translation: String): Boolean {
+        if (name.isNotEmpty() && translation.isNotEmpty()) {
+            return true
+        }
+        return false
     }
 
     private fun updateWord(newName: String, newTranslation: String) {

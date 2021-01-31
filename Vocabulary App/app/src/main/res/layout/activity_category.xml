@@ -7,10 +7,52 @@
     android:layout_height="match_parent"
     tools:context=".ui.category.CategoryActivity">
 
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        app:cardBackgroundColor="#FF9100"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_youknow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:shadowColor="#481C1C1C"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:text="You know"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/category_total_words"
+                android:layout_width="176dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="#481C1C1C"
+                android:shadowDy="5"
+                android:shadowRadius="10"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                android:textSize="36sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="634dp"
+        android:layout_marginTop="125dp"
+        android:background="#FFFFFF">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -24,8 +66,35 @@
         android:clickable="true"
         android:contentDescription="TODO"
         android:focusable="true"
-        app:backgroundTint="#FF9800"
+        app:tint="#FFFFFF"
+        app:backgroundTint="#FF9100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="#FFFFFF"
         app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <LinearLayout
+        android:id="@+id/category_no_words"
+        android:layout_width="match_parent"
+        android:layout_height="304dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="427dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/world" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|top"
+            android:text="Let's build your personal dictionary" />
+    </LinearLayout>
+
 </FrameLayout>

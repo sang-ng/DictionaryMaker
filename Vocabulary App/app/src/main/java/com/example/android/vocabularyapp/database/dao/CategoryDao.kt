@@ -7,7 +7,7 @@ import com.example.android.vocabularyapp.database.entities.CategoryDb
 @Dao
 interface CategoryDao {
 
-    @Query("SELECT * FROM categories")
+    @Query("SELECT * FROM categories ORDER BY id DESC")
     fun getAllCategories(): LiveData<List<CategoryDb>>
 
     @Insert

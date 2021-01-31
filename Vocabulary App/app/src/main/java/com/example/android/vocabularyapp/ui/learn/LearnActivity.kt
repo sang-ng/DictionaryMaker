@@ -1,14 +1,17 @@
 package com.example.android.vocabularyapp.ui.learn
 
+import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -25,12 +28,21 @@ class LearnActivity : AppCompatActivity() {
         binding = ActivityLearnBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
 
+        setSupportActionBar(binding.learnToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         getCategoryFromIntent()
         initOnClick()
         addObservers()
         initTextToSpeech()
 
         setContentView(binding.root)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     private fun getCategoryFromIntent() {
@@ -62,7 +74,7 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
-    private fun addObservers(){
+    private fun addObservers() {
         observeCurrentWord()
         observeShowTranslationEvent()
         observeSessionsEvent()

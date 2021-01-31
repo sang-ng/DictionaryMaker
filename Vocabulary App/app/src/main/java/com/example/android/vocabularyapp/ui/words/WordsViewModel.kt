@@ -15,22 +15,22 @@ class WordsViewModel(
     DefaultLifecycleObserver {
 
 
-    val words: LiveData<List<Word>>
-        get() = _words
+    val wordsOfCategory: LiveData<List<Word>>
+        get() = _wordsOfCategory
 
     val category: LiveData<Category>
         get() = _category
 
     private var _category = MutableLiveData<Category>()
-    private var _words = MutableLiveData<List<Word>>()
+    private var _wordsOfCategory = MutableLiveData<List<Word>>()
 
     init {
-        getWords()
+        getWordsOfCategory()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
-        getWords()
+        getWordsOfCategory()
         getAllCategoris()
     }
 
@@ -38,11 +38,11 @@ class WordsViewModel(
         _category.value = category
     }
 
-    private fun getWords() {
+    private fun getWordsOfCategory() {
         viewModelScope.launch(Dispatchers.IO) {
             val words = _category.value?.id?.let { repoWord.getWordsOfCategory(it) }
 
-            _words.postValue(words)
+            _wordsOfCategory.postValue(words)
         }
     }
 
@@ -54,7 +54,7 @@ class WordsViewModel(
 
     fun deleteWord(position: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _words.value?.get(position)?.let { repoWord.deleteWord(it) }
+            _wordsOfCategory.value?.get(position)?.let { repoWord.deleteWord(it) }
         }
     }
 

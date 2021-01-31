@@ -1,10 +1,18 @@
 package com.example.android.vocabularyapp.ui.category
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.vocabularyapp.database.dao.WordDao
 import com.example.android.vocabularyapp.databinding.CategoryListItemBinding
 import com.example.android.vocabularyapp.model.Category
+import com.example.android.vocabularyapp.repository.CategoryRepository
+import com.example.android.vocabularyapp.repository.WordsRepository
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CategoryListAdapter(
     private val categoryList: ArrayList<Category> = ArrayList(),
@@ -14,6 +22,13 @@ class CategoryListAdapter(
     interface ItemClickListener {
         fun onItemClick(position: Int)
     }
+
+//    var categoryFilterList = ArrayList<String>()
+//
+//    init {
+//        categoryFilterList = categoryList
+//
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val itemBinding =
@@ -47,8 +62,9 @@ class CategoryListAdapter(
         notifyDataSetChanged()
     }
 
-    fun clear(){
+    fun clear() {
         categoryList.clear()
         notifyDataSetChanged()
     }
+
 }

@@ -2,12 +2,15 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.vocabularyapp.database.VocDatabase
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
@@ -35,6 +38,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         initRecyclerView()
         initDialogFragment()
         observeCategories()
+        observeTotalNumberOfWords()
 
         setContentView(binding.root)
     }
@@ -67,17 +71,15 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     private fun observeCategories() {
         viewModel.categories.observe(this, { categories ->
             if (categories.isNullOrEmpty()) {
-                displayNoDataMessage()
                 listAdapter.clear()
+                binding.categoryNoWords.visibility = View.VISIBLE
             } else {
                 listAdapter.setData(categories)
+                binding.categoryNoWords.visibility = View.INVISIBLE
             }
         })
     }
 
-    private fun displayNoDataMessage() {
-        Toast.makeText(this, "Please add a category", Toast.LENGTH_LONG).show()
-    }
 
     override fun onDialogPositiveClick(name: String) {
         val newCat = CategoryDb(0, name)
@@ -94,6 +96,12 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     private fun startWordsActivity(category: Category) {
         startActivity(Intent(this, WordsActivity::class.java).apply {
             putExtra(CATEGORY, category)
+        })
+    }
+
+    private fun observeTotalNumberOfWords() {
+        viewModel.totalOfWords.observe(this, { totalNumberOfWords ->
+            binding.categoryTotalWords.text = totalNumberOfWords.toString() + " words"
         })
     }
 }

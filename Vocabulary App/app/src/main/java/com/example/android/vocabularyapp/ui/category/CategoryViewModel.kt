@@ -2,16 +2,20 @@ package com.example.android.vocabularyapp.ui.category
 
 import androidx.lifecycle.*
 import com.example.android.vocabularyapp.database.entities.CategoryDb
-import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.repository.CategoryRepository
+import com.example.android.vocabularyapp.repository.WordsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(),
+class CategoryViewModel(
+    private val repoCategory: CategoryRepository,
+    private val repoWords: WordsRepository
+) : ViewModel(),
     DefaultLifecycleObserver {
 
-    val categories = repository.categories
+    val categories = repoCategory.categories
+    val totalOfWords = repoWords.totalWords
+
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
@@ -20,13 +24,13 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
 
     private fun getCategories() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCategories()
+            repoCategory.getCategories()
         }
     }
 
     fun addCategory(categoryDb: CategoryDb) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addCategory(categoryDb)
+            repoCategory.addCategory(categoryDb)
         }
     }
 }
