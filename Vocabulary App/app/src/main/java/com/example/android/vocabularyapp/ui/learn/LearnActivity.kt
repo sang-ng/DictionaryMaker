@@ -34,19 +34,25 @@ class LearnActivity : AppCompatActivity() {
         binding = ActivityLearnBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
 
-        setSupportActionBar(binding.learnToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        initToolbar()
         getCategoryFromIntent()
         initOnClick()
         addObservers()
         initTextToSpeech()
-
-        soundCorrect = MediaPlayer.create(this, R.raw.correct)
-        soundCompleted = MediaPlayer.create(this, R.raw.success)
+        initSoundEffects()
 
         setContentView(binding.root)
+    }
+
+    private fun initToolbar(){
+        setSupportActionBar(binding.learnToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initSoundEffects(){
+        soundCorrect = MediaPlayer.create(this, R.raw.correct)
+        soundCompleted = MediaPlayer.create(this, R.raw.success)
     }
 
     override fun onSupportNavigateUp(): Boolean {
