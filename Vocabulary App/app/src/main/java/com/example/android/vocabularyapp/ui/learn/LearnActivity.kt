@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -45,8 +46,13 @@ class LearnActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish()
+        navigateUp()
         return super.onSupportNavigateUp()
+    }
+
+    private fun navigateUp(){
+        finish()
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     private fun getCategoryFromIntent() {
