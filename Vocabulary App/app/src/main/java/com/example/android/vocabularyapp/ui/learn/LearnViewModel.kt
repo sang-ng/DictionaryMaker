@@ -19,15 +19,12 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
     val showSessionCompleteEvent: LiveData<Boolean>
         get() = _showSessionCompleteEvent
 
-    val numberOfGoodWords: LiveData<Int>
-        get() = _numberOfGoodWords
 
     val category: LiveData<Category>
         get() = _category
 
     private var _category = MutableLiveData<Category>()
     private var _currentWord = MutableLiveData<Word>()
-    private var _numberOfGoodWords = MutableLiveData<Int>()
     private var _showTranslationEvent = MutableLiveData<Boolean>()
     private var _showSessionCompleteEvent = MutableLiveData<Boolean>()
 
@@ -37,14 +34,12 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
     init {
         getCurrentWord()
-        getNumberOfGoodWords()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
 
         getCurrentWord()
-        getNumberOfGoodWords()
     }
 
     fun setSelectedCategory(category: Category) {
@@ -75,22 +70,6 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         }
     }
 
-    private fun getNumberOfGoodWords() {
-        viewModelScope.launch(Dispatchers.IO) {
-
-            val goodWords = getAllWords()?.filter { it.goodWord == 1 }
-
-            goodWords?.let {
-
-                goodWords.count().toString()
-
-                _numberOfGoodWords.postValue(
-                    goodWords.count()
-                )
-            }
-        }
-    }
-
     private fun getAllWords() = _category.value?.id?.let { repository.getWordsOfCategory(it) }
 
     fun onCardClicked() {
@@ -105,7 +84,6 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         }
 
         _itemPosCounter++
-        getNumberOfGoodWords()
     }
 
     fun onNoClicked() {
@@ -116,7 +94,6 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
         }
 
         _itemPosCounter++
-        getNumberOfGoodWords()
     }
 
     fun showSessionCompleteDone() {

@@ -1,24 +1,23 @@
 package com.example.android.vocabularyapp.ui.learn
 
-import android.content.Intent
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
-import com.example.android.vocabularyapp.ui.words.WordsActivity
-import kotlinx.coroutines.delay
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
+
 
 class LearnActivity : AppCompatActivity() {
 
@@ -27,6 +26,7 @@ class LearnActivity : AppCompatActivity() {
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
     private lateinit var textToSpeech: TextToSpeech
+    private lateinit var soundCorrect : MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +41,8 @@ class LearnActivity : AppCompatActivity() {
         initOnClick()
         addObservers()
         initTextToSpeech()
+
+        soundCorrect = MediaPlayer.create(this, R.raw.correct)
 
         setContentView(binding.root)
     }
@@ -67,11 +69,14 @@ class LearnActivity : AppCompatActivity() {
 
         binding.learnCard.setOnClickListener {
             viewModel.onCardClicked()
+            initFlipCardAnim()
         }
+
 
         binding.learnYesBtn.setOnClickListener {
             viewModel.onYesClicked()
             viewModel.getCurrentWord()
+            soundCorrect.start()
         }
 
         binding.learnNoBtn.setOnClickListener {
@@ -84,11 +89,24 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
+    private fun initFlipCardAnim(){
+        val oa1 = ObjectAnimator.ofFloat( binding.learnCard, "scaleX", 1f, 0f)
+        val oa2 = ObjectAnimator.ofFloat( binding.learnCard, "scaleX", 0f, 1f)
+        oa1.interpolator = DecelerateInterpolator()
+        oa2.interpolator = AccelerateDecelerateInterpolator()
+        oa1.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                oa2.start()
+            }
+        })
+        oa1.start()
+    }
+
     private fun addObservers() {
         observeCurrentWord()
         observeShowTranslationEvent()
         observeSessionsEvent()
-        observeNumberOGoodWords()
     }
 
     private fun initTextToSpeech() {
@@ -131,12 +149,6 @@ class LearnActivity : AppCompatActivity() {
                 binding.learnPronunciation.visibility = View.INVISIBLE
                 binding.learnFlip.visibility = View.INVISIBLE
             }
-        })
-    }
-
-    private fun observeNumberOGoodWords() {
-        viewModel.numberOfGoodWords.observe(this, { numberOfGoodWords ->
-            Log.i("TEST", numberOfGoodWords.toString())
         })
     }
 
