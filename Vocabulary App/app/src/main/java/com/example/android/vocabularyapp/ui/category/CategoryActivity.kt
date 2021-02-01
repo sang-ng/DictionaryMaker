@@ -1,18 +1,17 @@
 package com.example.android.vocabularyapp.ui.category
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.vocabularyapp.R
-import com.example.android.vocabularyapp.database.VocDatabase
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
@@ -20,8 +19,10 @@ import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
+
 class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListener,
-    CategoryListAdapter.ItemClickListener {
+    CategoryListAdapter.ItemClickListener,
+    androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
     private val viewModel by viewModel<CategoryViewModel>()
     private lateinit var binding: ActivityCategoryBinding
@@ -35,7 +36,9 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
+        setSupportActionBar(binding.toolbar)
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         initOnClick()
         initRecyclerView()
         initDialogFragment()
@@ -108,4 +111,54 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
             binding.categoryTotalWords.text = totalNumberOfWords.toString() + " words"
         })
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        val searchItem: MenuItem? = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
+        searchView.setOnQueryTextListener(this)
+
+        return true
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%" // "%" required for custom sql query
+
+        viewModel.searchDatabase(searchQuery).observe(this, { list ->
+            list.let {
+                listAdapter.setData(it)
+            }
+        })
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            searchDatabase(query)
+        }
+        return true
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

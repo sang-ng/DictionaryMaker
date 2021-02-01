@@ -7,15 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.category.CategoryActivity">
 
-    <SearchView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="124dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:menu="@menu/menu_main" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="124dp"
         app:cardBackgroundColor="#FF9100"
-        app:cardElevation="2dp">
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="188dp"
@@ -51,7 +57,7 @@
         android:id="@+id/category_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="634dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="180dp"
         android:background="#FFFFFF">
 
     </androidx.recyclerview.widget.RecyclerView>

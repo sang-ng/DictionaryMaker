@@ -3,6 +3,7 @@ package com.example.android.vocabularyapp.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.android.vocabularyapp.database.entities.CategoryDb
+import com.example.android.vocabularyapp.model.Category
 
 @Dao
 interface CategoryDao {
@@ -18,4 +19,7 @@ interface CategoryDao {
 
     @Delete
     fun deleteCategory(categoryDb: CategoryDb)
+
+    @Query("SELECT * FROM categories WHERE name LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String) : LiveData<List<Category>>
 }
