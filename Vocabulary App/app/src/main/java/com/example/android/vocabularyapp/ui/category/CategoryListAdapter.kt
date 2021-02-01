@@ -15,7 +15,7 @@ class CategoryListAdapter(
     //TODO: show good and total words for each list item
 
     interface ItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(itemId: Long)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -35,12 +35,13 @@ class CategoryListAdapter(
     inner class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-        init {
-            itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
-        }
+//        init {
+//            itemView.setOnClickListener { clickListener.onItemClick(itemId) }
+//        }
 
         fun bind(category: Category) {
             itemBinding.categoryListName.text = category.name
+            itemBinding.categoryListLayout.setOnClickListener { clickListener.onItemClick(category.id) }
         }
     }
 

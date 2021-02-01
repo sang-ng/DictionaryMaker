@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -93,8 +94,8 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         catDialogFragment.dismiss()
     }
 
-    override fun onItemClick(position: Int) {
-        viewModel.categories.value?.get(position)?.let {
+    override fun onItemClick(id: Long) {
+        viewModel.categories.value?.find { it.id == id }?.let {
             startWordsActivity(it)
         }
     }
