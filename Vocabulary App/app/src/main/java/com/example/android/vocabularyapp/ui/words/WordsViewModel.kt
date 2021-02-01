@@ -55,6 +55,7 @@ class WordsViewModel(
     fun deleteWord(position: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _wordsOfCategory.value?.get(position)?.let { repoWord.deleteWord(it) }
+            getWordsOfCategory()
         }
     }
 

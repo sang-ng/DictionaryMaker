@@ -11,7 +11,6 @@ class CategoryListAdapter(
     val clickListener: ItemClickListener
 ) : RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
 
-    //TODO: implement search filter
     //TODO: show good and total words for each list item
 
     interface ItemClickListener {

@@ -143,6 +143,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             if (words.isNullOrEmpty()) {
                 binding.wordsAddImage.visibility = View.VISIBLE
                 binding.wordsAddText.visibility = View.VISIBLE
+                binding.wordsNumber.text =  "(0 /0)"
             } else {
                 renderUI(listItems = words)
             }
@@ -224,7 +225,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private fun setRecyclerViewItemTouchListener() {
 
         val itemTouchCallback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -237,7 +238,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                 val position = viewHolder.adapterPosition
 
                 viewModel.deleteWord(position)
-                //TODO: update recycler view after item deleted
             }
         }
 
