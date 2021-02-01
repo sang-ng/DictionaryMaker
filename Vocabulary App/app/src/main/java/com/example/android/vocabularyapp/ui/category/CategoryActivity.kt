@@ -17,6 +17,7 @@ import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -36,7 +37,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.topAppBar)
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
         initOnClick()
@@ -108,7 +109,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
 
     private fun observeTotalNumberOfWords() {
         viewModel.totalOfWords.observe(this, { totalNumberOfWords ->
-            binding.categoryTotalWords.text = totalNumberOfWords.toString() + " words"
+            binding.topAppBar.title = "$totalNumberOfWords words"
         })
     }
 

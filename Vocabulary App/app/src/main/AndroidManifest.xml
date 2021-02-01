@@ -14,18 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyApp">
 
-        <activity
-            android:name=".ui.learn.LearnActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-
-        <activity
-            android:name=".ui.addWord.AddWordActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity android:name=".ui.learn.LearnActivity" />
+        <activity android:name=".ui.addWord.AddWordActivity" />
 
         <activity
             android:name=".ui.words.WordsActivity"
-            android:parentActivityName=".ui.category.CategoryActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:parentActivityName=".ui.category.CategoryActivity" />
 
         <activity android:name=".ui.category.CategoryActivity">
             <intent-filter>

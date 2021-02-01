@@ -3,7 +3,7 @@
     <style name="Theme.VocabularyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FF9100</item>
-        <item name="colorPrimaryVariant">#FF9100</item>
+        <item name="colorPrimaryVariant">#c56200</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#c56200</item>
@@ -15,9 +15,7 @@
 
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
-
     </style>
-
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto</item>
@@ -28,8 +26,4 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-    <style name="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 </resources>
