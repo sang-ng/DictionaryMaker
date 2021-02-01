@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.provider.MediaStore
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
@@ -28,6 +29,7 @@ class LearnActivity : AppCompatActivity() {
     private lateinit var textToSpeech: TextToSpeech
     private lateinit var soundCorrect : MediaPlayer
     private lateinit var soundCompleted : MediaPlayer
+    private lateinit var soundWrong : MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,7 @@ class LearnActivity : AppCompatActivity() {
     private fun initSoundEffects(){
         soundCorrect = MediaPlayer.create(this, R.raw.correct)
         soundCompleted = MediaPlayer.create(this, R.raw.success)
+        soundWrong = MediaPlayer.create(this, R.raw.wrong)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -90,6 +93,7 @@ class LearnActivity : AppCompatActivity() {
         binding.learnNoBtn.setOnClickListener {
             viewModel.onNoClicked()
             viewModel.getCurrentWord()
+            soundWrong.start()
         }
 
         binding.learnPronunciation.setOnClickListener {
