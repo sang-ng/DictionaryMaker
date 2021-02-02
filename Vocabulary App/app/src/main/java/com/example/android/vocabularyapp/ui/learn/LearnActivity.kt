@@ -27,9 +27,9 @@ class LearnActivity : AppCompatActivity() {
     private val viewModel by viewModel<LearnViewModel>()
     private lateinit var binding: ActivityLearnBinding
     private lateinit var textToSpeech: TextToSpeech
-    private lateinit var soundCorrect : MediaPlayer
-    private lateinit var soundCompleted : MediaPlayer
-    private lateinit var soundWrong : MediaPlayer
+    private lateinit var soundCorrect: MediaPlayer
+    private lateinit var soundCompleted: MediaPlayer
+    private lateinit var soundWrong: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +46,13 @@ class LearnActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun initToolbar(){
+    private fun initToolbar() {
         setSupportActionBar(binding.learnToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun initSoundEffects(){
+    private fun initSoundEffects() {
         soundCorrect = MediaPlayer.create(this, R.raw.correct)
         soundCompleted = MediaPlayer.create(this, R.raw.success)
         soundWrong = MediaPlayer.create(this, R.raw.wrong)
@@ -63,7 +63,7 @@ class LearnActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    private fun navigateUp(){
+    private fun navigateUp() {
         finish()
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
@@ -79,8 +79,8 @@ class LearnActivity : AppCompatActivity() {
     private fun initOnClick() {
 
         binding.learnCard.setOnClickListener {
-            viewModel.onCardClicked()
             initFlipCardAnim()
+            viewModel.onCardClicked()
         }
 
 
@@ -101,9 +101,9 @@ class LearnActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFlipCardAnim(){
-        val oa1 = ObjectAnimator.ofFloat( binding.learnCard, "scaleX", 1f, 0f)
-        val oa2 = ObjectAnimator.ofFloat( binding.learnCard, "scaleX", 0f, 1f)
+    private fun initFlipCardAnim() {
+        val oa1 = ObjectAnimator.ofFloat(binding.learnCard, "scaleX", 1f, 0f)
+        val oa2 = ObjectAnimator.ofFloat(binding.learnCard, "scaleX", 0f, 1f)
         oa1.interpolator = DecelerateInterpolator()
         oa2.interpolator = AccelerateDecelerateInterpolator()
         oa1.addListener(object : AnimatorListenerAdapter() {
@@ -137,15 +137,18 @@ class LearnActivity : AppCompatActivity() {
 
     private fun observeShowTranslationEvent() {
         viewModel.showTranslationEvent.observe(this, { showTranslationEvent ->
-
-            if (showTranslationEvent) {
-                binding.learnTranslation.visibility = View.VISIBLE
-                binding.learnWord.visibility = View.INVISIBLE
-            } else {
-                binding.learnTranslation.visibility = View.INVISIBLE
-                binding.learnWord.visibility = View.VISIBLE
-            }
+            showTranslationOrWord(showTranslationEvent)
         })
+    }
+
+    private fun showTranslationOrWord(showTranslationEvent: Boolean) {
+        if (showTranslationEvent) {
+            binding.learnTranslation.visibility = View.VISIBLE
+            binding.learnWord.visibility = View.INVISIBLE
+        } else {
+            binding.learnTranslation.visibility = View.INVISIBLE
+            binding.learnWord.visibility = View.VISIBLE
+        }
     }
 
     private fun observeSessionsEvent() {
@@ -158,7 +161,7 @@ class LearnActivity : AppCompatActivity() {
         })
     }
 
-    private fun startSuccessAnim(){
+    private fun startSuccessAnim() {
         binding.learnAnimation.visibility = View.VISIBLE
         binding.learnWord.visibility = View.INVISIBLE
         binding.learnTranslation.visibility = View.INVISIBLE

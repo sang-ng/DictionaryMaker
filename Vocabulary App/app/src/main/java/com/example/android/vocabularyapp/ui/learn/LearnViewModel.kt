@@ -34,6 +34,7 @@ class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
 
     init {
         getCurrentWord()
+        _showTranslationEvent.value = true
     }
 
     override fun onResume(owner: LifecycleOwner) {
