@@ -2,14 +2,13 @@ package com.example.android.vocabularyapp.ui.words
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Canvas
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.telecom.Call
-import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -23,9 +22,11 @@ import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     AddCatDialog.CategoryDialogListener {
@@ -143,7 +144,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             if (words.isNullOrEmpty()) {
                 binding.wordsAddImage.visibility = View.VISIBLE
                 binding.wordsAddText.visibility = View.VISIBLE
-                binding.wordsNumber.text =  "(0 /0)"
+                binding.wordsNumber.text = "(0 /0)"
             } else {
                 renderUI(listItems = words)
             }
@@ -225,10 +226,9 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private fun setRecyclerViewItemTouchListener() {
 
         val itemTouchCallback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                 viewHolder1: RecyclerView.ViewHolder
             ): Boolean {
                 return false
