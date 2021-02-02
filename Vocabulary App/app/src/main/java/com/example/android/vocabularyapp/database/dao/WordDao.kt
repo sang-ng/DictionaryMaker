@@ -20,7 +20,7 @@ interface WordDao {
     @Query("DELETE FROM words WHERE categoryId=:categoryId")
     fun deleteWordsOfCategory(categoryId: Long)
 
-    @Query("SELECT * FROM words WHERE categoryId=:categoryId")
+    @Query("SELECT * FROM words WHERE categoryId=:categoryId ORDER BY id DESC")
     fun getWordsOfCategory(categoryId: Long): List<WordDb>
 
     @Query("SELECT COUNT(*) FROM words")
