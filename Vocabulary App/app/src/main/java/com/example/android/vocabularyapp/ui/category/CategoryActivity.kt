@@ -2,11 +2,9 @@ package com.example.android.vocabularyapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -19,7 +17,6 @@ import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -37,11 +34,11 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         lifecycle.addObserver(viewModel)
-        setSupportActionBar(binding.topAppBar)
 
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        initToolbar()
         initOnClick()
         initRecyclerView()
         initDialogFragment()
@@ -49,6 +46,11 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         observeTotalNumberOfWords()
 
         setContentView(binding.root)
+    }
+
+    private fun initToolbar(){
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun initOnClick() {
@@ -78,16 +80,24 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
 
     private fun observeCategories() {
         viewModel.categories.observe(this, { categories ->
+
             if (categories.isNullOrEmpty()) {
                 listAdapter.clear()
-                binding.categoryNoWords.visibility = View.VISIBLE
             } else {
                 listAdapter.setData(categories)
-                binding.categoryNoWords.visibility = View.INVISIBLE
             }
+
+            showOrHideImage(categories)
         })
     }
 
+    private fun showOrHideImage(categories : List<Category>){
+        if(categories.isNullOrEmpty()){
+            binding.categoryNoCategories.visibility = View.VISIBLE
+        }else{
+            binding.categoryNoCategories.visibility = View.INVISIBLE
+        }
+    }
 
     override fun onDialogPositiveClick(name: String) {
         val newCat = CategoryDb(0, name)
@@ -95,8 +105,8 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         catDialogFragment.dismiss()
     }
 
-    override fun onItemClick(id: Long) {
-        viewModel.categories.value?.find { it.id == id }?.let {
+    override fun onItemClick(itemId: Long) {
+        viewModel.categories.value?.find { it.id == itemId }?.let {
             startWordsActivity(it)
         }
     }
@@ -106,7 +116,6 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
             putExtra(CATEGORY, category)
         })
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
-
     }
 
     private fun observeTotalNumberOfWords() {

@@ -11,13 +11,12 @@ import java.util.*
 
 class CategoryViewModel(
     private val repoCategory: CategoryRepository,
-    private val repoWords: WordsRepository
+    repoWords: WordsRepository
 ) : ViewModel(),
     DefaultLifecycleObserver {
 
     val categories = repoCategory.categories
     val totalOfWords = repoWords.totalWords
-
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)

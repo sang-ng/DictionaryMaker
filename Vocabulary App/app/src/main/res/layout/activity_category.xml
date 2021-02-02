@@ -47,7 +47,7 @@
         app:tint="#FFFFFF" />
 
     <LinearLayout
-        android:id="@+id/category_no_words"
+        android:id="@+id/category_no_categories"
         android:layout_width="match_parent"
         android:layout_height="304dp"
         android:layout_gravity="center"
