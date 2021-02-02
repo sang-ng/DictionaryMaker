@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Vocabulary App</string>
+    <string name="error_dialog">\" must implement NoticeDialogListener\"</string>
+    <string name="input_invalid_error_message">Please fill out all fields</string>
+    <string name="category_arg">category_arg</string>
+    <string name="word_arg">word_arg</string>
+    <string name="zero_words">(0 /0)</string>
+    <string name="cat_dialog">CatDialog</string>
+    <string name="new_word">New word</string>
+    <string name="translation">Translation</string>
+    <string name="save">save</string>
+    <string name="add_button">add_button</string>
+    <string name="let_s_build_your_personal_dictionary">Let\'s build your personal dictionary</string>
+    <string name="textview">TextView</string>
+    <string name="flipcard">Flipcard</string>
+    <string name="speaker">speaker</string>
+    <string name="yes_button">yes button</string>
+    <string name="no_button">no button</string>
+    <string name="continue_learning">Continue Learning</string>
+    <string name="add_your_first_words">Add your first words!</string>
+    <string name="my_vocabulary">MY VOCABULARY</string>
+    <string name="_0">0</string>
+    <string name="basic">Basic</string>
+    <string name="new_category">NEW CATEGORY</string>
+    <string name="e_g_food">e.g. Food</string>
 </resources>

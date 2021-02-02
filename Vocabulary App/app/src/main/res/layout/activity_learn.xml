@@ -12,7 +12,7 @@
         android:id="@+id/learn_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F6F8FB"
+        android:background="@color/app_background_color"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +37,8 @@
         android:id="@+id/learn_card"
         android:layout_width="0dp"
         android:layout_height="266dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
         app:cardElevation="4dp"
         app:cardMaxElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +55,7 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textSize="18sp"
             android:visibility="invisible" />
 
@@ -66,7 +66,7 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textColor="#000000"
             android:textSize="18sp" />
 
@@ -76,7 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="8dp"
-            app:srcCompat="@drawable/ic_baseline_360_24" />
+            app:srcCompat="@drawable/ic_baseline_360_24"
+            android:contentDescription="@string/flipcard" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -91,7 +92,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/learn_card"
-        app:srcCompat="@drawable/ic_baseline_volume" />
+        app:srcCompat="@drawable/ic_baseline_volume"
+        android:contentDescription="@string/speaker" />
 
     <ImageView
         android:id="@+id/learn_yes_btn"
@@ -103,7 +105,8 @@
         app:layout_constraintEnd_toEndOf="@+id/learn_card"
         app:layout_constraintStart_toEndOf="@+id/learn_pronunciation"
         app:layout_constraintTop_toBottomOf="@+id/learn_card"
-        app:srcCompat="@drawable/ic_baseline_sentiment_very_satisfied_24" />
+        app:srcCompat="@drawable/ic_baseline_sentiment_very_satisfied_24"
+        android:contentDescription="@string/yes_button" />
 
     <ImageView
         android:id="@+id/learn_no_btn"
@@ -115,6 +118,7 @@
         app:layout_constraintEnd_toStartOf="@+id/learn_pronunciation"
         app:layout_constraintStart_toStartOf="@+id/learn_card"
         app:layout_constraintTop_toBottomOf="@+id/learn_card"
-        app:srcCompat="@drawable/ic_baseline_sentiment_very_dissatisfied_24" />
+        app:srcCompat="@drawable/ic_baseline_sentiment_very_dissatisfied_24"
+        android:contentDescription="@string/no_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

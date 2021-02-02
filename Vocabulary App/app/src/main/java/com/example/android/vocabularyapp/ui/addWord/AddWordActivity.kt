@@ -67,7 +67,7 @@ class AddWordActivity : AppCompatActivity() {
     private fun observeInputData() {
         viewModel.dataIsValid.observe(this, { dataIsValid ->
             if (!dataIsValid) {
-                Snackbar.make(binding.root, "Please fill out all fields", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.root, getString(R.string.input_invalid_error_message), Snackbar.LENGTH_SHORT)
                     .show()
             } else {
                 finish()
@@ -83,13 +83,6 @@ class AddWordActivity : AppCompatActivity() {
                 binding.addWordTrans.setText(word.translation)
             }
         })
-    }
-
-    private fun startWordsActivity(category: Category?) {
-        startActivity(Intent(this, WordsActivity::class.java).apply {
-            putExtra(CATEGORY, category)
-        })
-        overridePendingTransition(R.anim.slide_out_bottom, R.anim.hold)
     }
 }
 

@@ -75,8 +75,6 @@ class WordsViewModel(
             _category.value?.let { repoCategory.updateCategory(it) }
         }
     }
-
-
 }
 
 

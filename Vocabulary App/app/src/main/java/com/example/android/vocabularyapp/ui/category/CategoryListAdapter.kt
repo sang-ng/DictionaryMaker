@@ -11,8 +11,6 @@ class CategoryListAdapter(
     val clickListener: ItemClickListener
 ) : RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
 
-    //TODO: show good and total words for each list item
-
     interface ItemClickListener {
         fun onItemClick(itemId: Long)
     }
@@ -34,10 +32,6 @@ class CategoryListAdapter(
     inner class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-//        init {
-//            itemView.setOnClickListener { clickListener.onItemClick(itemId) }
-//        }
-
         fun bind(category: Category) {
             itemBinding.categoryListName.text = category.name
             itemBinding.categoryListLayout.setOnClickListener { clickListener.onItemClick(category.id) }
@@ -54,5 +48,4 @@ class CategoryListAdapter(
         categoryList.clear()
         notifyDataSetChanged()
     }
-
 }

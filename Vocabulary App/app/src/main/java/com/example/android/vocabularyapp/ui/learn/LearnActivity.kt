@@ -83,7 +83,6 @@ class LearnActivity : AppCompatActivity() {
             viewModel.onCardClicked()
         }
 
-
         binding.learnYesBtn.setOnClickListener {
             viewModel.onYesClicked()
             viewModel.getCurrentWord()

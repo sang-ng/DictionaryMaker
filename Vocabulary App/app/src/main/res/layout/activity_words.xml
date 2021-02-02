@@ -11,7 +11,7 @@
         android:id="@+id/words_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F6F8FB"
+        android:background="@color/app_background_color"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="161dp"
         android:layout_gravity="top"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/margin_normal"
         app:layout_constraintBottom_toTopOf="@+id/cardView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -38,20 +38,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/margin_normal"
             android:clickable="false"
             android:enabled="false"
-            android:text="Continue Learning"
+            android:text="@string/continue_learning"
             android:visibility="visible"
-            app:backgroundTint="#ff6f00" />
+            app:backgroundTint="@color/app_main_color" />
 
         <TextView
             android:id="@+id/words_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
-            android:text="TextView"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:text="@string/textview"
             android:textSize="24sp" />
 
         <ImageView
@@ -95,8 +95,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:text="Add your first words!"
-            android:textColor="#DCDCDC" />
+            android:text="@string/add_your_first_words"
+            android:textColor="@color/word_text_color" />
 
     </androidx.cardview.widget.CardView>
 
@@ -132,7 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="MY VOCABULARY"
+                    android:text="@string/my_vocabulary"
                     android:textColor="#777777"
                     android:textSize="12sp" />
 
@@ -141,8 +141,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#F1F1F1"
-                    android:text="0"
+                    android:background="@color/list_header_background"
+                    android:text="@string/_0"
                     android:textColor="#777777"
                     android:textSize="12sp" />
             </LinearLayout>

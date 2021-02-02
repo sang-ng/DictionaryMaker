@@ -29,6 +29,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     private lateinit var listAdapter: CategoryListAdapter
     private lateinit var fragmentManager: FragmentManager
     private lateinit var catDialogFragment: DialogFragment
+
     private val CATEGORY = "category_arg"
 
 
@@ -60,7 +61,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     }
 
     private fun showAddDialog() {
-        catDialogFragment.show(fragmentManager, "CatDialog")
+        catDialogFragment.show(fragmentManager, getString(R.string.cat_dialog))
     }
 
     private fun initRecyclerView() {

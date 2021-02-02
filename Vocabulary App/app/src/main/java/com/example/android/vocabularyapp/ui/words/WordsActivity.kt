@@ -119,7 +119,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         }
     }
 
-
     private fun initRecyclerView() {
         listAdapter = WordListAdapter(ArrayList(), this)
 
@@ -140,7 +139,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             if (words.isNullOrEmpty()) {
                 binding.wordsAddImage.visibility = View.VISIBLE
                 binding.wordsAddText.visibility = View.VISIBLE
-                binding.wordsNumber.text = "(0 /0)"
+                binding.wordsNumber.text = getString(R.string.zero_words)
             } else {
                 renderUI(listItems = words)
             }
@@ -215,7 +214,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     }
 
     private fun showRenameDialog() {
-        catDialogFragment.show(fragmentManager, "CatDialog")
+        catDialogFragment.show(fragmentManager, getString(R.string.cat_dialog))
     }
 
     private fun setRecyclerViewItemTouchListener() {
