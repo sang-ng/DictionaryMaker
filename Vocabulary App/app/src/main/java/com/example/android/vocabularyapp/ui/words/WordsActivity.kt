@@ -2,13 +2,11 @@ package com.example.android.vocabularyapp.ui.words
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Canvas
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -22,7 +20,6 @@ import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.addWord.AddWordActivity
 import com.example.android.vocabularyapp.ui.learn.LearnActivity
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -40,7 +37,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private lateinit var recyclerView: RecyclerView
     private val CATEGORY = "category_arg"
     private val WORD = "word_arg"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,7 +113,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                     viewModel.deleteCategory()
                     finish()
                 }
-                R.id.menu_cat_rename -> showDialog()
+                R.id.menu_cat_rename -> showRenameDialog()
             }
             true
         }
@@ -167,7 +163,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
         binding.wordsStartBtn.isEnabled = true
         binding.wordsStartBtn.isClickable = true
-
     }
 
     private fun startLearnActivity(category: Category) {
@@ -219,7 +214,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         catDialogFragment.dismiss()
     }
 
-    private fun showDialog() {
+    private fun showRenameDialog() {
         catDialogFragment.show(fragmentManager, "CatDialog")
     }
 

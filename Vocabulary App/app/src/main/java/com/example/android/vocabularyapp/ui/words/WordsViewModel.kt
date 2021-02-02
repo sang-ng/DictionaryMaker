@@ -14,7 +14,6 @@ class WordsViewModel(
 ) : ViewModel(),
     DefaultLifecycleObserver {
 
-
     val wordsOfCategory: LiveData<List<Word>>
         get() = _wordsOfCategory
 
@@ -36,6 +35,12 @@ class WordsViewModel(
 
     fun setSelectedCategory(category: Category) {
         _category.value = category
+    }
+
+    private fun getAllCategories() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repoCategory.getCategories()
+        }
     }
 
     private fun getWordsOfCategory() {
@@ -71,11 +76,7 @@ class WordsViewModel(
         }
     }
 
-    private fun getAllCategories() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repoCategory.getCategories()
-        }
-    }
+
 }
 
 
