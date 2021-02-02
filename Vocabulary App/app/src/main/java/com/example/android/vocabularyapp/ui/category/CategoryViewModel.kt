@@ -36,7 +36,7 @@ class CategoryViewModel(
         }
     }
 
-    fun searchDatabase(searchQuery: String) : LiveData<List<Category>>{
+    fun searchDatabase(searchQuery: String) : LiveData<List<CategoryDb>>{
         return repoCategory.searchDatabase(searchQuery)
     }
 }

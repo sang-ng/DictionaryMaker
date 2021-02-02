@@ -21,5 +21,5 @@ interface CategoryDao {
     fun deleteCategory(categoryDb: CategoryDb)
 
     @Query("SELECT * FROM categories WHERE name LIKE :searchQuery")
-    fun searchDatabase(searchQuery: String) : LiveData<List<Category>>
+    fun searchDatabase(searchQuery: String) : LiveData<List<CategoryDb>>
 }

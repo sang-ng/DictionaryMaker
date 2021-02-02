@@ -39,7 +39,7 @@ class CategoryRepository(private val dao: CategoryDao) {
         }
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<Category>> {
+    fun searchDatabase(searchQuery: String): LiveData<List<CategoryDb>> {
         return dao.searchDatabase(searchQuery)
     }
 }

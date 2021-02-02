@@ -22,7 +22,4 @@ interface WordDao {
 
     @Query("SELECT COUNT(*) FROM words")
     fun getTotalOfWords(): LiveData<Int>
-
-    @Query("SELECT COUNT(*) FROM words WHERE categoryId=:categoryId")
-    fun getTotalWordsOfCategory(categoryId: Long): Int
 }

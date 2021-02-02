@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.database.entities.CategoryDb
+import com.example.android.vocabularyapp.database.entities.toDomainModel
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
@@ -129,7 +130,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
 
         viewModel.searchDatabase(searchQuery).observe(this, { list ->
             list.let {
-                listAdapter.setData(it)
+                listAdapter.setData(it.toDomainModel())
             }
         })
     }
