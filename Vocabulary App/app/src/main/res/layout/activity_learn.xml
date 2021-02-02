@@ -20,16 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
-        android:layout_width="match_parent"
+        android:id="@+id/learn_animation"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+        app:lottie_loop="false"
         app:lottie_rawRes="@raw/succeeded" />
 
     <com.google.android.material.card.MaterialCardView
@@ -70,7 +71,7 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/learn_flip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"

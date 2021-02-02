@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.telecom.Call
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -97,6 +99,12 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        startCategoryActivity()
+
+        return super.onSupportNavigateUp()
+    }
+
     private fun showCatPopUp(view: View) {
         val popUp = PopupMenu(this, view)
         popUp.inflate(R.menu.menu_category)
@@ -164,6 +172,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         startActivity(Intent(this, LearnActivity::class.java).apply {
             putExtra(CATEGORY, category)
         })
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
     }
 
     private fun startAddWordActivity(category: Category, word: Word?) {
@@ -171,6 +180,12 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             putExtra(CATEGORY, category)
             putExtra(WORD, word)
         })
+        overridePendingTransition(R.anim.slide_in_bottom, R.anim.hold)
+    }
+
+    private fun startCategoryActivity() {
+        finish()
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     override fun onItemClick(position: Int) {

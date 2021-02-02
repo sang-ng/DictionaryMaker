@@ -1,5 +1,6 @@
 package com.example.android.vocabularyapp.ui.category
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.database.VocDatabase
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.databinding.ActivityCategoryBinding
@@ -97,6 +99,8 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         startActivity(Intent(this, WordsActivity::class.java).apply {
             putExtra(CATEGORY, category)
         })
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
+
     }
 
     private fun observeTotalNumberOfWords() {

@@ -3,6 +3,7 @@ package com.example.android.vocabularyapp.ui.addWord
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityAddWordBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
@@ -35,7 +36,7 @@ class AddWordActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
-
+        overridePendingTransition(R.anim.hold, R.anim.slide_out_bottom)
         return super.onSupportNavigateUp()
     }
 
@@ -61,7 +62,8 @@ class AddWordActivity : AppCompatActivity() {
     private fun observeInputData() {
         viewModel.dataIsValid.observe(this, { dataIsValid ->
             if (!dataIsValid) {
-                Snackbar.make(binding.root, "Please fill out all fields", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Please fill out all fields", Snackbar.LENGTH_SHORT)
+                    .show()
             } else {
                 finish()
             }
