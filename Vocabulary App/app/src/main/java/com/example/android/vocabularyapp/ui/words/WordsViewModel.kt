@@ -31,7 +31,7 @@ class WordsViewModel(
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
         getWordsOfCategory()
-        getAllCategoris()
+        getAllCategories()
     }
 
     fun setSelectedCategory(category: Category) {
@@ -48,7 +48,10 @@ class WordsViewModel(
 
     fun deleteCategory() {
         viewModelScope.launch(Dispatchers.IO) {
-            _category.value?.let { repoCategory.deleteCategory(it) }
+            _category.value?.let {
+                repoCategory.deleteCategory(it)
+                repoWord.deleteWordsOfCategory(it.id)
+            }
         }
     }
 
@@ -68,7 +71,7 @@ class WordsViewModel(
         }
     }
 
-    private fun getAllCategoris() {
+    private fun getAllCategories() {
         viewModelScope.launch(Dispatchers.IO) {
             repoCategory.getCategories()
         }

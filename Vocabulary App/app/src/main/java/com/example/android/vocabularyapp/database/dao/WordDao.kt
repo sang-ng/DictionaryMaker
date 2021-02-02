@@ -17,6 +17,9 @@ interface WordDao {
     @Delete
     fun deleteWord(word: WordDb)
 
+    @Query("DELETE FROM words WHERE categoryId=:categoryId")
+    fun deleteWordsOfCategory(categoryId: Long)
+
     @Query("SELECT * FROM words WHERE categoryId=:categoryId")
     fun getWordsOfCategory(categoryId: Long): List<WordDb>
 
