@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
+import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.DialogCategoryBinding
 
 class AddCatDialog : DialogFragment() {
@@ -28,7 +29,7 @@ class AddCatDialog : DialogFragment() {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (context.toString() +
-                        " must implement NoticeDialogListener")
+                        getString(R.string.error_dialog))
             )
         }
     }

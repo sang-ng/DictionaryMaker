@@ -17,12 +17,12 @@ interface WordDao {
     @Delete
     fun deleteWord(word: WordDb)
 
-    @Query("SELECT * FROM words WHERE categoryId=:categoryId")
+    @Query("DELETE FROM words WHERE categoryId=:categoryId")
+    fun deleteWordsOfCategory(categoryId: Long)
+
+    @Query("SELECT * FROM words WHERE categoryId=:categoryId ORDER BY id DESC")
     fun getWordsOfCategory(categoryId: Long): List<WordDb>
 
     @Query("SELECT COUNT(*) FROM words")
     fun getTotalOfWords(): LiveData<Int>
-
-    @Query("SELECT COUNT(*) FROM words WHERE categoryId=:categoryId")
-    fun getTotalWordsOfCategory(categoryId: Long): Int
 }

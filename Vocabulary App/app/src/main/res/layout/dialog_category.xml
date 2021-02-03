@@ -18,35 +18,36 @@
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_weight="1"
-            android:background="#FF6D00"
+            android:background="@color/dark_orange"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center|start"
-            android:paddingStart="16dp"
-            android:text="NEW CATEGORY"
-            android:textColor="#FFFFFF" />
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:text="@string/new_category"
+            android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/cat_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="@dimen/margin_very_small"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_very_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
             android:layout_weight="1"
             android:fontFamily="@font/roboto_medium"
-            android:hint="e.g. Food"
+            android:hint="@string/e_g_food"
             android:inputType="textEmailAddress"
-            android:padding="16dp" />
+            android:padding="@dimen/padding_normal" />
 
         <Button
             android:id="@+id/cat_add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SAVE"
+            android:text="@string/save"
             android:textColor="#636363"
-            app:backgroundTint="#FFFFFF" />
+            app:backgroundTint="@color/white" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

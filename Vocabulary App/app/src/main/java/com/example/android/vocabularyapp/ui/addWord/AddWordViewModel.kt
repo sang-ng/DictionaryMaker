@@ -19,6 +19,9 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
     val dataIsValid: LiveData<Boolean>
         get() = _dataIsValid
 
+    val category: LiveData<Category>
+        get() = _category
+
     private var _category = MutableLiveData<Category>()
     private var _word = MutableLiveData<Word>()
     private var _dataIsValid = MutableLiveData<Boolean>()

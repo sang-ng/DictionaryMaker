@@ -14,7 +14,6 @@ class WordsViewModel(
 ) : ViewModel(),
     DefaultLifecycleObserver {
 
-
     val wordsOfCategory: LiveData<List<Word>>
         get() = _wordsOfCategory
 
@@ -31,11 +30,17 @@ class WordsViewModel(
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
         getWordsOfCategory()
-        getAllCategoris()
+        getAllCategories()
     }
 
     fun setSelectedCategory(category: Category) {
         _category.value = category
+    }
+
+    private fun getAllCategories() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repoCategory.getCategories()
+        }
     }
 
     private fun getWordsOfCategory() {
@@ -48,13 +53,17 @@ class WordsViewModel(
 
     fun deleteCategory() {
         viewModelScope.launch(Dispatchers.IO) {
-            _category.value?.let { repoCategory.deleteCategory(it) }
+            _category.value?.let {
+                repoCategory.deleteCategory(it)
+                repoWord.deleteWordsOfCategory(it.id)
+            }
         }
     }
 
     fun deleteWord(position: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _wordsOfCategory.value?.get(position)?.let { repoWord.deleteWord(it) }
+            getWordsOfCategory()
         }
     }
 
@@ -64,12 +73,6 @@ class WordsViewModel(
             _category.value?.name = newName
 
             _category.value?.let { repoCategory.updateCategory(it) }
-        }
-    }
-
-    private fun getAllCategoris() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repoCategory.getCategories()
         }
     }
 }

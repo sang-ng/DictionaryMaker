@@ -13,11 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyApp">
-        <activity android:name=".ui.learn.LearnActivity"/>
+
+        <activity android:name=".ui.learn.LearnActivity" />
         <activity android:name=".ui.addWord.AddWordActivity" />
+
         <activity
             android:name=".ui.words.WordsActivity"
             android:parentActivityName=".ui.category.CategoryActivity" />
+
         <activity android:name=".ui.category.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".VocApplication" />
 
         <meta-data

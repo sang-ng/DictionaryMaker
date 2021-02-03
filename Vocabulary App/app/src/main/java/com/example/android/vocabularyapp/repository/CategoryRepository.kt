@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.room.Query
 import com.example.android.vocabularyapp.database.dao.CategoryDao
 import com.example.android.vocabularyapp.database.entities.CategoryDb
 import com.example.android.vocabularyapp.database.entities.toDomainModel
@@ -36,5 +37,9 @@ class CategoryRepository(private val dao: CategoryDao) {
         withContext(Dispatchers.IO) {
             dao.deleteCategory(category.toDatabaseModel())
         }
+    }
+
+    fun searchDatabase(searchQuery: String): LiveData<List<CategoryDb>> {
+        return dao.searchDatabase(searchQuery)
     }
 }

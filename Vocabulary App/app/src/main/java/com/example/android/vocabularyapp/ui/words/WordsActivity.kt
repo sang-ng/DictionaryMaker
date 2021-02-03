@@ -2,14 +2,11 @@ package com.example.android.vocabularyapp.ui.words
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.telecom.Call
-import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -27,6 +24,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     AddCatDialog.CategoryDialogListener {
 
@@ -39,7 +37,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private lateinit var recyclerView: RecyclerView
     private val CATEGORY = "category_arg"
     private val WORD = "word_arg"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,12 +113,11 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                     viewModel.deleteCategory()
                     finish()
                 }
-                R.id.menu_cat_rename -> showDialog()
+                R.id.menu_cat_rename -> showRenameDialog()
             }
             true
         }
     }
-
 
     private fun initRecyclerView() {
         listAdapter = WordListAdapter(ArrayList(), this)
@@ -143,6 +139,7 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             if (words.isNullOrEmpty()) {
                 binding.wordsAddImage.visibility = View.VISIBLE
                 binding.wordsAddText.visibility = View.VISIBLE
+                binding.wordsNumber.text = getString(R.string.zero_words)
             } else {
                 renderUI(listItems = words)
             }
@@ -165,7 +162,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
         binding.wordsStartBtn.isEnabled = true
         binding.wordsStartBtn.isClickable = true
-
     }
 
     private fun startLearnActivity(category: Category) {
@@ -217,17 +213,16 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
         catDialogFragment.dismiss()
     }
 
-    private fun showDialog() {
-        catDialogFragment.show(fragmentManager, "CatDialog")
+    private fun showRenameDialog() {
+        catDialogFragment.show(fragmentManager, getString(R.string.cat_dialog))
     }
 
     private fun setRecyclerViewItemTouchListener() {
 
         val itemTouchCallback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                 viewHolder1: RecyclerView.ViewHolder
             ): Boolean {
                 return false
@@ -237,7 +232,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
                 val position = viewHolder.adapterPosition
 
                 viewModel.deleteWord(position)
-                //TODO: update recycler view after item deleted
             }
         }
 
