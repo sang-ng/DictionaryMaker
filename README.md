@@ -1,6 +1,10 @@
 # Dictionary Maker
 
-An app for learning English. The user can add vocabulary, sort it into categories and use flash cards to learn the words.
+An app for learning English. The user can 
+- add vocabulary 
+- sort it into categories
+- use flash cards to learn the words 
+- view the total number of words learned
 
 ### Screenshots
 
