@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vocabulary App</string>
+    <string name="app_name">Dictionary Maker</string>
     <string name="error_dialog">\" must implement NoticeDialogListener\"</string>
     <string name="input_invalid_error_message">Please fill out all fields</string>
     <string name="category_arg">category_arg</string>
