@@ -36,7 +36,6 @@
             android:layout_marginBottom="@dimen/margin_very_small"
             android:layout_weight="1"
             android:fontFamily="@font/roboto_medium"
-            android:hint="@string/e_g_food"
             android:inputType="textEmailAddress"
             android:padding="@dimen/padding_normal" />
 
