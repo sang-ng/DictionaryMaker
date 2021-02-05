@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/menu_cat_rename"
-        android:title="Rename" />
+        android:title="@string/rename" />
     <item
         android:id="@+id/menu_cat_delete"
-        android:title="Delete" />
+        android:title="@string/delete" />
 </menu>
