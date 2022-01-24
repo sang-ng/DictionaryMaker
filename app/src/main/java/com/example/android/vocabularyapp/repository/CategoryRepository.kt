@@ -21,22 +21,16 @@ class CategoryRepository(private val dao: CategoryDao) {
         return dao.getAllCategories()
     }
 
-    suspend fun addCategory(category: CategoryDb) {
-        withContext(Dispatchers.IO) {
+    fun addCategory(category: CategoryDb) {
             dao.addCategory(category)
-        }
     }
 
-    suspend fun updateCategory(category: Category) {
-        withContext(Dispatchers.IO) {
+    fun updateCategory(category: Category) {
             dao.updateCategory(category.toDatabaseModel())
-        }
     }
 
-    suspend fun deleteCategory(category: Category) {
-        withContext(Dispatchers.IO) {
+    fun deleteCategory(category: Category) {
             dao.deleteCategory(category.toDatabaseModel())
-        }
     }
 
     fun searchDatabase(searchQuery: String): LiveData<List<CategoryDb>> {
