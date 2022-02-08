@@ -14,31 +14,19 @@ class WordsRepository(private val dao: WordDao) {
 
     val totalWords: LiveData<Int> = dao.getTotalOfWords()
 
-    suspend fun addWord(word: Word) {
-        withContext(Dispatchers.IO) {
-            dao.addWord(word.toDatabaseModel())
-        }
-    }
+    fun addWord(word: Word) =
+        dao.addWord(word.toDatabaseModel())
 
-    suspend fun updateWord(word: Word) {
-        withContext(Dispatchers.IO) {
-            dao.updateWord(word.toDatabaseModel())
-        }
-    }
+    fun updateWord(word: Word) =
+        dao.updateWord(word.toDatabaseModel())
 
-    suspend fun deleteWord(word: Word) {
-        withContext(Dispatchers.IO) {
-            dao.deleteWord(word.toDatabaseModel())
-        }
-    }
+    fun deleteWord(word: Word) =
+        dao.deleteWord(word.toDatabaseModel())
 
-    suspend fun deleteWordsOfCategory(id: Long) {
-        withContext(Dispatchers.IO) {
-            dao.deleteWordsOfCategory(id)
-        }
-    }
+    fun deleteWordsOfCategory(id: Long) =
+        dao.deleteWordsOfCategory(id)
 
-    fun getWordsOfCategory(categoryId: Long): List<Word> {
-        return dao.getWordsOfCategory(categoryId).toDomainModel()
-    }
+    fun getWordsOfCategory(categoryId: Long): List<Word> =
+        dao.getWordsOfCategory(categoryId).toDomainModel()
+
 }
