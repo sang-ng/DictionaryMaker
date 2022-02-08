@@ -49,7 +49,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         setContentView(binding.root)
     }
 
-    private fun initToolbar(){
+    private fun initToolbar() {
         setSupportActionBar(binding.topAppBar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
@@ -92,10 +92,10 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         })
     }
 
-    private fun showOrHideImage(categories : List<Category>){
-        if(categories.isNullOrEmpty()){
+    private fun showOrHideImage(categories: List<Category>) {
+        if (categories.isNullOrEmpty()) {
             binding.categoryNoCategories.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.categoryNoCategories.visibility = View.INVISIBLE
         }
     }
@@ -146,16 +146,14 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            searchDatabase(query)
-        }
+
+        query?.let { searchDatabase(query) }
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if (query != null) {
-            searchDatabase(query)
-        }
+        
+        query?.let { searchDatabase(query) }
         return true
     }
 }
