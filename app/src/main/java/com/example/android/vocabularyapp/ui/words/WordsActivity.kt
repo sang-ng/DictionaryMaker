@@ -58,8 +58,10 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
     private fun initToolbar() {
         setSupportActionBar(binding.wordsToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(false)
+        }
     }
 
     private fun observeCategory() {
@@ -79,20 +81,22 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
 
     private fun initOnClick() {
 
-        binding.wordsAddBtn.setOnClickListener {
-            viewModel.category.value?.let {
-                startAddWordActivity(category = it, null)
+        binding.apply {
+            wordsAddBtn.setOnClickListener {
+                viewModel.category.value?.let {
+                    startAddWordActivity(category = it, null)
+                }
             }
-        }
 
-        binding.wordsStartBtn.setOnClickListener {
-            viewModel.category.value?.let {
-                startLearnActivity(category = it)
+            wordsStartBtn.setOnClickListener {
+                viewModel.category.value?.let {
+                    startLearnActivity(category = it)
+                }
             }
-        }
 
-        binding.wordsCatEdit.setOnClickListener {
-            showCatPopUp(binding.wordsCatEdit)
+            wordsCatEdit.setOnClickListener {
+                showCatPopUp(binding.wordsCatEdit)
+            }
         }
     }
 
@@ -103,19 +107,20 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     }
 
     private fun showCatPopUp(view: View) {
-        val popUp = PopupMenu(this, view)
-        popUp.inflate(R.menu.menu_category)
-        popUp.show()
+        PopupMenu(this, view).apply {
+            inflate(R.menu.menu_category)
+            show()
 
-        popUp.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_cat_delete -> {
-                    viewModel.deleteCategory()
-                    finish()
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_cat_delete -> {
+                        viewModel.deleteCategory()
+                        finish()
+                    }
+                    R.id.menu_cat_rename -> showRenameDialog()
                 }
-                R.id.menu_cat_rename -> showRenameDialog()
+                true
             }
-            true
         }
     }
 
@@ -150,18 +155,22 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
     private fun renderUI(listItems: List<Word>) {
         listAdapter.setData(listItems)
 
-        binding.wordsStartBtn.visibility = View.VISIBLE
+        binding.apply {
 
-        binding.wordsNumber.text =
-            "(" + listItems.filter { it.goodWord == 1 }.count()
-                .toString() + " /" + listItems.count()
-                .toString() + ")"
+            wordsStartBtn.apply {
+                wordsStartBtn.visibility = View.VISIBLE
+                wordsStartBtn.isEnabled = true
+                wordsStartBtn.isClickable = true
+            }
 
-        binding.wordsAddImage.visibility = View.INVISIBLE
-        binding.wordsAddText.visibility = View.INVISIBLE
+            wordsNumber.text =
+                "(" + listItems.filter { it.goodWord == 1 }.count()
+                    .toString() + " /" + listItems.count()
+                    .toString() + ")"
 
-        binding.wordsStartBtn.isEnabled = true
-        binding.wordsStartBtn.isClickable = true
+            wordsAddImage.visibility = View.INVISIBLE
+            wordsAddText.visibility = View.INVISIBLE
+        }
     }
 
     private fun startLearnActivity(category: Category) {
@@ -235,7 +244,6 @@ class WordsActivity : AppCompatActivity(), WordListAdapter.ItemClickListener,
             }
         }
 
-        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(recyclerView)
     }
 }
