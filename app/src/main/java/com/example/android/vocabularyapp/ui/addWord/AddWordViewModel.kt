@@ -44,18 +44,17 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
         }
     }
 
-    private fun inputNotEmpty(name: String, translation: String): Boolean {
-        if (name.isNotEmpty() && translation.isNotEmpty()) {
-            return true
-        }
-        return false
-    }
+    private fun inputNotEmpty(name: String, translation: String): Boolean =
+        name.isNotEmpty() && translation.isNotEmpty()
+
 
     private fun updateWord(newName: String, newTranslation: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            _word.value?.name = newName
-            _word.value?.translation = newTranslation
+            _word.value?.apply {
+                name = newName
+                translation = newTranslation
+            }
 
             _word.value?.let { repository.updateWord(it) }
         }
@@ -66,9 +65,7 @@ class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
 
             val word = _category.value?.id?.let { Word(0, name, translation, 0, it) }
 
-            if (word != null) {
-                repository.addWord(word)
-            }
+            word?.let { repository.addWord(word) }
         }
     }
 

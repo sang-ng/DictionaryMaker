@@ -1,14 +1,11 @@
 package com.example.android.vocabularyapp.ui.addWord
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityAddWordBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
-import com.example.android.vocabularyapp.ui.words.WordsActivity
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -33,10 +30,12 @@ class AddWordActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun initToolbar(){
+    private fun initToolbar() {
         setSupportActionBar(binding.addToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(false)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -46,28 +45,32 @@ class AddWordActivity : AppCompatActivity() {
     }
 
     private fun getDataFromIntent() {
+
         val category: Category? = intent.getParcelableExtra(CATEGORY)
         val word: Word? = intent.getParcelableExtra(WORD)
 
-        category?.run { viewModel.setSelectedCategory(this) }
-
-        word?.run { viewModel.setSelectedWord(this) }
+        category?.let { viewModel.setSelectedCategory(it) }
+        word?.let { viewModel.setSelectedWord(it) }
     }
 
     private fun initOnClick() {
 
         binding.addWordBtn.setOnClickListener {
-            val name = binding.addWordName.text.toString()
-            val translation = binding.addWordTrans.text.toString()
-
-            viewModel.addOrUpdate(name, translation)
+            viewModel.addOrUpdate(
+                name = binding.addWordName.text.toString(),
+                translation = binding.addWordTrans.text.toString()
+            )
         }
     }
 
     private fun observeInputData() {
         viewModel.dataIsValid.observe(this, { dataIsValid ->
             if (!dataIsValid) {
-                Snackbar.make(binding.root, getString(R.string.input_invalid_error_message), Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.input_invalid_error_message),
+                    Snackbar.LENGTH_SHORT
+                )
                     .show()
             } else {
                 finish()
@@ -79,8 +82,10 @@ class AddWordActivity : AppCompatActivity() {
     private fun observeSelectedWord() {
         viewModel.word.observe(this, { word ->
             word?.let {
-                binding.addWordName.setText(word.name)
-                binding.addWordTrans.setText(word.translation)
+                binding.apply {
+                    addWordName.setText(word.name)
+                    addWordTrans.setText(word.translation)
+                }
             }
         })
     }
