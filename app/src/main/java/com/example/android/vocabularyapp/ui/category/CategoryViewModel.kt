@@ -23,19 +23,14 @@ class CategoryViewModel(
         getCategories()
     }
 
-    private fun getCategories() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repoCategory.getCategories()
-        }
+    private fun getCategories() = viewModelScope.launch(Dispatchers.IO) {
+        repoCategory.getCategories()
     }
 
-    fun addCategory(categoryDb: CategoryDb) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repoCategory.addCategory(categoryDb)
-        }
+    fun addCategory(categoryDb: CategoryDb) = viewModelScope.launch(Dispatchers.IO) {
+        repoCategory.addCategory(categoryDb)
     }
 
-    fun searchDatabase(searchQuery: String) : LiveData<List<CategoryDb>>{
-        return repoCategory.searchDatabase(searchQuery)
-    }
+    fun searchDatabase(searchQuery: String): LiveData<List<CategoryDb>> =
+        repoCategory.searchDatabase(searchQuery)
 }
