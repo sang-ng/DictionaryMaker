@@ -35,15 +35,16 @@ class AddCatDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogCategoryBinding.inflate(LayoutInflater.from(context))
+        binding = DialogCategoryBinding.inflate(LayoutInflater.from(context)).apply {
+            catAddBtn.setOnClickListener {
 
-        val builder = AlertDialog.Builder(context)
-        builder.setView(binding.root)
+                val categoryName = binding.catName.text.toString()
+                listener.onDialogPositiveClick(categoryName)
+            }
+        }
 
-        binding.catAddBtn.setOnClickListener {
-
-            val categoryName = binding.catName.text.toString()
-            listener.onDialogPositiveClick(categoryName)
+        val builder = AlertDialog.Builder(context).apply {
+            setView(binding.root)
         }
 
         return builder.create()
