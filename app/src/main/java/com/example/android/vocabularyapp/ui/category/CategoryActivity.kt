@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -49,7 +50,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         setContentView(binding.root)
     }
 
-    private fun initToolbar(){
+    private fun initToolbar() {
         setSupportActionBar(binding.topAppBar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
@@ -92,10 +93,10 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         })
     }
 
-    private fun showOrHideImage(categories : List<Category>){
-        if(categories.isNullOrEmpty()){
+    private fun showOrHideImage(categories: List<Category>) {
+        if (categories.isNullOrEmpty()) {
             binding.categoryNoCategories.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.categoryNoCategories.visibility = View.INVISIBLE
         }
     }
@@ -106,7 +107,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         catDialogFragment.dismiss()
     }
 
-    override fun onItemClick(itemId: Long) {
+    override fun onListItemClick(itemId: Long) {
         viewModel.categories.value?.find { it.id == itemId }?.let {
             startWordsActivity(it)
         }
