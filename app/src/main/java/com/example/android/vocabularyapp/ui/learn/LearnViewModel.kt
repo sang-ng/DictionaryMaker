@@ -4,10 +4,14 @@ import androidx.lifecycle.*
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.repository.WordsRepository
+import com.example.android.vocabularyapp.utils.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LearnViewModel(private val repository: WordsRepository) : ViewModel(),
+class LearnViewModel(
+    private val repository: WordsRepository,
+    private val dispatchers: DispatcherProvider
+) : ViewModel(),
     DefaultLifecycleObserver {
 
     val currentWord: LiveData<Word>

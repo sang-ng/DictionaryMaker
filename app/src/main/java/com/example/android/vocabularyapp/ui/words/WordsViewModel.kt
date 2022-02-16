@@ -5,12 +5,14 @@ import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.repository.CategoryRepository
 import com.example.android.vocabularyapp.repository.WordsRepository
+import com.example.android.vocabularyapp.utils.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class WordsViewModel(
     private val repoWord: WordsRepository,
-    private val repoCategory: CategoryRepository
+    private val repoCategory: CategoryRepository,
+    private val dispatchers: DispatcherProvider
 ) : ViewModel(),
     DefaultLifecycleObserver {
 
