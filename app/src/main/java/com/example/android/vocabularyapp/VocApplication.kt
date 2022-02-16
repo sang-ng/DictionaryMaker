@@ -2,6 +2,7 @@ package com.example.android.vocabularyapp
 
 import android.app.Application
 import com.example.android.vocabularyapp.modules.databaseModule
+import com.example.android.vocabularyapp.modules.dispatcherModule
 import com.example.android.vocabularyapp.modules.repositoryModule
 import com.example.android.vocabularyapp.modules.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -13,7 +14,7 @@ class VocApplication : Application() {
 
         startKoin {
             androidContext(this@VocApplication)
-            modules(databaseModule, repositoryModule, viewModelModule)
+            modules(databaseModule, repositoryModule, viewModelModule, dispatcherModule)
         }
     }
 }

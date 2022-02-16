@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
 
-    viewModel { CategoryViewModel(repoCategory = get(), repoWords = get()) }
+    viewModel { CategoryViewModel(repoCategory = get(), repoWords = get(), dispatchers = get()) }
     viewModel { WordsViewModel(repoWord = get(), repoCategory = get()) }
     viewModel { AddWordViewModel(repository = get()) }
     viewModel { LearnViewModel(repository = get()) }
