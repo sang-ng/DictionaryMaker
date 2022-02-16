@@ -17,23 +17,18 @@ class CategoryRepository(private val dao: CategoryDao) {
         it.toDomainModel()
     }
 
-    suspend fun getCategories(): LiveData<List<CategoryDb>> {
-        return dao.getAllCategories()
-    }
+    suspend fun getCategories(): LiveData<List<CategoryDb>> =
+        dao.getAllCategories()
 
-    fun addCategory(category: CategoryDb) {
-            dao.addCategory(category)
-    }
+    fun addCategory(category: CategoryDb) =
+        dao.addCategory(category)
 
-    fun updateCategory(category: Category) {
-            dao.updateCategory(category.toDatabaseModel())
-    }
+    fun updateCategory(category: Category) =
+        dao.updateCategory(category.toDatabaseModel())
 
-    fun deleteCategory(category: Category) {
-            dao.deleteCategory(category.toDatabaseModel())
-    }
+    fun deleteCategory(category: Category) =
+        dao.deleteCategory(category.toDatabaseModel())
 
-    fun searchDatabase(searchQuery: String): LiveData<List<CategoryDb>> {
-        return dao.searchDatabase(searchQuery)
-    }
+    fun searchDatabase(searchQuery: String): LiveData<List<CategoryDb>> =
+        dao.searchDatabase(searchQuery)
 }

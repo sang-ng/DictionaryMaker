@@ -12,7 +12,7 @@ class CategoryListAdapter(
 ) : RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
 
     interface ItemClickListener {
-        fun onItemClick(itemId: Long)
+        fun onListItemClick(itemId: Long)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -32,7 +32,7 @@ class CategoryListAdapter(
 
         fun bind(category: Category) {
             itemBinding.categoryListName.text = category.name
-            itemBinding.categoryListLayout.setOnClickListener { clickListener.onItemClick(category.id) }
+            itemBinding.categoryListLayout.setOnClickListener { clickListener.onListItemClick(category.id) }
         }
     }
 

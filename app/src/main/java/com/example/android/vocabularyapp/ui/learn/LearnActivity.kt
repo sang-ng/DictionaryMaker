@@ -16,6 +16,7 @@ import com.example.android.vocabularyapp.R
 import com.example.android.vocabularyapp.databinding.ActivityLearnBinding
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -48,8 +49,10 @@ class LearnActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         setSupportActionBar(binding.learnToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     private fun initSoundEffects() {
@@ -78,39 +81,45 @@ class LearnActivity : AppCompatActivity() {
 
     private fun initOnClick() {
 
-        binding.learnCard.setOnClickListener {
-            initFlipCardAnim()
-            viewModel.onCardClicked()
-        }
+        binding.apply {
+            learnCard.setOnClickListener {
+                initFlipCardAnim()
+                viewModel.onCardClicked()
+            }
 
-        binding.learnYesBtn.setOnClickListener {
-            viewModel.onYesClicked()
-            viewModel.getCurrentWord()
-            soundCorrect.start()
-        }
+            learnYesBtn.setOnClickListener {
+                viewModel.onYesClicked()
+                viewModel.getCurrentWord()
+                soundCorrect.start()
+            }
 
-        binding.learnNoBtn.setOnClickListener {
-            viewModel.onNoClicked()
-            viewModel.getCurrentWord()
-            soundWrong.start()
-        }
+            learnNoBtn.setOnClickListener {
+                viewModel.onNoClicked()
+                viewModel.getCurrentWord()
+                soundWrong.start()
+            }
 
-        binding.learnPronunciation.setOnClickListener {
-            speakWord()
+            learnPronunciation.setOnClickListener {
+                speakWord()
+            }
         }
     }
 
     private fun initFlipCardAnim() {
         val oa1 = ObjectAnimator.ofFloat(binding.learnCard, "scaleX", 1f, 0f)
-        val oa2 = ObjectAnimator.ofFloat(binding.learnCard, "scaleX", 0f, 1f)
-        oa1.interpolator = DecelerateInterpolator()
-        oa2.interpolator = AccelerateDecelerateInterpolator()
-        oa1.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                oa2.start()
-            }
-        })
+        val oa2 = ObjectAnimator.ofFloat(binding.learnCard, "scaleX", 0f, 1f).apply {
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+
+        oa1.apply {
+            interpolator = DecelerateInterpolator()
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    oa2.start()
+                }
+            })
+        }
         oa1.start()
     }
 
@@ -141,12 +150,14 @@ class LearnActivity : AppCompatActivity() {
     }
 
     private fun showTranslationOrWord(showTranslationEvent: Boolean) {
-        if (showTranslationEvent) {
-            binding.learnTranslation.visibility = View.VISIBLE
-            binding.learnWord.visibility = View.INVISIBLE
-        } else {
-            binding.learnTranslation.visibility = View.INVISIBLE
-            binding.learnWord.visibility = View.VISIBLE
+        binding.apply {
+            if (showTranslationEvent) {
+                learnTranslation.visibility = View.VISIBLE
+                learnWord.visibility = View.INVISIBLE
+            } else {
+                learnTranslation.visibility = View.INVISIBLE
+                learnWord.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -161,14 +172,17 @@ class LearnActivity : AppCompatActivity() {
     }
 
     private fun startSuccessAnim() {
-        binding.learnAnimation.visibility = View.VISIBLE
-        binding.learnWord.visibility = View.INVISIBLE
-        binding.learnTranslation.visibility = View.INVISIBLE
-        binding.learnCard.visibility = View.INVISIBLE
-        binding.learnNoBtn.visibility = View.INVISIBLE
-        binding.learnYesBtn.visibility = View.INVISIBLE
-        binding.learnPronunciation.visibility = View.INVISIBLE
-        binding.learnFlip.visibility = View.INVISIBLE
+
+        binding.apply {
+            learnAnimation.visibility = View.VISIBLE
+            learnWord.visibility = View.INVISIBLE
+            learnTranslation.visibility = View.INVISIBLE
+            learnCard.visibility = View.INVISIBLE
+            learnNoBtn.visibility = View.INVISIBLE
+            learnYesBtn.visibility = View.INVISIBLE
+            learnPronunciation.visibility = View.INVISIBLE
+            learnFlip.visibility = View.INVISIBLE
+        }
     }
 
     private fun speakWord() {
@@ -177,8 +191,13 @@ class LearnActivity : AppCompatActivity() {
     }
 
     private fun renderUI(word: Word) {
-        binding.learnWord.text = word.name
-        binding.learnTranslation.text = word.translation
+
+        binding.apply {
+            with(word) {
+                learnWord.text = this.name
+                learnTranslation.text = this.translation
+            }
+        }
     }
 
     override fun onPause() {

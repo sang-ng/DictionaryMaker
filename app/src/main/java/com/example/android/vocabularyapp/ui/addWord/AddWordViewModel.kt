@@ -7,10 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.model.Word
 import com.example.android.vocabularyapp.repository.WordsRepository
+import com.example.android.vocabularyapp.utils.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AddWordViewModel(private val repository: WordsRepository) : ViewModel() {
+class AddWordViewModel(
+    private val repository: WordsRepository,
+    private val dispatchers: DispatcherProvider
+) : ViewModel() {
 
 
     val word: LiveData<Word>
