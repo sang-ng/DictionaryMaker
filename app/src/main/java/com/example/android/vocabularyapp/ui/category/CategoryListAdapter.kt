@@ -21,13 +21,11 @@ class CategoryListAdapter(
         return CategoryViewHolder(itemBinding)
     }
 
-    override fun getItemCount(): Int {
-        return categoryList.size
-    }
+    override fun getItemCount(): Int = categoryList.size
 
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) =
         holder.bind(categoryList[position])
-    }
+
 
     inner class CategoryViewHolder(private val itemBinding: CategoryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

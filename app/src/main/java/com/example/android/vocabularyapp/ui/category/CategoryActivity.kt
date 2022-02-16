@@ -129,8 +129,8 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
-        val searchItem: MenuItem? = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
+        val searchView =
+            menu?.findItem(R.id.action_search)?.actionView as androidx.appcompat.widget.SearchView
         searchView.setOnQueryTextListener(this)
 
         return true
@@ -147,16 +147,12 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            searchDatabase(query)
-        }
+        query?.let { searchDatabase(query) }
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if (query != null) {
-            searchDatabase(query)
-        }
+        query?.let { searchDatabase(query) }
         return true
     }
 }
