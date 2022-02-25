@@ -1,12 +1,13 @@
 package com.example.android.vocabularyapp.ui.category
 
+import android.app.*
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -19,6 +20,8 @@ import com.example.android.vocabularyapp.model.Category
 import com.example.android.vocabularyapp.ui.addCategory.AddCatDialog
 import com.example.android.vocabularyapp.ui.words.WordsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListener,
@@ -155,6 +158,7 @@ class CategoryActivity : AppCompatActivity(), AddCatDialog.CategoryDialogListene
         query?.let { searchDatabase(query) }
         return true
     }
+
 }
 
 

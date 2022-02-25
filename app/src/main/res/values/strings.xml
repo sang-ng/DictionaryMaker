@@ -25,4 +25,8 @@
     <string name="e_g_food">e.g. Food</string>
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
+    <string name="Notification_title">Practice makes perfect</string>
+    <string name="Notification_text">Take your next session!</string>
+    <string name="main_channel_id">mainChannelId</string>
+
 </resources>
