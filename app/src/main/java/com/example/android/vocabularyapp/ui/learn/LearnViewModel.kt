@@ -52,7 +52,7 @@ class LearnViewModel(
     }
 
     fun getCurrentWord() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
 
             val allWords = getAllWords()
 

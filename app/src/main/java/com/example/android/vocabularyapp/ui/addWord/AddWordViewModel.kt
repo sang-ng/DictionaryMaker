@@ -53,7 +53,7 @@ class AddWordViewModel(
 
 
     private fun updateWord(newName: String, newTranslation: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
 
             _word.value?.apply {
                 name = newName
@@ -65,7 +65,7 @@ class AddWordViewModel(
     }
 
     private fun addWord(name: String, translation: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
 
             val word = _category.value?.id?.let { Word(0, name, translation, 0, it) }
 

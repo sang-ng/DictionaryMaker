@@ -40,19 +40,19 @@ class WordsViewModel(
     }
 
     private fun getAllCategories() =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             repoCategory.getCategories()
         }
 
     private fun getWordsOfCategory() =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             val words = _category.value?.id?.let { repoWord.getWordsOfCategory(it) }
 
             _wordsOfCategory.postValue(words)
         }
 
     fun deleteCategory() =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             _category.value?.let {
                 repoCategory.deleteCategory(it)
                 repoWord.deleteWordsOfCategory(it.id)
@@ -60,13 +60,13 @@ class WordsViewModel(
         }
 
     fun deleteWord(position: Int) =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             _wordsOfCategory.value?.get(position)?.let { repoWord.deleteWord(it) }
             getWordsOfCategory()
         }
 
     fun updateCategory(newName: String) =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
 
             _category.value?.name = newName
 
